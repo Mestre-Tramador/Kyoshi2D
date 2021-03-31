@@ -1,3 +1,15 @@
-[0.0.1]
+[0.0.2]
+- Updated Unity version to 2021.1.0f1
+- Updated Unity Packages
+- Created first Assets Structure
+- Created Resources folder
+- Imported Cursor Sprite Resources
+- Created Scripts folder
+- Created first Player Movement Behaviour Scripts
+- Created first Player Bending Behaviour Scripts
+- Generated Prefabs for Bending Behaviour
+- Created "MestreTramadorEMulherMotoca" Namespace
+- Improved Documentation
 
+[0.0.1]
 - Initial commit
