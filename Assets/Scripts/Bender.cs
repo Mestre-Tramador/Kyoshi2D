@@ -13,25 +13,20 @@ public abstract class Bender : Character
     public bool CanWaterBend { get; private set; }
 
     public void BendAir() => ListenToAirBending();
+
     public void BendEarth() => ListenToEarthBending();
+
     public void BendFire() => ListenToFireBending();
+
     public void BendWater() => ListenToWaterBending();
 
-    protected void enableAirBending() => CanAirBend = true;
+    protected abstract void OnAirBending();
 
-    protected void disableAirBending() => CanAirBend = false;
+    protected abstract void OnEarthBending();
 
-    protected void enableEarthBending() => CanEarthBend = true;
+    protected abstract void OnFireBending();
 
-    protected void disableEarthBending() => CanEarthBend = false;
-
-    protected void enableFireBending() => CanFireBend = true;
-
-    protected void disableFireBending() => CanFireBend = false;
-
-    protected void enableWaterBending() => CanWaterBend = true;
-
-    protected void disableWaterBending() => CanWaterBend = false;
+    protected abstract void OnWaterBending();
 
     protected void BecomeAvatar()
     {
@@ -49,9 +44,25 @@ public abstract class Bender : Character
         disableWaterBending();
     }
 
+    protected void disableAirBending() => CanAirBend = false;
+
+    protected void enableAirBending() => CanAirBend = true;
+
+    protected void disableEarthBending() => CanEarthBend = false;
+
+    protected void enableEarthBending() => CanEarthBend = true;
+
+    protected void disableFireBending() => CanFireBend = false;
+
+    protected void enableFireBending() => CanFireBend = true;
+
+    protected void disableWaterBending() => CanWaterBend = false;    
+
+    protected void enableWaterBending() => CanWaterBend = true;
+
     private void ListenToAirBending()
     {
-        if(!CanAirBend)   
+        if(!CanAirBend)
         {
             return;
         }
@@ -61,7 +72,7 @@ public abstract class Bender : Character
 
     private void ListenToEarthBending()
     {
-        if(!CanAirBend)   
+        if(!CanAirBend)
         {
             return;
         }
@@ -71,7 +82,7 @@ public abstract class Bender : Character
 
     private void ListenToFireBending()
     {
-        if(!CanAirBend)   
+        if(!CanAirBend)
         {
             return;
         }
@@ -81,19 +92,11 @@ public abstract class Bender : Character
 
     private void ListenToWaterBending()
     {
-        if(!CanAirBend)   
+        if(!CanAirBend)
         {
             return;
         }
 
         OnWaterBending();
     }
-    
-    protected abstract void OnAirBending();
-
-    protected abstract void OnEarthBending();
-
-    protected abstract void OnFireBending();
-
-    protected abstract void OnWaterBending();
 }

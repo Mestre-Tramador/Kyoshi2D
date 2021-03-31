@@ -16,21 +16,48 @@ public abstract class Character : MonoBehaviour
 
     public int Jumps { get; protected set; }
 
-    public void enableMoving() => CanMove = true;
-
     public void disableMoving() => CanMove = false;
 
-    public void enableJumping() => CanJump = true;
+    public void enableMoving() => CanMove = true;
 
     public void disableJumping() => CanJump = false;
 
-    public void enableDashing() => CanDash = true;
+    public void enableJumping() => CanJump = true;
 
     public void disableDashing() => CanDash = false;
+
+    public void enableDashing() => CanDash = true;
+
+    public void disableMovement()
+    {
+        disableMoving();
+        disableJumping();
+        disableDashing();
+    }
+
+    public void enableMovement()
+    {
+        enableMoving();
+        enableJumping();
+        enableDashing();
+    }
+
+    protected abstract void OnDash();
+
+    protected abstract void OnJump();
+
+    protected abstract void OnMovement();    
 
     protected virtual void Start()
     {
         enableMoving();
+    }
+
+    protected IEnumerator RefreshDash()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        enableDashing();
     }
 
     protected void ListenToDash()
@@ -63,23 +90,10 @@ public abstract class Character : MonoBehaviour
         OnMovement();
     }
 
-    protected abstract void OnDash();
-
-    protected abstract void OnJump();
-
-    protected abstract void OnMovement();
-
     protected void RefreshJump()
     {
         Jumps = 0;
 
         enableJumping();
-    }
- 
-    protected IEnumerator RefreshDash()
-    {
-        yield return new WaitForSeconds(2.0f);
-
-        enableDashing();
     }
 }

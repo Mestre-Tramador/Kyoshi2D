@@ -21,9 +21,19 @@ namespace MestreTramadorEMulherMotoca
                 gameObject.transform.localScale.z
             );
 
+            public static Vector3 CurrentMouseWorldPoint() => Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            public static Vector3 FixedCurrentMouseWorldPoint() => Camera.main.ScreenToWorldPoint(new Vector3(
+                Input.mousePosition.x,
+                Input.mousePosition.y,
+                1.0f
+            ));
+
             public static Type LoadResource<Type>(string path) where Type : Object => Resources.Load<Type>(path);
 
             public static GameObject GetPlayer() => GameObject.Find(Constants.GameObjects.Player);
+
+            public static Kyoshi GetKyoshi() => GetPlayer().GetComponent<Kyoshi>();
         }
 
         public static class BendCursor
@@ -42,19 +52,19 @@ namespace MestreTramadorEMulherMotoca
             {
                 switch(element)
                 {
-                    case Constants.Keys.Air:
+                    case Constants.Tags.Air:
                         SetAir();
                     return;
 
-                    case Constants.Keys.Earth:
+                    case Constants.Tags.Earth:
                         SetEarth();
                     return;
 
-                    case Constants.Keys.Fire:
+                    case Constants.Tags.Fire:
                         SetFire();
                     return;
 
-                    case Constants.Keys.Water:
+                    case Constants.Tags.Water:
                         SetWater();
                     return;
 
@@ -74,6 +84,8 @@ namespace MestreTramadorEMulherMotoca
         public static class Path
         {
             public const string Cursor = "Cursor/";
+
+            public const string Prefab = "Prefab/";
         }
     }
 }

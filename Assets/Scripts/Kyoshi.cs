@@ -6,35 +6,10 @@ using MestreTramadorEMulherMotoca.Util;
 
 public sealed class Kyoshi : Bender
 {
-    protected override void Start()
+    protected override void OnAirBending()
     {
-        base.Start();
-
-        enableJumping();
-        enableDashing();
-
-        Speed = Player.Speed;
-        Force = Player.JumpForce;
-        
-        RefreshJump();
-
-        BecomeAvatar();
-
-        BendCursor.SetDefault();
+        Debug.Log($"{name} is bending Air!");
     }
-
-    private void Update()
-    {
-        ListenToMovement();
-        ListenToJump();
-        ListenToDash();
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        RefreshJump();
-    }
-
 
     protected override void OnDash()
     {
@@ -49,6 +24,16 @@ public sealed class Kyoshi : Bender
 
             StartCoroutine(RefreshDash());
         }
+    }
+
+    protected override void OnEarthBending()
+    {
+        Debug.Log($"{name} is bending Earth!");
+    }
+
+    protected override void OnFireBending()
+    {
+        Debug.Log($"{name} is bending Fire!");
     }
 
     protected override void OnJump()
@@ -77,25 +62,39 @@ public sealed class Kyoshi : Bender
         }
 
         transform.Translate(new Vector3(x, 0.0f, 0.0f));
-    }
-
-    protected override void OnAirBending()
-    {
-        
-    }
-
-    protected override void OnEarthBending()
-    {
-        
-    }
-
-    protected override void OnFireBending()
-    {
-        
-    }
+    }        
 
     protected override void OnWaterBending()
     {
-        Debug.Log("is bending water!");                
+        Debug.Log($"{name} is bending Water!");
     }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        enableJumping();
+        enableDashing();
+
+        Speed = Player.Speed;
+        Force = Player.JumpForce;
+
+        RefreshJump();
+
+        BecomeAvatar();
+
+        BendCursor.SetDefault();
+    }
+
+    private void Update()
+    {
+        ListenToMovement();
+        ListenToJump();
+        ListenToDash();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        RefreshJump();
+    }   
 }

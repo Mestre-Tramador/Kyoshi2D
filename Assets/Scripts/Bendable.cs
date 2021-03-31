@@ -10,11 +10,21 @@ public class Bendable : MonoBehaviour
 
     private bool IsBending { get; set; }
 
-    private void Start()
+    private void AllowBending()
+    {
+        BendCursor.Set(tag);
+
+        ReadyToBend = true;
+    }
+
+    private void BlockBending()
     {
         ReadyToBend = false;
-        IsBending = false;
-    }
+
+        BendCursor.SetDefault();
+
+        Cursor.visible = true;
+    }    
 
     private void FixedUpdate()
     {
@@ -22,45 +32,39 @@ public class Bendable : MonoBehaviour
         {
             if(Input.GetMouseButton(0))
             {
-                Kyoshi avatar = Helper.GetPlayer().GetComponent<Kyoshi>();
+                Cursor.visible = false;
 
                 switch(tag)
                 {
-                    case Keys.Air:
-                        avatar.BendAir();
+                    case Tags.Air:
+                        Helper.GetKyoshi().BendAir();
                     break;
 
-                    case Keys.Earth:
-                        avatar.BendEarth();
+                    case Tags.Earth:
+                        Helper.GetKyoshi().BendEarth();
                     break;
 
-                    case Keys.Fire:
-                        avatar.BendFire();
+                    case Tags.Fire:
+                        Helper.GetKyoshi().BendFire();
                     break;
 
-                    case Keys.Water:
-                        avatar.BendWater();
+                    case Tags.Water:
+                        Helper.GetKyoshi().BendWater();
                     break;
                 }
 
                 IsBending = true;
-                
+
+                Helper.GetKyoshi().disableMovement();
+
                 return;
             }
 
             IsBending = false;
-        }
-
-        OnMouseExit();
-    }
-
-    private void OnMouseOver()
-    {
-        if(!IsBending)
-        {
-            BendCursor.Set(tag);
-
-            ReadyToBend = true;
+            
+            BlockBending();        
+            
+            Helper.GetKyoshi().enableMovement();
         }
     }
 
@@ -70,38 +74,59 @@ public class Bendable : MonoBehaviour
         {
             switch(tag)
             {
-                case Keys.Air:
-                    
+                case Tags.Air:
+                    UseAirBall();
                 break;
 
-                case Keys.Earth:
-                    
+                case Tags.Earth:
+                    UseEarthBoulder();
                 break;
 
-                case Keys.Fire:
-                    
+                case Tags.Fire:
+                    UseFireStream();
                 break;
 
-                case Keys.Water:
-                    GameObject bend = Instantiate<GameObject>(
-                        UnityEngine.Resources.Load<GameObject>("Prefab/WaterBall"),
-                        Camera.main.ScreenToWorldPoint(new Vector3(
-                            Input.mousePosition.x,
-                            Input.mousePosition.y,
-                            1
-                        )),
-                        new Quaternion()
-                    );
-
-                    Debug.Log(bend.name);
+                case Tags.Water:
+                    UseWaterWhip();
                 break;
             }
-            
+
             return;
         }
 
-        BendCursor.SetDefault();
-
-        ReadyToBend = false;
+        BlockBending();
     }
+
+    private void OnMouseOver()
+    {
+        if(!IsBending)
+        {
+            AllowBending();
+        }
+    }    
+
+    private void Start()
+    {
+        ReadyToBend = false;
+        IsBending = false;
+    }
+
+    private void UseBend(string path)
+    {
+        GameObject bend = Instantiate(
+            Helper.LoadResource<GameObject>(path),
+            Helper.FixedCurrentMouseWorldPoint(),
+            Quaternion.identity
+        );
+
+        Physics2D.IgnoreCollision(bend.GetComponent<Collider2D>(), Helper.GetPlayer().GetComponent<Collider2D>());
+    }
+
+    private void UseAirBall() => UseBend($"{Path.Prefab}{GameObjects.AirBall}");
+
+    private void UseEarthBoulder() => UseBend($"{Path.Prefab}{GameObjects.EarthBoulder}");
+
+    private void UseFireStream() => UseBend($"{Path.Prefab}{GameObjects.FireStream}");
+
+    private void UseWaterWhip() => UseBend($"{Path.Prefab}{GameObjects.WhaterWhip}");
 }

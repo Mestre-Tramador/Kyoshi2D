@@ -1,3 +1,8 @@
+[0.0.3]
+- Improved Bending Behaviour for all four elements
+- Generated new Prefabs for Bending Behaviour
+- Trailed Scripts' spaces and improved code writing
+
 [0.0.2]
 - Updated Unity version to 2021.1.0f1
 - Updated Unity Packages

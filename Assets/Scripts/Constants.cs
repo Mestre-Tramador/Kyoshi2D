@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static MestreTramadorEMulherMotoca.Constants.Keys;
+using static MestreTramadorEMulherMotoca.Constants.Tags;
 
 namespace MestreTramadorEMulherMotoca
 {
     namespace Constants
     {
-        public static class Keys
+        public static class Tags
         {
             public const string Air = "Air";
 
@@ -16,6 +16,8 @@ namespace MestreTramadorEMulherMotoca
             public const string Fire = "Fire";
 
             public const string Water = "Water";
+
+            public const string Floor = "Floor";
         }
 
         public static class Player
@@ -29,7 +31,7 @@ namespace MestreTramadorEMulherMotoca
 
         public static class Resources
         {
-            public const string Cursor = "Cursor";            
+            public const string Cursor = "Cursor";
 
             public const string CursorAir = Cursor + Air;
 
@@ -42,7 +44,15 @@ namespace MestreTramadorEMulherMotoca
 
         public static class GameObjects
         {
+            public const string AirBall = Air + "Ball";
+
+            public const string EarthBoulder = Earth + "Boulder";
+
+            public const string FireStream = Fire + "Stream";
+
             public const string Player = "Kyoshi";
+
+            public const string WhaterWhip = Water + "Whip";
         }
     }
 }
