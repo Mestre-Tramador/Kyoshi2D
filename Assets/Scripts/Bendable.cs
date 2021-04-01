@@ -1,15 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MestreTramadorEMulherMotoca.Constants;
 using MestreTramadorEMulherMotoca.Util;
 
+/// <summary>
+/// Represents a Bendable source.
+/// </summary>
 public class Bendable : MonoBehaviour
 {
+    /// <summary>
+    /// Determine if the source is ready to be bended.
+    /// </summary>
+    /// <value><see langword="true"/> to become ready.</value>
     public bool ReadyToBend { get; private set; }
 
+    /// <summary>
+    /// Determine if the source is been used to be bended.
+    /// </summary>
+    /// <value><see langword="true"/> if is been used.</value>
     private bool IsBending { get; set; }
 
+    /// <summary>
+    /// Allow the use of Bending on the source.
+    /// </summary>
     private void AllowBending()
     {
         BendCursor.Set(tag);
@@ -17,6 +29,9 @@ public class Bendable : MonoBehaviour
         ReadyToBend = true;
     }
 
+    /// <summary>
+    /// Block the use of Bending on the source.
+    /// </summary>
     private void BlockBending()
     {
         ReadyToBend = false;
@@ -24,8 +39,15 @@ public class Bendable : MonoBehaviour
         BendCursor.SetDefault();
 
         Cursor.visible = true;
-    }    
+    }
 
+    /// <summary>
+    /// The Fixed Updater keeps the verification
+    /// if the source is ready and if the Mouse LButton
+    /// was kept pressed, to then use the current Bending. <br/>
+    ///
+    /// Else, the Bending is blocked until the Mouse LButton is pressed again.
+    /// </summary>
     private void FixedUpdate()
     {
         if(ReadyToBend)
@@ -55,19 +77,24 @@ public class Bendable : MonoBehaviour
 
                 IsBending = true;
 
-                Helper.GetKyoshi().disableMovement();
+                Helper.GetKyoshi().DisableMovement();
 
                 return;
             }
 
             IsBending = false;
-            
-            BlockBending();        
-            
-            Helper.GetKyoshi().enableMovement();
+
+            BlockBending();
+
+            Helper.GetKyoshi().EnableMovement();
         }
     }
 
+    /// <summary>
+    /// If the source is bended,
+    /// when the Mouse is exited,
+    /// then a bend is used.
+    /// </summary>
     private void OnMouseExit()
     {
         if(IsBending)
@@ -97,36 +124,60 @@ public class Bendable : MonoBehaviour
         BlockBending();
     }
 
+    /// <summary>
+    /// When the Mouse is over,
+    /// if not Bending,
+    /// the bend itself is allowed.
+    /// </summary>
     private void OnMouseOver()
     {
         if(!IsBending)
         {
             AllowBending();
         }
-    }    
+    }
 
+    /// <summary>
+    /// The Starter just set the initial values to the properties.
+    /// </summary>
     private void Start()
     {
         ReadyToBend = false;
         IsBending = false;
     }
 
+    /// <summary>
+    /// To use a bend, a new Instance of it is spawned as a GameObject.
+    /// </summary>
+    /// <param name="path">The path to the GameObject.</param>
     private void UseBend(string path)
     {
         GameObject bend = Instantiate(
             Helper.LoadResource<GameObject>(path),
-            Helper.FixedCurrentMouseWorldPoint(),
+            Helper.CurrentMouseWorldPoint(),
             Quaternion.identity
         );
 
         Physics2D.IgnoreCollision(bend.GetComponent<Collider2D>(), Helper.GetPlayer().GetComponent<Collider2D>());
     }
 
+    /// <summary>
+    /// Use the Air Ball Bending.
+    /// </summary>
     private void UseAirBall() => UseBend($"{Path.Prefab}{GameObjects.AirBall}");
 
+    /// <summary>
+    /// Use the Earth Boulder Bending.
+    /// </summary>
     private void UseEarthBoulder() => UseBend($"{Path.Prefab}{GameObjects.EarthBoulder}");
 
+    /// <summary>
+    /// Use the Fire Stream Bending.
+    /// </summary>
     private void UseFireStream() => UseBend($"{Path.Prefab}{GameObjects.FireStream}");
 
+    /// <summary>
+    /// Use the Water Whip Bending.
+    /// </summary>
     private void UseWaterWhip() => UseBend($"{Path.Prefab}{GameObjects.WhaterWhip}");
 }

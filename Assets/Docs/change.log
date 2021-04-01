@@ -1,3 +1,8 @@
+[0.0.4]
+- Renamed scenes, from "Levels" to "Books"
+- Created XML Code Documentation Comments
+- Improved class organization and code writing
+
 [0.0.3]
 - Improved Bending Behaviour for all four elements
 - Generated new Prefabs for Bending Behaviour

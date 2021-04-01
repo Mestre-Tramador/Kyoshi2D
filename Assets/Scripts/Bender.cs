@@ -1,65 +1,161 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// Represents a Bender Character.
+/// </summary>
 public abstract class Bender : Character
 {
+    /// <summary>
+    /// Controls if the <see cref="Bender"/> can bend Air.
+    /// </summary>
+    /// <value><see langword="true"/> if it can.</value>
     public bool CanAirBend { get; private set; }
 
+    /// <summary>
+    /// Controls if the <see cref="Bender"/> can bend Earth.
+    /// </summary>
+    /// <value><see langword="true"/> if it can.</value>
     public bool CanEarthBend { get; private set; }
 
+    /// <summary>
+    /// Controls if the <see cref="Bender"/> can bend Fire.
+    /// </summary>
+    /// <value><see langword="true"/> if it can.</value>
     public bool CanFireBend { get; private set; }
 
+    /// <summary>
+    /// Controls if the <see cref="Bender"/> can bend Water.
+    /// </summary>
+    /// <value><see langword="true"/> if it can.</value>
     public bool CanWaterBend { get; private set; }
 
+    /// <summary>
+    /// Activate the Air Bending event listener.
+    /// </summary>
     public void BendAir() => ListenToAirBending();
 
+    /// <summary>
+    /// Activate the Earth Bending event listener.
+    /// </summary>
     public void BendEarth() => ListenToEarthBending();
 
+    /// <summary>
+    /// Activate the Fire Bending event listener.
+    /// </summary>
     public void BendFire() => ListenToFireBending();
 
+    /// <summary>
+    /// Activate the Water Bending event listener.
+    /// </summary>
     public void BendWater() => ListenToWaterBending();
 
+    /// <summary>
+    /// The Air Bending event. <br/>
+    ///
+    /// As <see langword="abstract"/>,
+    /// it depends on each <see cref="Bender"/>.
+    /// </summary>
     protected abstract void OnAirBending();
 
+    /// <summary>
+    /// The Earth Bending event. <br/>
+    ///
+    /// As <see langword="abstract"/>,
+    /// it depends on each <see cref="Bender"/>.
+    /// </summary>
     protected abstract void OnEarthBending();
 
+    /// <summary>
+    /// The Fire Bending event. <br/>
+    ///
+    /// As <see langword="abstract"/>,
+    /// it depends on each <see cref="Bender"/>.
+    /// </summary>
     protected abstract void OnFireBending();
 
+    /// <summary>
+    /// The Water Bending event. <br/>
+    ///
+    /// As <see langword="abstract"/>,
+    /// it depends on each <see cref="Bender"/>.
+    /// </summary>
     protected abstract void OnWaterBending();
 
+    /// <summary>
+    /// All in one, enable respectively:
+    /// <list type="bullet">
+    /// <item>Air Bend;</item>
+    /// <item>Earth Bend;</item>
+    /// <item>Fire Bend;</item>
+    /// <item>Water Bend.</item>
+    /// </list>
+    /// </summary>
     protected void BecomeAvatar()
     {
-        enableAirBending();
-        enableEarthBending();
-        enableFireBending();
-        enableWaterBending();
+        EnableAirBending();
+        EnableEarthBending();
+        EnableFireBending();
+        EnableWaterBending();
     }
 
+    /// <summary>
+    /// All in one, disable respectively:
+    /// <list type="bullet">
+    /// <item>Air Bend;</item>
+    /// <item>Earth Bend;</item>
+    /// <item>Fire Bend;</item>
+    /// <item>Water Bend.</item>
+    /// </list>
+    /// </summary>
     protected void BecomeOzai()
     {
-        disableAirBending();
-        disableEarthBending();
-        disableFireBending();
-        disableWaterBending();
+        DisableAirBending();
+        DisableEarthBending();
+        DisableFireBending();
+        DisableWaterBending();
     }
 
-    protected void disableAirBending() => CanAirBend = false;
+    /// <summary>
+    /// Disable the Air Bend control.
+    /// </summary>
+    protected void DisableAirBending() => CanAirBend = false;
 
-    protected void enableAirBending() => CanAirBend = true;
+    /// <summary>
+    /// Enable the Air Bend control.
+    /// </summary>
+    protected void EnableAirBending() => CanAirBend = true;
 
-    protected void disableEarthBending() => CanEarthBend = false;
+    /// <summary>
+    /// Disable the Earth Bend control.
+    /// </summary>
+    protected void DisableEarthBending() => CanEarthBend = false;
 
-    protected void enableEarthBending() => CanEarthBend = true;
+    /// <summary>
+    /// Enable the Earth Bend control.
+    /// </summary>
+    protected void EnableEarthBending() => CanEarthBend = true;
 
-    protected void disableFireBending() => CanFireBend = false;
+    /// <summary>
+    /// Disable the Fire Bend control.
+    /// </summary>
+    protected void DisableFireBending() => CanFireBend = false;
 
-    protected void enableFireBending() => CanFireBend = true;
+    /// <summary>
+    /// Enable the Fire Bend control.
+    /// </summary>
+    protected void EnableFireBending() => CanFireBend = true;
 
-    protected void disableWaterBending() => CanWaterBend = false;    
+    /// <summary>
+    /// Disable the Water Bend control.
+    /// </summary>
+    protected void DisableWaterBending() => CanWaterBend = false;
 
-    protected void enableWaterBending() => CanWaterBend = true;
+    /// <summary>
+    /// Enable the Water Bend control.
+    /// </summary>
+    protected void EnableWaterBending() => CanWaterBend = true;
 
+    /// <summary>
+    /// The Air Bend event listener.
+    /// </summary>
     private void ListenToAirBending()
     {
         if(!CanAirBend)
@@ -70,9 +166,12 @@ public abstract class Bender : Character
         OnAirBending();
     }
 
+    /// <summary>
+    /// The Earth Bend event listener.
+    /// </summary>
     private void ListenToEarthBending()
     {
-        if(!CanAirBend)
+        if(!CanEarthBend)
         {
             return;
         }
@@ -80,9 +179,12 @@ public abstract class Bender : Character
         OnEarthBending();
     }
 
+    /// <summary>
+    /// The Fire Bend event listener.
+    /// </summary>
     private void ListenToFireBending()
     {
-        if(!CanAirBend)
+        if(!CanFireBend)
         {
             return;
         }
@@ -90,9 +192,12 @@ public abstract class Bender : Character
         OnFireBending();
     }
 
+    /// <summary>
+    /// The Water Bend event listener.
+    /// </summary>
     private void ListenToWaterBending()
     {
-        if(!CanAirBend)
+        if(!CanWaterBend)
         {
             return;
         }

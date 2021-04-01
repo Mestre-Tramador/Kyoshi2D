@@ -1,65 +1,181 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a base Character.
+/// </summary>
 public abstract class Character : MonoBehaviour
 {
-    public bool CanMove { get; private set; }
-
-    public bool CanJump { get; private set; }
-
+    /// <summary>
+    /// Controls if the <see cref="Character"/> can dash.
+    /// </summary>
+    /// <value><see langword="true"/> if it can.</value>
     public bool CanDash { get; private set; }
 
-    public float Speed { get; protected set; }
+    /// <summary>
+    /// Controls if the <see cref="Character"/> can jump.
+    /// </summary>
+    /// <value><see langword="true"/> if it can.</value>
+    public bool CanJump { get; private set; }
 
+    /// <summary>
+    /// Controls if the <see cref="Character"/> can move.
+    /// </summary>
+    /// <value><see langword="true"/> if it can.</value>
+    public bool CanMove { get; private set; }
+
+    /// <summary>
+    /// Represents the Force used to impulsionate the jumping.
+    /// </summary>
+    /// <value>Any numeric value above zero.</value>
     public float Force { get; protected set; }
 
+    /// <summary>
+    /// Represents the Impulse used to dash.
+    /// </summary>
+    /// <value>Any numeric value above zero.</value>
+    public float Impulse { get; protected set; }
+
+    /// <summary>
+    /// Represents the amount of Speed used to calculate the movement.
+    /// </summary>
+    /// <value>Any numeric value above zero.</value>
+    public float Speed { get; protected set; }
+
+    /// <summary>
+    /// The amount of Jumps that a character did.
+    /// </summary>
+    /// <value></value>
     public int Jumps { get; protected set; }
 
-    public void disableMoving() => CanMove = false;
+    /// <summary>
+    /// Disable the Dash control.
+    /// </summary>
+    public void DisableDashing() => CanDash = false;
 
-    public void enableMoving() => CanMove = true;
+    /// <summary>
+    /// Enable the Dash control.
+    /// </summary>
+    public void EnableDashing() => CanDash = true;
 
-    public void disableJumping() => CanJump = false;
+    /// <summary>
+    /// Disable the Jump control.
+    /// </summary>
+    public void DisableJumping() => CanJump = false;
 
-    public void enableJumping() => CanJump = true;
+    /// <summary>
+    /// Enable the Jump control.
+    /// </summary>
+    public void EnableJumping() => CanJump = true;
 
-    public void disableDashing() => CanDash = false;
-
-    public void enableDashing() => CanDash = true;
-
-    public void disableMovement()
+    /// <summary>
+    /// All in one, disable respectively:
+    /// <list type="bullet">
+    /// <item>Movement;</item>
+    /// <item>Jump;</item>
+    /// <item>Dash.</item>
+    /// </list>
+    /// </summary>
+    public void DisableMovement()
     {
-        disableMoving();
-        disableJumping();
-        disableDashing();
+        DisableMoving();
+        DisableJumping();
+        DisableDashing();
     }
 
-    public void enableMovement()
+    /// <summary>
+    /// All in one, enable respectively:
+    /// <list type="bullet">
+    /// <item>Movement;</item>
+    /// <item>Jump;</item>
+    /// <item>Dash.</item>
+    /// </list>
+    /// </summary>
+    public void EnableMovement()
     {
-        enableMoving();
-        enableJumping();
-        enableDashing();
+        EnableMoving();
+        EnableJumping();
+        EnableDashing();
     }
 
+    /// <summary>
+    /// Disable the Movement control.
+    /// </summary>
+    public void DisableMoving() => CanMove = false;
+
+    /// <summary>
+    /// Enable the Movement control.
+    /// </summary>
+    public void EnableMoving() => CanMove = true;
+
+    /// <summary>
+    /// The Dash event. <br/>
+    ///
+    /// As <see langword="abstract"/>,
+    /// it depends on each <see cref="Character"/>.
+    /// </summary>
     protected abstract void OnDash();
 
+    /// <summary>
+    /// The Jump event. <br/>
+    ///
+    /// As <see langword="abstract"/>,
+    /// it depends on each <see cref="Character"/>.
+    /// </summary>
     protected abstract void OnJump();
 
-    protected abstract void OnMovement();    
+    /// <summary>
+    /// The Movement event. <br/>
+    ///
+    /// As <see langword="abstract"/>,
+    /// it depends on each <see cref="Character"/>.
+    /// </summary>
+    protected abstract void OnMovement();
 
-    protected virtual void Start()
-    {
-        enableMoving();
-    }
-
-    protected IEnumerator RefreshDash()
+    /// <summary>
+    /// The <see langword="virtual"/> Refresher
+    /// for the Dash event. <br/>
+    ///
+    /// Consequently, it can be overwritten
+    /// to each <see cref="Character"/> specification.
+    /// </summary>
+    /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
+    protected virtual IEnumerator RefreshDash()
     {
         yield return new WaitForSeconds(2.0f);
 
-        enableDashing();
+        EnableDashing();
     }
 
+    /// <summary>
+    /// The <see langword="virtual"/> Refresher
+    /// for the Jump event. <br/>
+    ///
+    /// Consequently, it can be overwritten
+    /// to each <see cref="Character"/> specification.
+    /// </summary>
+    protected virtual void RefreshJump()
+    {
+        Jumps = 0;
+
+        EnableJumping();
+    }
+
+    /// <summary>
+    /// The <see langword="virtual"/> Starter
+    /// already enables the Movement. <br/>
+    ///
+    /// Consequently, it can be overwritten
+    /// to each <see cref="Character"/> specification.
+    /// </summary>
+    protected virtual void Start()
+    {
+        EnableMoving();
+    }
+
+    /// <summary>
+    /// Dash event listener.
+    /// </summary>
     protected void ListenToDash()
     {
         if(!CanDash)
@@ -70,6 +186,9 @@ public abstract class Character : MonoBehaviour
         OnDash();
     }
 
+    /// <summary>
+    /// Jump event listener.
+    /// </summary>
     protected void ListenToJump()
     {
         if(!CanJump)
@@ -80,6 +199,9 @@ public abstract class Character : MonoBehaviour
         OnJump();
     }
 
+    /// <summary>
+    /// Movement event listener.
+    /// </summary>
     protected void ListenToMovement()
     {
         if(!CanMove)
@@ -88,12 +210,5 @@ public abstract class Character : MonoBehaviour
         }
 
         OnMovement();
-    }
-
-    protected void RefreshJump()
-    {
-        Jumps = 0;
-
-        enableJumping();
     }
 }
