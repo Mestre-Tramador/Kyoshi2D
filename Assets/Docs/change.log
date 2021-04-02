@@ -1,3 +1,13 @@
+[0.0.5]
+- Added SimpleJSON Unity Plugin.
+- Imported Herculanum Font Resource
+- Imported Nations Sprite Resources
+- Created English and Brazilian Portuguese Lang Resources
+- Created loading screen scene
+- Added Book Behaviour, wich load the data on the loading screen scene
+- Improved Constants and Util Namespaces from the "MestreTramadorEMulherMotoca" Namespace
+- Created "Foo" scene and "Bar" script for testing
+
 [0.0.4]
 - Renamed scenes, from "Levels" to "Books"
 - Created XML Code Documentation Comments

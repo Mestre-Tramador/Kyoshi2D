@@ -1,4 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static MestreTramadorEMulherMotoca.Util.Helper;
 
 namespace MestreTramadorEMulherMotoca
@@ -13,27 +17,27 @@ namespace MestreTramadorEMulherMotoca
             /// <summary>
             /// Set the Cursor to the Air theme.
             /// </summary>
-            public static void SetAir() => Set(LoadResource<Texture2D>($"{Path.Cursor}{Constants.Resources.CursorAir}"));
+            public static void SetAir() => Set(LoadResource<Texture2D>($"{Path.Cursor}{Constants.ResourceNames.CursorAir}"));
 
             /// <summary>
             /// Set the Cursor to the Default theme.
             /// </summary>
-            public static void SetDefault() => Set(LoadResource<Texture2D>($"{Path.Cursor}{Constants.Resources.Cursor}"));
+            public static void SetDefault() => Set(LoadResource<Texture2D>($"{Path.Cursor}{Constants.ResourceNames.Cursor}"));
 
             /// <summary>
             /// Set the Cursor to the Earth theme.
             /// </summary>
-            public static void SetEarth() => Set(LoadResource<Texture2D>($"{Path.Cursor}{Constants.Resources.CursorEarth}"));
+            public static void SetEarth() => Set(LoadResource<Texture2D>($"{Path.Cursor}{Constants.ResourceNames.CursorEarth}"));
 
             /// <summary>
             /// Set the Cursor to the Fire theme.
             /// </summary>
-            public static void SetFire() => Set(LoadResource<Texture2D>($"{Path.Cursor}{Constants.Resources.CursorFire}"));
+            public static void SetFire() => Set(LoadResource<Texture2D>($"{Path.Cursor}{Constants.ResourceNames.CursorFire}"));
 
             /// <summary>
             /// Set the Cursor to the Water theme.
             /// </summary>
-            public static void SetWater() => Set(LoadResource<Texture2D>($"{Path.Cursor}{Constants.Resources.CursorWater}"));
+            public static void SetWater() => Set(LoadResource<Texture2D>($"{Path.Cursor}{Constants.ResourceNames.CursorWater}"));
 
             /// <summary>
             /// Set the Cursor to a given element.
@@ -101,6 +105,52 @@ namespace MestreTramadorEMulherMotoca
             ));
 
             /// <summary>
+            /// Get the current used lang from <see cref="PlayerPrefs"/>.
+            /// </summary>
+            /// <returns>The String holding the Lang.</returns>
+            public static string CurrentLang() => Constants.ResourceNames.En; // TODO: Improve with the PlayerPrefs.
+            
+            /// <summary>
+            /// Fade a Canvas Element in.
+            /// </summary>
+            /// <param name="element">The Element to be faded.</param>
+            /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
+            public static IEnumerator FadeIn(MaskableGraphic element)
+            {
+                for(float i = 0; i <= 1; i += Time.deltaTime)
+                {                
+                    element.color = new Color(
+                        element.color.r,
+                        element.color.g, 
+                        element.color.b,
+                        i
+                    );
+
+                    yield return null;
+                }
+            }
+
+            /// <summary>
+            /// Fade a Canvas Element out.
+            /// </summary>
+            /// <param name="element">The Element to be faded.</param>
+            /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
+            public static IEnumerator FadeOut(MaskableGraphic element)
+            {
+                for(float i = 1; i >= 0; i -= Time.deltaTime)
+                {                
+                    element.color =  new Color(
+                        element.color.r,
+                        element.color.g, 
+                        element.color.b,
+                        i
+                    );
+                    
+                    yield return null;
+                }
+            }
+
+            /// <summary>
             /// Get the Player main Component.
             /// </summary>
             /// <returns>The Kyoshi Component on its current state.</returns>
@@ -110,7 +160,7 @@ namespace MestreTramadorEMulherMotoca
             /// Get the Player GameObject.
             /// </summary>
             /// <returns>The GameObject on its current state.</returns>
-            public static GameObject GetPlayer() => GameObject.Find(Constants.GameObjects.Player);
+            public static GameObject GetPlayer() => GameObject.Find(Constants.GameObjectNames.Player);
 
             /// <summary>
             /// Verifiy if some GameObject is turned to the left.
@@ -165,9 +215,149 @@ namespace MestreTramadorEMulherMotoca
             public const string Cursor = "Cursor/";
 
             /// <summary>
+            /// "Lang" folder path.
+            /// </summary>
+            public const string Lang = "Lang/";
+
+            /// <summary>
+            /// "Nations" folder path.
+            /// </summary>
+            public const string Nations = "Nations/";
+
+            /// <summary>
             /// "Prefab" folder path.
             /// </summary>
             public const string Prefab = "Prefab/";
+        }
+
+        /// <summary>
+        /// A Loader facilitator for the <see cref="UnityEngine.SceneManagement.Scene"/> instances. <br/>
+        /// 
+        /// It can hold some <see langword="string"/> params between scenes.
+        /// </summary>
+        public static class SceneLoader
+        {
+            /// <summary>
+            /// All parameters are stored on a Dictionary.
+            /// </summary>
+            /// <value>Every Key-Value pair stores an info to the loaded scene.</value>
+            private static Dictionary<string, string> Data { get; set; }
+
+            /// <summary>
+            /// Get the data stored.
+            /// </summary>
+            /// <returns>The current Dictionary of data.</returns>
+            public static Dictionary<string, string> Get()
+            {
+                return Data;
+            }
+
+            /// <summary>
+            /// Clear and refresh all the data.
+            /// </summary>
+            public static void Clear()
+            {
+                Data = null;
+
+                VerifyData();
+            }
+
+            /// <summary>
+            /// Load a <see cref="UnityEngine.SceneManagement.Scene"/> by its name.
+            /// </summary>
+            /// <param name="sceneName">The name of the <see cref="UnityEngine.SceneManagement.Scene"/>.</param>
+            public static void Load(string sceneName)
+            {
+                SceneManager.LoadScene(sceneName);
+            }
+
+            /// <summary>
+            /// Load a <see cref="UnityEngine.SceneManagement.Scene"/> by its name. <br/>
+            /// 
+            /// Also, pass a new dataset to be stored and recovered on the new load.
+            /// </summary>
+            /// <param name="sceneName">The name of the <see cref="UnityEngine.SceneManagement.Scene"/>.</param>
+            /// <param name="data">A set of <see cref="Data"/> parameters.</param>
+            public static void Load(string sceneName, Dictionary<string, string> data)
+            {
+                Data = data;
+
+                Load(sceneName);
+            }
+
+            /// <summary>
+            /// Load a <see cref="UnityEngine.SceneManagement.Scene"/> by its name. <br/>
+            /// 
+            /// Also, pass any number of parameters to be stored and recovered on the new load.
+            /// </summary>
+            /// <param name="sceneName">The name of the <see cref="UnityEngine.SceneManagement.Scene"/>.</param>
+            /// <param name="parameters">Every Kay-Value Pair to load on the new scene.</param>
+            public static void Load(string sceneName, params KeyValuePair<string, string>[] parameters)
+            {
+                VerifyData();
+
+                foreach(KeyValuePair<string, string> parameter in parameters)
+                {
+                    Data.Add(parameter.Key, parameter.Value);
+                }
+
+                Load(sceneName);
+            }            
+
+            /// <summary>
+            /// Get a specific parameter.
+            /// </summary>
+            /// <param name="key">The key wich holds the value.</param>
+            /// <returns>An empty <see langword="string"/> or the value.</returns>
+            public static string Get(string key)
+            {                     
+                if(Data != null)         
+                {
+                    if(Data.TryGetValue(key, out string parameter)) 
+                    {
+                        return parameter;
+                    } 
+                }
+
+                return "";
+            }
+
+            /// <summary>
+            /// Set a value to a key and store them.
+            /// </summary>
+            /// <param name="key">The parameter key.</param>
+            /// <param name="value">The parameter value.</param>
+            public static void Set(string key, string value)
+            {
+                VerifyData();
+
+                Data.Add(key, value);
+            }
+
+            /// <summary>
+            /// Set and store any number of Key-Value Pairs at once.
+            /// </summary>
+            /// <param name="parameters">The parameters to save.</param>
+            public static void Set(params KeyValuePair<string, string>[] parameters)
+            {
+                foreach(KeyValuePair<string, string> parameter in parameters)
+                {
+                    Set(parameter.Key, parameter.Value);
+                }
+            }            
+
+            /// <summary>
+            /// Simple verifier if there is a valid <see cref="Dictionary{TKey, TValue}"/>. <br/>
+            /// 
+            /// If not, instantiate it.
+            /// </summary>
+            private static void VerifyData()
+            {
+                if(Data == null)
+                {
+                    Data = new Dictionary<string, string>();
+                }
+            }
         }
     }
 }

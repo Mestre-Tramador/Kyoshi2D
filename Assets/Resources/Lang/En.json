@@ -1,0 +1,28 @@
+{
+    "BOOKS": {
+        "1": {
+            "LABEL": "Book",
+            "TITLE": "Earth",
+            "SUBTITLE": "Justice",
+            "NUMBER": "One"
+        },
+        "2": {
+            "LABEL": "Book",
+            "TITLE": "Fire",
+            "SUBTITLE": "Strenght",
+            "NUMBER": "Two"
+        },
+        "3": {
+            "LABEL": "Book",
+            "TITLE": "Air",
+            "SUBTITLE": "Focus",
+            "NUMBER": "   Three"
+        },
+        "4": {
+            "LABEL": "Book",
+            "TITLE": "Water",
+            "SUBTITLE": "Peace",
+            "NUMBER": "  Four"
+        }
+    }
+}

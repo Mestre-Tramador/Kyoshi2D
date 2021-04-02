@@ -164,20 +164,20 @@ public class Bendable : MonoBehaviour
     /// <summary>
     /// Use the Air Ball Bending.
     /// </summary>
-    private void UseAirBall() => UseBend($"{Path.Prefab}{GameObjects.AirBall}");
+    private void UseAirBall() => UseBend($"{Path.Prefab}{GameObjectNames.AirBall}");
 
     /// <summary>
     /// Use the Earth Boulder Bending.
     /// </summary>
-    private void UseEarthBoulder() => UseBend($"{Path.Prefab}{GameObjects.EarthBoulder}");
+    private void UseEarthBoulder() => UseBend($"{Path.Prefab}{GameObjectNames.EarthBoulder}");
 
     /// <summary>
     /// Use the Fire Stream Bending.
     /// </summary>
-    private void UseFireStream() => UseBend($"{Path.Prefab}{GameObjects.FireStream}");
+    private void UseFireStream() => UseBend($"{Path.Prefab}{GameObjectNames.FireStream}");
 
     /// <summary>
     /// Use the Water Whip Bending.
     /// </summary>
-    private void UseWaterWhip() => UseBend($"{Path.Prefab}{GameObjects.WhaterWhip}");
+    private void UseWaterWhip() => UseBend($"{Path.Prefab}{GameObjectNames.WhaterWhip}");
 }

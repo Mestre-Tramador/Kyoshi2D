@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using static MestreTramadorEMulherMotoca.Constants.Tags;
 
 namespace MestreTramadorEMulherMotoca
@@ -7,22 +8,32 @@ namespace MestreTramadorEMulherMotoca
         /// <summary>
         /// The Contants names for <see cref="UnityEngine.GameObject"/> instances.
         /// </summary>
-        public static class GameObjects
+        public static class GameObjectNames
         {
             /// <summary>
-            /// The Air Ball Bend.
+            /// The Air Ball <see cref="Bend"/>.
             /// </summary>
             public const string AirBall = Air + "Ball";
 
             /// <summary>
-            /// The Earth Boulder Bend.
+            /// The <see cref="Book"/> Background.
+            /// </summary>
+            public const string Background = "Background";
+
+            /// <summary>
+            /// The Earth Boulder <see cref="Bend"/>.
             /// </summary>
             public const string EarthBoulder = Earth + "Boulder";
 
             /// <summary>
-            /// The Fire Stream Bend.
+            /// The Fire Stream <see cref="Bend"/>.
             /// </summary>
             public const string FireStream = Fire + "Stream";
+
+            /// <summary>
+            /// The <see cref="Book"/> Label.
+            /// </summary>
+            public const string Label = "Label";
 
             /// <summary>
             /// The Player, aka, <see cref="Kyoshi"/>.
@@ -30,9 +41,72 @@ namespace MestreTramadorEMulherMotoca
             public const string Player = "Kyoshi";
 
             /// <summary>
-            /// The Whater Whip Bend.
+            /// The <see cref="Book"/> Number.
+            /// </summary>
+            public const string Number = "Number";
+            
+            /// <summary>
+            /// The <see cref="Book"/> Subtitle.
+            /// </summary>
+            public const string Subtitle = "Subtitle";
+
+            /// <summary>
+            /// The <see cref="Book"/> Symbol.
+            /// </summary>
+            public const string Symbol = "Symbol";
+
+            /// <summary>
+            /// The <see cref="Book"/> Title.
+            /// </summary>
+            public const string Title = "Title";
+
+            /// <summary>
+            /// The Whater Whip <see cref="Bend"/>.
             /// </summary>
             public const string WhaterWhip = Water + "Whip";
+        }
+
+        /// <summary>
+        /// Constants Lang Keys to access JSON data.
+        /// </summary>
+        public static class Lang
+        {            
+            /// <summary>
+            /// Lang Keys to the <see cref="Book"/> scenes.
+            /// </summary>
+            public static class Books
+            {
+                /// <summary>
+                /// The Label.
+                /// </summary>
+                public const string Label = "LABEL";
+
+                /// <summary>
+                /// The Title.
+                /// </summary>
+                public const string Title = "TITLE";
+
+                /// <summary>
+                /// The Subtitle.
+                /// </summary>
+                public const string Subtitle = "SUBTITLE";
+
+                /// <summary>
+                /// The Number.
+                /// </summary>
+                public const string Number = "NUMBER";
+
+                #pragma warning disable CS0114
+                /// <summary>
+                /// The self key.
+                /// </summary>
+                /// <returns>The key for the <see cref="Books"/> entry.</returns>
+                public static string ToString()
+                {
+                    return "BOOKS";
+                }
+                #pragma warning restore CS0114
+            }
         }
 
         /// <summary>
@@ -59,7 +133,7 @@ namespace MestreTramadorEMulherMotoca
         /// <summary>
         /// Constant names for <see cref="UnityEngine.Resources"/>.
         /// </summary>
-        public static class Resources
+        public static class ResourceNames
         {
             /// <summary>
             /// The default Cursor.
@@ -85,6 +159,83 @@ namespace MestreTramadorEMulherMotoca
             /// The Water themed Cursor.
             /// </summary>
             public const string CursorWater = Cursor + Water;
+
+            /// <summary>
+            /// The English Language JSON file.
+            /// </summary>
+            public const string En = "En";
+
+            /// <summary>
+            /// The Four Nations Symbol.
+            /// </summary>
+            public const string Nations = "Nations";
+
+            /// <summary>
+            /// The Air Nomads Symbol.
+            /// </summary>
+            public const string NationsAir = Nations + Air;
+
+            /// <summary>
+            /// The Earth Kingdom Symbol.
+            /// </summary>
+            public const string NationsEarth = Nations + Earth;
+
+            /// <summary>
+            /// The Fire Nation Symbol.
+            /// </summary>
+            public const string NationsFire = Nations + Fire;
+
+            /// <summary>
+            /// The Water Tribe Symbol.
+            /// </summary>
+            public const string NationsWater = Nations + Water;
+
+            /// <summary>
+            /// The Brazilian Portuguese JSON file.
+            /// </summary>
+            public const string PtBr = "PtBr";
+        }
+
+        /// <summary>
+        /// The Contants names for <see cref="UnityEngine.SceneManagement.Scene"/> instances.
+        /// </summary>
+        public static class SceneNames
+        {
+            /// <summary>
+            /// The first level.
+            /// </summary>
+            public const string BookEarth = "BookEarth";
+            
+            /// <summary>
+            /// The loading screen.
+            /// </summary>
+            public const string PreBook = "PreBook";
+        }
+
+        /// <summary>
+        /// Specific data parameters for <see cref="UnityEngine.SceneManagement.Scene"/> instances.
+        /// </summary>
+        public static class SceneData
+        {
+            /// <summary>
+            /// To load a <see cref="Book"/> with the Air theme.
+            /// </summary>
+            public static readonly KeyValuePair<string, string> BookAir = new KeyValuePair<string, string>("Book", "3");
+
+            /// <summary>
+            /// To load a <see cref="Book"/> with the Earth theme.
+            /// </summary>
+            public static readonly KeyValuePair<string, string> BookEarth = new KeyValuePair<string, string>("Book", "1");
+
+            /// <summary>
+            /// To load a <see cref="Book"/> with the Fire theme.
+            /// </summary>
+            public static readonly KeyValuePair<string, string> BookFire = new KeyValuePair<string, string>("Book", "2");
+
+            /// <summary>
+            /// To load a <see cref="Book"/> with the Water theme.
+            /// </summary>
+            public static readonly KeyValuePair<string, string> BookWater = new KeyValuePair<string, string>("Book", "4");
         }
 
         /// <summary>
