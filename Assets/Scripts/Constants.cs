@@ -61,6 +61,11 @@ namespace MestreTramadorEMulherMotoca
             public const string Title = "Title";
 
             /// <summary>
+            /// The Terminal used as <see cref="MestreTramadorEMulherMotoca.Extras.Console"/>.
+            /// </summary>
+            public const string Terminal = "Terminal";
+
+            /// <summary>
             /// The Whater Whip <see cref="Bend"/>.
             /// </summary>
             public const string WhaterWhip = Water + "Whip";

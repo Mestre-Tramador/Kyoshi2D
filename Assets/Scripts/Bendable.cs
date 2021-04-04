@@ -24,6 +24,11 @@ public class Bendable : MonoBehaviour
     /// </summary>
     private void AllowBending()
     {
+        if(Helper.GameIsPaused())
+        {
+            return;
+        }
+        
         BendCursor.Set(tag);
 
         ReadyToBend = true;
@@ -34,11 +39,16 @@ public class Bendable : MonoBehaviour
     /// </summary>
     private void BlockBending()
     {
+        if(Helper.GameIsPaused())
+        {
+            return;
+        }
+
         ReadyToBend = false;
 
         BendCursor.SetDefault();
 
-        Cursor.visible = true;
+        BendCursor.Unhide();
     }
 
     /// <summary>
@@ -54,7 +64,7 @@ public class Bendable : MonoBehaviour
         {
             if(Input.GetMouseButton(0))
             {
-                Cursor.visible = false;
+                BendCursor.Hide();
 
                 switch(tag)
                 {

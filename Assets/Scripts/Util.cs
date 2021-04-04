@@ -15,6 +15,11 @@ namespace MestreTramadorEMulherMotoca
         public static class BendCursor
         {
             /// <summary>
+            /// Hide the visibility of the Cursor.
+            /// </summary>
+            public static void Hide() => Cursor.visible = false;
+
+            /// <summary>
             /// Set the Cursor to the Air theme.
             /// </summary>
             public static void SetAir() => Set(LoadResource<Texture2D>($"{Path.Cursor}{Constants.ResourceNames.CursorAir}"));
@@ -68,6 +73,11 @@ namespace MestreTramadorEMulherMotoca
                     return;
                 }
             }
+
+            /// <summary>
+            /// Unhide the visibility of the Cursor.
+            /// </summary>
+            public static void Unhide() => Cursor.visible = true;
 
             /// <summary>
             /// Overwrite of the <see cref="Cursor.SetCursor(Texture2D, Vector2, CursorMode)"/>
@@ -151,10 +161,24 @@ namespace MestreTramadorEMulherMotoca
             }
 
             /// <summary>
+            /// Get if the Game is currently paused.
+            /// </summary>
+            /// <returns>True if it's paused by any means.</returns>
+            public static bool GameIsPaused() => (Time.timeScale == 0);
+
+            /// <summary>
+            /// Get if the Game is currently resumed.
+            /// </summary>
+            /// <returns>True if the game is in any state other than paused.</returns>
+            public static bool GameIsResumed() => (Time.timeScale > 0);
+
+            /// <summary>
             /// Get the Player main Component.
             /// </summary>
             /// <returns>The Kyoshi Component on its current state.</returns>
             public static Kyoshi GetKyoshi() => GetPlayer().GetComponent<Kyoshi>();
+
+            public static bool GetAnyMouseClick() => (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2));
 
             /// <summary>
             /// Get the Player GameObject.
@@ -184,6 +208,31 @@ namespace MestreTramadorEMulherMotoca
             /// <typeparam name="Type">A valid <see cref="UnityEngine.Object"/>.</typeparam>
             /// <returns>The Resource loaded.</returns>
             public static Type LoadResource<Type>(string path) where Type : Object => Resources.Load<Type>(path);
+
+            /// <summary>
+            /// Put the game on pause state.
+            /// </summary>
+            public static void PauseGame() => Time.timeScale = 0;
+
+            /// <summary>
+            /// Put the game on resume state.
+            /// </summary>
+            public static void ResumeGame() => Time.timeScale = 1;
+
+            /// <summary>
+            /// Switches between the pause and resume states of the game.
+            /// </summary>
+            public static void SwitchGameState()
+            {
+                if(GameIsResumed())
+                {
+                    PauseGame();
+                }
+                else
+                {
+                    ResumeGame();
+                }
+            }
 
             /// <summary>
             /// Turn a 2D GameObject to the oposite direction.

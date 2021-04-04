@@ -1,3 +1,9 @@
+[0.0.6]
+- Created "Extras" Namespace with Console and Command classes.
+- Created Terminal Prefab.
+- Created first behaviour for Terminal.
+- Improved Util and Constants functionalities.
+
 [0.0.5]
 - Added SimpleJSON Unity Plugin.
 - Imported Herculanum Font Resource

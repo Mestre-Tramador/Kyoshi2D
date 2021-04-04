@@ -12,7 +12,10 @@ public class Bend : MonoBehaviour
     /// </summary>
     public void Dissipate()
     {
-        Cursor.visible = true;
+        if(Helper.GameIsResumed())
+        {
+            BendCursor.Unhide();
+        }
 
         Destroy(gameObject);
     }
@@ -43,14 +46,14 @@ public class Bend : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if(Input.GetMouseButton(0))
+        if(Input.GetMouseButton(0) && Helper.GameIsResumed())
         {
             Follow();
 
             return;
         }
 
-        if((CompareTag(Tags.Air) || CompareTag(Tags.Fire)) || !GetComponent<Renderer>().isVisible)
+        if((CompareTag(Tags.Air) || CompareTag(Tags.Fire)) || !GetComponent<Renderer>().isVisible || Helper.GameIsPaused())
         {
             Dissipate();
         }
