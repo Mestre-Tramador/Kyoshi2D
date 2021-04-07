@@ -6,6 +6,42 @@ namespace MestreTramadorEMulherMotoca
     namespace Constants
     {
         /// <summary>
+        /// The Constant names for the <see cref="UnityEngine.AudioClip"/> instances.
+        /// </summary>
+        public static class AudioClipNames
+        {
+            /// <summary>
+            /// The chanting for a Book Subtitle.
+            /// </summary>
+            private const string BookChant = "BookChant";
+
+            /// <summary>
+            /// The chanting for the Air Book Subtitle.
+            /// </summary>
+            public const string BookChantAir = BookChant + Air;
+
+            /// <summary>
+            /// The chanting for the Earth Book Subtitle.
+            /// </summary>
+            public const string BookChantEarth = BookChant + Earth;
+
+            /// <summary>
+            /// The chanting for the Fire Book Subtitle.
+            /// </summary>
+            public const string BookChantFire = BookChant + Fire;
+
+            /// <summary>
+            /// The chanting for the Water Book Subtitle.
+            /// </summary>
+            public const string BookChantWater = BookChant + Water;
+
+            /// <summary>
+            /// The reading theme of a Book.
+            /// </summary>
+            public const string BookReading = "BookReading";
+        }
+
+        /// <summary>
         /// The Contants names for <see cref="UnityEngine.GameObject"/> instances.
         /// </summary>
         public static class GameObjectNames
@@ -31,6 +67,11 @@ namespace MestreTramadorEMulherMotoca
             public const string FireStream = Fire + "Stream";
 
             /// <summary>
+            /// The Jukebox itself.
+            /// </summary>
+            public const string Jukebox = "Jukebox";
+
+            /// <summary>
             /// The <see cref="Book"/> Label.
             /// </summary>
             public const string Label = "Label";
@@ -44,7 +85,7 @@ namespace MestreTramadorEMulherMotoca
             /// The <see cref="Book"/> Number.
             /// </summary>
             public const string Number = "Number";
-            
+
             /// <summary>
             /// The <see cref="Book"/> Subtitle.
             /// </summary>
@@ -75,7 +116,7 @@ namespace MestreTramadorEMulherMotoca
         /// Constants Lang Keys to access JSON data.
         /// </summary>
         public static class Lang
-        {            
+        {
             /// <summary>
             /// Lang Keys to the <see cref="Book"/> scenes.
             /// </summary>
@@ -207,10 +248,25 @@ namespace MestreTramadorEMulherMotoca
         public static class SceneNames
         {
             /// <summary>
+            /// The third level.
+            /// </summary>
+            public const string BookAir = "BookAir";
+
+            /// <summary>
             /// The first level.
             /// </summary>
             public const string BookEarth = "BookEarth";
-            
+
+            /// <summary>
+            /// The second level.
+            /// </summary>
+            public const string BookFire = "BookFire";
+
+            /// <summary>
+            /// The fourth level.
+            /// </summary>
+            public const string BookWater = "BookWater";
+
             /// <summary>
             /// The loading screen.
             /// </summary>

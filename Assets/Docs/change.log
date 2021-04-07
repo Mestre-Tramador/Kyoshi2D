@@ -1,11 +1,20 @@
+[0.0.7]
+- Created Jukebox music and audio manager
+- Imported BookReading Music
+- Imported BookChants SFX
+- Created missing Book Scenes and Menu Scene
+- Improved Util and Constants functionalities
+- Improved Documentation
+- PreBooks now fade out completely, hides the mouse, and have sounds
+
 [0.0.6]
-- Created "Extras" Namespace with Console and Command classes.
-- Created Terminal Prefab.
-- Created first behaviour for Terminal.
-- Improved Util and Constants functionalities.
+- Created "Extras" Namespace with Console and Command classes
+- Created Terminal Prefab
+- Created first behaviour for Terminal
+- Improved Util and Constants functionalities
 
 [0.0.5]
-- Added SimpleJSON Unity Plugin.
+- Added SimpleJSON Unity Plugin
 - Imported Herculanum Font Resource
 - Imported Nations Sprite Resources
 - Created English and Brazilian Portuguese Lang Resources

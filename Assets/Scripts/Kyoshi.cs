@@ -127,6 +127,7 @@ public sealed class Kyoshi : Bender
         BecomeAvatar();
 
         BendCursor.SetDefault();
+        BendCursor.Unhide();
     }
 
     /// <summary>

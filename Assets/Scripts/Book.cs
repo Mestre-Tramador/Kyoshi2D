@@ -32,42 +32,68 @@ public sealed class Book : MonoBehaviour
     /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
     private IEnumerator Entrance()
     {
-        for(float i = 0.0f; i <= 255.0f; i += Time.deltaTime)
-        {                
-            Background().color = new Color(i, i, i);                        
-        
+        for(float i = 0.0f; i <= 10.0f; i += Time.deltaTime)
+        {
+            Background().color = new Color(i, i, i);
+
             yield return null;
-        }  
+        }
     }
 
     /// <summary>
-    /// Present all the elements on the screen, fading in them gradualy.
+    /// Gradualy switch from the white screen color to black.
     /// </summary>
     /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
-    private IEnumerator PresentAll()
+    private IEnumerator Disappearance()
     {
-        yield return new WaitForSecondsRealtime(1.0f); 
+        for(float i = 5.0f; i >= 0.0f; i -= Time.deltaTime)
+        {
+            Background().color = new Color(i, i, i);
+
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// Present all the elements on the screen, fading in and fading out them gradualy.
+    /// </summary>
+    /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
+    private IEnumerator Present()
+    {
+        BendCursor.Hide();
+
+        Helper.GetJukebox().PlayDiscOne();
+
+        yield return new WaitForSecondsRealtime(1.0f);
 
         StartCoroutine(Entrance());
-        
-        yield return new WaitForSecondsRealtime(2.0f); 
-        
+
+        yield return new WaitForSecondsRealtime(2.0f);
+
         StartCoroutine(Helper.FadeIn(Symbol()));
-        
-        yield return new WaitForSecondsRealtime(0.5f); 
+
+        yield return new WaitForSecondsRealtime(0.5f);
 
         StartCoroutine(Helper.FadeIn(Label()));
-        
+
         StartCoroutine(Helper.FadeIn(Number()));
 
-        yield return new WaitForSecondsRealtime(3.5f); 
+        yield return new WaitForSecondsRealtime(3.5f);
 
         StartCoroutine(Helper.FadeIn(Title()));
 
         yield return new WaitForSecondsRealtime(4.0f);
 
-        StartCoroutine(Helper.FadeIn(Subtitle()));        
-    }    
+        Helper.GetJukebox().PlayDisc(1);
+
+        StartCoroutine(Helper.FadeIn(Subtitle()));
+
+        yield return new WaitForSecondsRealtime(10.0f);
+
+        yield return StartCoroutine(Disappearance());
+
+        LoadBook();
+    }
 
     /// <summary>
     /// The <see cref="Book"/> Background.
@@ -80,25 +106,25 @@ public sealed class Book : MonoBehaviour
     /// </summary>
     /// <returns>The Image component of the Canvas child.</returns>
     private Image Symbol() => GameObject.Find(GameObjectNames.Symbol).GetComponent<Image>();
-    
+
     /// <summary>
     /// The <see cref="Book"/> Label.
     /// </summary>
     /// <returns>The Text component of the Canvas child.</returns>
     private Text Label() => GameObject.Find(GameObjectNames.Label).GetComponent<Text>();
-    
+
     /// <summary>
     /// The <see cref="Book"/> Number.
     /// </summary>
     /// <returns>The Text component of the Canvas child.</returns>
     private Text Number() => GameObject.Find(GameObjectNames.Number).GetComponent<Text>();
-    
+
     /// <summary>
     /// The <see cref="Book"/> Subtitle.
     /// </summary>
     /// <returns>The Text component of the Canvas child.</returns>
     private Text Subtitle() => GameObject.Find(GameObjectNames.Subtitle).GetComponent<Text>();
-    
+
     /// <summary>
     /// The <see cref="Book"/> Title.
     /// </summary>
@@ -117,7 +143,7 @@ public sealed class Book : MonoBehaviour
 
     /// <summary>
     /// Get the <see langword="Book"/> Scene parameter and store it. <br/>
-    /// 
+    ///
     /// If unnable to load the parameter, then an Exception is thrown.
     /// </summary>
     private void GetIndex()
@@ -131,6 +157,35 @@ public sealed class Book : MonoBehaviour
     }
 
     /// <summary>
+    /// Load the respective Elemental Book
+    /// </summary>
+    private void LoadBook()
+    {
+        string scene = "";
+
+        switch(int.Parse(Index))
+        {
+            case 1:
+                scene = SceneNames.BookEarth;
+            break;
+
+            case 2:
+                scene = SceneNames.BookFire;
+            break;
+
+            case 3:
+                scene = SceneNames.BookAir;
+            break;
+
+            case 4:
+                scene = SceneNames.BookWater;
+            break;
+        }
+
+        SceneLoader.Load(scene);
+    }
+
+    /// <summary>
     /// The Starter firstly loads all data,
     /// then, with it, place all the respective
     /// assets on the screen and starts the fading routines.
@@ -140,11 +195,41 @@ public sealed class Book : MonoBehaviour
         GetIndex();
         GetData();
 
+        SetChant();
         SetSymbol();
         SetTexts();
 
-        StartCoroutine(PresentAll());
-    }    
+        StartCoroutine(Present());
+    }
+
+    /// <summary>
+    /// Set the Chant <see cref="AudioClip"/> to the <see cref="Jukebox"/>.
+    /// </summary>
+    private void SetChant()
+    {
+        string path = "";
+
+        switch(int.Parse(Index))
+        {
+            case 1:
+                path = $"{Path.SFX}{AudioClipNames.BookChantEarth}";
+            break;
+
+            case 2:
+                path = $"{Path.SFX}{AudioClipNames.BookChantFire}";
+            break;
+
+            case 3:
+                path = $"{Path.SFX}{AudioClipNames.BookChantAir}";
+            break;
+
+            case 4:
+                path = $"{Path.SFX}{AudioClipNames.BookChantWater}";
+            break;
+        }
+
+        Helper.GetJukebox().AddDisc(Helper.LoadResource<AudioClip>(path));
+    }
 
     /// <summary>
     /// According to the <see cref="Index"/>, load the Symbol.
@@ -177,7 +262,7 @@ public sealed class Book : MonoBehaviour
 
     /// <summary>
     /// According to the <see cref="Index"/>, load each and every Texts. <br/>
-    /// 
+    ///
     /// Depending on the <see cref="Index"/>, some positions are fixed.
     /// </summary>
     private void SetTexts()
@@ -185,22 +270,22 @@ public sealed class Book : MonoBehaviour
         Label().text    = Data[Books.ToString()][Index][Books.Label].Value;
         Title().text    = Data[Books.ToString()][Index][Books.Title].Value;
         Subtitle().text = Data[Books.ToString()][Index][Books.Subtitle].Value;
-        Number().text   = Data[Books.ToString()][Index][Books.Number].Value + ":";  
-        
+        Number().text   = Data[Books.ToString()][Index][Books.Number].Value + ":";
+
         switch(int.Parse(Index))
         {
-            case 1:                    
+            case 1:
             break;
 
-            case 2:                    
+            case 2:
             break;
 
-            case 3:                
+            case 3:
             case 4:
                 Label().rectTransform.anchoredPosition = new Vector2(-45.0f, Label().rectTransform.anchoredPosition.y);
                 Number().rectTransform.anchoredPosition = new Vector2(40.0f, Number().rectTransform.anchoredPosition.y);
             break;
         }
-        
-    }    
+
+    }
 }

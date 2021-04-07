@@ -119,7 +119,7 @@ namespace MestreTramadorEMulherMotoca
             /// </summary>
             /// <returns>The String holding the Lang.</returns>
             public static string CurrentLang() => Constants.ResourceNames.En; // TODO: Improve with the PlayerPrefs.
-            
+
             /// <summary>
             /// Fade a Canvas Element in.
             /// </summary>
@@ -128,10 +128,10 @@ namespace MestreTramadorEMulherMotoca
             public static IEnumerator FadeIn(MaskableGraphic element)
             {
                 for(float i = 0; i <= 1; i += Time.deltaTime)
-                {                
+                {
                     element.color = new Color(
                         element.color.r,
-                        element.color.g, 
+                        element.color.g,
                         element.color.b,
                         i
                     );
@@ -148,14 +148,14 @@ namespace MestreTramadorEMulherMotoca
             public static IEnumerator FadeOut(MaskableGraphic element)
             {
                 for(float i = 1; i >= 0; i -= Time.deltaTime)
-                {                
+                {
                     element.color =  new Color(
                         element.color.r,
-                        element.color.g, 
+                        element.color.g,
                         element.color.b,
                         i
                     );
-                    
+
                     yield return null;
                 }
             }
@@ -178,6 +178,16 @@ namespace MestreTramadorEMulherMotoca
             /// <returns>The Kyoshi Component on its current state.</returns>
             public static Kyoshi GetKyoshi() => GetPlayer().GetComponent<Kyoshi>();
 
+            /// <summary>
+            /// Get the current Jukebox.
+            /// </summary>
+            /// <returns>The Jukebox Component of the namesake GameObject.</returns>
+            public static Jukebox GetJukebox() => GameObject.Find(Constants.GameObjectNames.Jukebox).GetComponent<Jukebox>();
+
+            /// <summary>
+            /// Get if there was any Mouse click on screen.
+            /// </summary>
+            /// <returns>True if there was a click by the Mouse Zero, One and Two buttons.</returns>
             public static bool GetAnyMouseClick() => (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2));
 
             /// <summary>
@@ -269,6 +279,11 @@ namespace MestreTramadorEMulherMotoca
             public const string Lang = "Lang/";
 
             /// <summary>
+            /// "Music" folder path.
+            /// </summary>
+            public const string Music = "Music/";
+
+            /// <summary>
             /// "Nations" folder path.
             /// </summary>
             public const string Nations = "Nations/";
@@ -277,11 +292,16 @@ namespace MestreTramadorEMulherMotoca
             /// "Prefab" folder path.
             /// </summary>
             public const string Prefab = "Prefab/";
+
+            /// <summary>
+            /// "SFX" folder path.
+            /// </summary>
+            public const string SFX = "SFX/";
         }
 
         /// <summary>
         /// A Loader facilitator for the <see cref="UnityEngine.SceneManagement.Scene"/> instances. <br/>
-        /// 
+        ///
         /// It can hold some <see langword="string"/> params between scenes.
         /// </summary>
         public static class SceneLoader
@@ -322,7 +342,7 @@ namespace MestreTramadorEMulherMotoca
 
             /// <summary>
             /// Load a <see cref="UnityEngine.SceneManagement.Scene"/> by its name. <br/>
-            /// 
+            ///
             /// Also, pass a new dataset to be stored and recovered on the new load.
             /// </summary>
             /// <param name="sceneName">The name of the <see cref="UnityEngine.SceneManagement.Scene"/>.</param>
@@ -336,7 +356,7 @@ namespace MestreTramadorEMulherMotoca
 
             /// <summary>
             /// Load a <see cref="UnityEngine.SceneManagement.Scene"/> by its name. <br/>
-            /// 
+            ///
             /// Also, pass any number of parameters to be stored and recovered on the new load.
             /// </summary>
             /// <param name="sceneName">The name of the <see cref="UnityEngine.SceneManagement.Scene"/>.</param>
@@ -351,7 +371,7 @@ namespace MestreTramadorEMulherMotoca
                 }
 
                 Load(sceneName);
-            }            
+            }
 
             /// <summary>
             /// Get a specific parameter.
@@ -359,13 +379,13 @@ namespace MestreTramadorEMulherMotoca
             /// <param name="key">The key wich holds the value.</param>
             /// <returns>An empty <see langword="string"/> or the value.</returns>
             public static string Get(string key)
-            {                     
-                if(Data != null)         
+            {
+                if(Data != null)
                 {
-                    if(Data.TryGetValue(key, out string parameter)) 
+                    if(Data.TryGetValue(key, out string parameter))
                     {
                         return parameter;
-                    } 
+                    }
                 }
 
                 return "";
@@ -393,11 +413,11 @@ namespace MestreTramadorEMulherMotoca
                 {
                     Set(parameter.Key, parameter.Value);
                 }
-            }            
+            }
 
             /// <summary>
             /// Simple verifier if there is a valid <see cref="Dictionary{TKey, TValue}"/>. <br/>
-            /// 
+            ///
             /// If not, instantiate it.
             /// </summary>
             private static void VerifyData()
