@@ -7,6 +7,32 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     /// <summary>
+    /// The index of all the possible Character Discs.
+    /// </summary>
+    protected readonly struct DiscIndex
+    {
+        /// <summary>
+        /// The disc for the Movement event.
+        /// </summary>
+        public const int Move = 1;
+
+        /// <summary>
+        /// The disc for the Jump event.
+        /// </summary>
+        public const int Jump = 2;
+
+        /// <summary>
+        /// The disc for the Double Jump event.
+        /// </summary>
+        public const int DoubleJump = 3;
+        
+        /// <summary>
+        /// The disc for the Dash event.
+        /// </summary>
+        public const int Dash = 4;
+    }
+
+    /// <summary>
     /// Controls if the <see cref="Character"/> can dash.
     /// </summary>
     /// <value><see langword="true"/> if it can.</value>
@@ -159,6 +185,17 @@ public abstract class Character : MonoBehaviour
         Jumps = 0;
 
         EnableJumping();
+    }
+
+    /// <summary>
+    /// Set the current indexed discs to the Character. <br/>
+    /// 
+    /// Beeing a <see langword="virtual"/> method, it can be overwritten
+    /// to fit any Character.
+    /// </summary>
+    protected virtual void SetDiscs()
+    {
+        // ? Base characters does not set any Jukebox discs.
     }
 
     /// <summary>

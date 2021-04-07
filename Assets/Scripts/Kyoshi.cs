@@ -10,6 +10,16 @@ using MestreTramadorEMulherMotoca.Util;
 /// </summary>
 public sealed class Kyoshi : Bender
 {
+    #pragma warning disable CS0108
+    /// <summary>
+    /// The Disc Index of the Avatar Kyoshi.
+    /// </summary>
+    private readonly struct DiscIndex
+    {
+        // TODO: Place some discs.
+    }
+    #pragma warning restore CS0108
+
     /// <summary>
     /// Avatar Kyoshi <see langword="override"/> the
     /// Air Bend event.
@@ -34,6 +44,8 @@ public sealed class Kyoshi : Bender
             .AddForce(direction * Impulse);
 
             DisableDashing();
+
+            Helper.GetJukebox().PlayDisc(Character.DiscIndex.Dash);
 
             StartCoroutine(RefreshDash());
         }
@@ -63,9 +75,14 @@ public sealed class Kyoshi : Bender
     /// two times, then it is disabled.
     /// </summary>
     protected override void OnJump()
-    {
+    {      
         if(Input.GetKeyDown(KeyCode.Space) && Jumps <= 1)
         {
+            if(Jumps == 0)
+            {
+                Helper.GetJukebox().PlayDisc(Character.DiscIndex.Jump);
+            }
+            
             GetComponent<Rigidbody2D>()
             .AddForce(Vector2.up * Force);
 
@@ -73,6 +90,8 @@ public sealed class Kyoshi : Bender
 
             if(Jumps > 1)
             {
+                Helper.GetJukebox().PlayDisc(Character.DiscIndex.DoubleJump);
+
                 DisableJumping();
             }
         }
@@ -84,8 +103,10 @@ public sealed class Kyoshi : Bender
     /// wich is switched according to the given Axis.
     /// </summary>
     protected override void OnMovement()
-    {
-        float x = Helper.CalculateXPosition(Input.GetAxis("Horizontal"), Speed);
+    {        
+        float axis = Input.GetAxis("Horizontal");
+
+        float x = Helper.CalculateXPosition(axis, Speed);
 
         if((x > 0.0f && Helper.IsTurnedToLeft(transform.localScale)) || (x < 0.0f && Helper.IsTurnedToRight(transform.localScale)))
         {
@@ -93,6 +114,11 @@ public sealed class Kyoshi : Bender
         }
 
         transform.Translate(new Vector3(x, 0.0f, 0.0f));
+
+        if(axis != 0 && Helper.IsPlayerTouchingFloor())
+        {
+            Helper.GetJukebox().PlayDiscIfNotPlaying(Character.DiscIndex.Move);            
+        }
     }
 
     /// <summary>
@@ -102,6 +128,32 @@ public sealed class Kyoshi : Bender
     protected override void OnWaterBending()
     {
         Debug.Log($"{name} is bending Water!");
+    }
+
+    /// <summary>
+    /// Place on the <see cref="Jukebox"/> the discs for Avatar Kyoshi.
+    /// </summary>
+    protected override void SetDiscs()
+    {
+        Helper
+        .GetJukebox()
+        // .ReplaceDiscOne()
+        .ReplaceDisc(
+            Character.DiscIndex.Move,
+            Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiMove}")
+        )
+        .ReplaceDisc(
+            Character.DiscIndex.Jump,
+            Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiJump}")
+        )
+        .ReplaceDisc(
+            Character.DiscIndex.DoubleJump,
+            Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDoubleJump}")
+        )
+        .ReplaceDisc(
+            Character.DiscIndex.Dash,
+            Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDash}")
+        );
     }
 
     /// <summary>
@@ -126,6 +178,8 @@ public sealed class Kyoshi : Bender
 
         BecomeAvatar();
 
+        SetDiscs();
+
         BendCursor.SetDefault();
         BendCursor.Unhide();
     }
@@ -148,6 +202,9 @@ public sealed class Kyoshi : Bender
     /// <param name="other">The other GameObject that was collided.</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
-        RefreshJump();
+        if(other.CompareTag(Tags.Floor))
+        {
+            RefreshJump();
+        }
     }
 }

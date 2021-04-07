@@ -19,7 +19,7 @@ public sealed class Jukebox : MonoBehaviour
     /// <returns>True if it is playing.</returns>
     public bool IsDiscPlaying(int index)
     {
-        if(Disc(index) is null)
+        if(!DiscWasPlaced(index))
         {
             return false;
         }
@@ -58,21 +58,31 @@ public sealed class Jukebox : MonoBehaviour
     /// <returns>Itself, to run other operations.</returns>
     public Jukebox PlayDisc(int index)
     {
+        ArrangeDiscs();
+
         Disc(index).Play();
 
         return this;
     }
 
     /// <summary>
+    /// Play the given disc, but only if it is not playing.
+    /// </summary>
+    /// <param name="index">The index of the disc.</param>
+    /// <returns>Itself, to run other operations.</returns>
+    public Jukebox PlayDiscIfNotPlaying(int index) => (!IsDiscPlaying(index) ? PlayDisc(index) : this);
+
+    /// <summary>
     /// Play the disc 1.
     /// </summary>
     /// <returns>Itself, to run other operations.</returns>
-    public Jukebox PlayDiscOne()
-    {
-        DiscOne().Play();
+    public Jukebox PlayDiscOne() => PlayDisc(0);
 
-        return this;
-    }
+    /// <summary>
+    /// Play the disc 1, but only if it is not playing.
+    /// </summary>
+    /// <returns>Itself, to run other operations.</returns>
+    public Jukebox PlayDiscOneIfNotPlaying() => (!IsDiscOnePlaying() ? PlayDiscOne() : this);
 
     /// <summary>
     /// Replace an existing disc, or simply put it on the desired position.
@@ -83,8 +93,8 @@ public sealed class Jukebox : MonoBehaviour
     public Jukebox ReplaceDisc(int index, AudioClip clip)
     {
         ArrangeDiscs();
-        
-        if(Disc(index) is null)
+       
+        if(!DiscWasPlaced(index))
         {
             Discs.Add(index, gameObject.AddComponent<AudioSource>());
         }
@@ -93,6 +103,13 @@ public sealed class Jukebox : MonoBehaviour
 
         return this;
     }  
+
+    /// <summary>
+    /// Replace the disc 1.
+    /// </summary>
+    /// <param name="clip">The new clip of the disc.</param>
+    /// <returns>Itself, to run other operations.</returns>
+    public Jukebox ReplaceDiscOne(AudioClip clip) => ReplaceDisc(0, clip);
 
     /// <summary>
     /// Stop the given disc.
@@ -118,6 +135,24 @@ public sealed class Jukebox : MonoBehaviour
     }      
 
     /// <summary>
+    /// Switch the loop of the given disc.
+    /// </summary>
+    /// <param name="index">The index of the disc.</param>
+    /// <returns>Itself, to run other operations.</returns>
+    public Jukebox SwitchDiscLoop(int index)
+    {
+        Disc(index).loop = !Disc(index).loop;
+
+        return this;
+    }
+
+    /// <summary>
+    /// Switch the loop of the disc 1.
+    /// </summary>
+    /// <returns>Itself, to run other operations.</returns>
+    public Jukebox SwitchDiscOneLoop() => SwitchDiscLoop(0);
+
+    /// <summary>
     /// Get the referenced disc.
     /// </summary>
     /// <param name="index">The index of the disc.</param>
@@ -129,6 +164,13 @@ public sealed class Jukebox : MonoBehaviour
     /// </summary>
     /// <returns>The <see cref="AudioSource"/> of the disc 1.</returns>
     private AudioSource DiscOne() => Disc(0);
+
+    /// <summary>
+    /// Verify if the Disc was placed on the Jukebox.
+    /// </summary>
+    /// <param name="index">The index of the disc.</param>
+    /// <returns>True if the given disc was placed on the Jukebox.</returns>
+    private bool DiscWasPlaced(int index) => Discs.ContainsKey(index);
 
     /// <summary>
     /// Arrange the discs and get the disc 1.

@@ -1,3 +1,11 @@
+[0.0.8]
+- Imported Menu Musics
+- Imported Kyoshi firsts SFX
+- Created SandBox Book Scene and a new Earth Book
+- Created Manager Scripts to Menu and Camera
+- Improved Jukebox
+- Improved Util and Constants functionalities
+
 [0.0.7]
 - Created Jukebox music and audio manager
 - Imported BookReading Music

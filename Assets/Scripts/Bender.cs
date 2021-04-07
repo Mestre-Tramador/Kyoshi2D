@@ -4,6 +4,34 @@
 public abstract class Bender : Character
 {
     /// <summary>
+    /// The index of all the possible Bender Discs.
+    /// </summary>
+    #pragma warning disable CS0108
+    protected readonly struct DiscIndex
+    {
+        /// <summary>
+        /// The disc for the Air Bending event.
+        /// </summary>
+        public const int AirBend = 5;
+        
+        /// <summary>
+        /// The disc for the Air Bending event.
+        /// </summary>
+        public const int EarthBend = 6;
+        
+        /// <summary>
+        /// The disc for the Air Bending event.
+        /// </summary>
+        public const int FireBend = 9;
+        
+        /// <summary>
+        /// The disc for the Air Bending event.
+        /// </summary>
+        public const int WaterBend = 10;
+    }
+    #pragma warning restore CS0108
+
+    /// <summary>
     /// Controls if the <see cref="Bender"/> can bend Air.
     /// </summary>
     /// <value><see langword="true"/> if it can.</value>

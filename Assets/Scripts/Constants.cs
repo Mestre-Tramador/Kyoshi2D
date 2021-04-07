@@ -39,6 +39,36 @@ namespace MestreTramadorEMulherMotoca
             /// The reading theme of a Book.
             /// </summary>
             public const string BookReading = "BookReading";
+
+            /// <summary>
+            /// The Kyoshi Dashing sound effect.
+            /// </summary>
+            public const string KyoshiDash = "KyoshiDash";
+
+            /// <summary>
+            /// The Kyoshi Jumping sound effect.
+            /// </summary>
+            public const string KyoshiJump = KyoshiMove;
+
+            /// <summary>
+            /// The Kyoshi Double Jumping sound effect.
+            /// </summary>
+            public const string KyoshiDoubleJump = "KyoshiJumpAir";
+
+            /// <summary>
+            /// The Kyoshi Moving sound effect.
+            /// </summary>
+            public const string KyoshiMove = "KyoshiStep";
+
+            /// <summary>
+            /// The Menu ambience music.
+            /// </summary>
+            public const string MenuAmbience = "MenuAmbience";
+
+            /// <summary>
+            /// The Menu entrance music.
+            /// </summary>
+            public const string MenuEntrance = "MenuEntrance";
         }
 
         /// <summary>
@@ -161,11 +191,6 @@ namespace MestreTramadorEMulherMotoca
         public static class Player
         {
             /// <summary>
-            /// Player Movement Speed.
-            /// </summary>
-            public const float Speed = 5.0f;
-
-            /// <summary>
             /// Player Jump Force.
             /// </summary>
             public const float Force = 250.0f;
@@ -173,7 +198,12 @@ namespace MestreTramadorEMulherMotoca
             /// <summary>
             /// Player Dash Impulse.
             /// </summary>
-            public const float Impulse = 300.0f;
+            public const float Impulse = 300.0f;            
+
+            /// <summary>
+            /// Player Movement Speed.
+            /// </summary>
+            public const float Speed = 5.0f;            
         }
 
         /// <summary>

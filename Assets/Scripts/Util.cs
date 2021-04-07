@@ -197,6 +197,30 @@ namespace MestreTramadorEMulherMotoca
             public static GameObject GetPlayer() => GameObject.Find(Constants.GameObjectNames.Player);
 
             /// <summary>
+            /// Get if the Player is touching any <see cref="Constants.Tags.Floor"/> Game Objects.
+            /// </summary>
+            /// <returns>True if it is.</returns>
+            public static bool IsPlayerTouchingFloor() => IsTouchingFloor(GetPlayer());
+
+            /// <summary>
+            /// Get if a <see cref="Character"/> is touching any <see cref="Constants.Tags.Floor"/> Game Objects.
+            /// </summary>
+            /// <param name="character">The GameObject of the character.</param>
+            /// <returns>True if it is.</returns>
+            public static bool IsTouchingFloor(GameObject character)
+            {
+                foreach(GameObject floor in GameObject.FindGameObjectsWithTag(Constants.Tags.Floor))
+                {
+                    if(character.GetComponent<Rigidbody2D>().IsTouching(floor.GetComponent<Collider2D>()))
+                    {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+
+            /// <summary>
             /// Verifiy if some GameObject is turned to the left.
             /// </summary>
             /// <param name="scale">The local scale of the GameObject.</param>
