@@ -15,7 +15,7 @@ namespace MestreTramadorEMulherMotoca
             /// <summary>
             /// Determines if the Terminal, aka the Console, is enabled.
             /// </summary>
-            /// <value>True if some instance was loaded.</value>
+            /// <value><see cref="true"/> if some instance was loaded.</value>
             public bool TerminalIsEnabled { get; private set; }
 
             /// <summary>

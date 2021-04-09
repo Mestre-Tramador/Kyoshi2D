@@ -97,6 +97,62 @@ namespace MestreTramadorEMulherMotoca
         public static class Helper
         {
             /// <summary>
+            /// Get if the Game is currently paused.
+            /// </summary>
+            /// <returns><see cref="true"/> if it's paused by any means.</returns>
+            public static bool GameIsPaused() => (Time.timeScale == 0);
+
+            /// <summary>
+            /// Get if the Game is currently resumed.
+            /// </summary>
+            /// <returns><see cref="true"/> if the game is in any state other than paused.</returns>
+            public static bool GameIsResumed() => (Time.timeScale > 0);
+
+            /// <summary>
+            /// Get if there was any Mouse click on screen.
+            /// </summary>
+            /// <returns><see cref="true"/> if there was a click by the Mouse Zero, One and Two buttons.</returns>
+            public static bool GetAnyMouseClick() => (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2));
+
+            /// <summary>
+            /// Get if the Player is touching any <see cref="Constants.Tags.Floor"/> Game Objects.
+            /// </summary>
+            /// <returns><see cref="true"/> if it is.</returns>
+            public static bool IsPlayerTouchingFloor() => IsTouchingFloor(GetPlayer());
+
+            /// <summary>
+            /// Get if a <see cref="Character"/> is touching any <see cref="Constants.Tags.Floor"/> Game Objects.
+            /// </summary>
+            /// <param name="character">The GameObject of the character.</param>
+            /// <returns><see cref="true"/> if it is.</returns>
+            public static bool IsTouchingFloor(GameObject character)
+            {
+                foreach(GameObject floor in GameObject.FindGameObjectsWithTag(Constants.Tags.Floor))
+                {
+                    if(character.GetComponent<Rigidbody2D>().IsTouching(floor.GetComponent<Collider2D>()))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            /// <summary>
+            /// Verifiy if some GameObject is turned to the left.
+            /// </summary>
+            /// <param name="scale">The local scale of the GameObject.</param>
+            /// <returns><see langword="true"/> if it is.</returns>
+            public static bool IsTurnedToLeft(Vector3 scale) => (scale.x < 0);
+
+            /// <summary>
+            /// Verifiy if some GameObject is turned to the right.
+            /// </summary>
+            /// <param name="scale">The local scale of the GameObject.</param>
+            /// <returns><see langword="true"/> if it is.</returns>
+            public static bool IsTurnedToRight(Vector3 scale) => (scale.x > 0);
+
+            /// <summary>
             /// Calculate the changing of position on X axis.
             /// </summary>
             /// <param name="axis">The first X axis position.</param>
@@ -105,20 +161,44 @@ namespace MestreTramadorEMulherMotoca
             public static float CalculateXPosition(float axis, float speed) => (axis * speed * Time.deltaTime);
 
             /// <summary>
-            /// Quick converter of the Mouse Position to a Game coordinate.
-            /// </summary>
-            /// <returns>A Vector3 with the correct position.</returns>
-            public static Vector3 CurrentMouseWorldPoint() => Camera.main.ScreenToWorldPoint(new Vector3(
-                Input.mousePosition.x,
-                Input.mousePosition.y,
-                1.0f
-            ));
-
-            /// <summary>
             /// Get the current used lang from <see cref="PlayerPrefs"/>.
             /// </summary>
             /// <returns>The String holding the Lang.</returns>
             public static string CurrentLang() => Constants.ResourceNames.En; // TODO: Improve with the PlayerPrefs.
+
+            /// <summary>
+            /// Get the Player Tag.
+            /// </summary>
+            /// <returns>The current Tag selected.</returns>
+            public static string GetPlayerTag() => GetPlayer().tag;
+
+            /// <summary>
+            /// The the Main Camera manager Component.
+            /// </summary>
+            /// <returns>The CameraManager Component on its current state.</returns>
+            public static CameraManager GetCameraManager() => GetCamera().GetComponent<CameraManager>();
+
+            /// <summary>
+            /// Give a Color with fixed values.
+            /// </summary>
+            /// <param name="r">Red entry.</param>
+            /// <param name="g">Green entry.</param>
+            /// <param name="b">Blue entry.</param>
+            /// <param name="a"><see langword="optional"/> Alpha entry.</param>
+            /// <returns>The Color structure with its values fixed.</returns>
+            public static Color ColorFixed(float r, float g, float b, float a = 255.0f) => new Color((r / 255.0f), (g / 255.0f), (b / 255.0f), (a / 255.0f));
+            
+            /// <summary>
+            /// Get the Main Camera GameObject.
+            /// </summary>
+            /// <returns>The GameObject on its current state.</returns>
+            public static GameObject GetCamera() => Camera.main.gameObject;
+
+            /// <summary>
+            /// Get the Player GameObject.
+            /// </summary>
+            /// <returns>The GameObject on its current state.</returns>
+            public static GameObject GetPlayer() => GameObject.Find(Constants.GameObjectNames.Player);
 
             /// <summary>
             /// Fade a Canvas Element in.
@@ -161,22 +241,37 @@ namespace MestreTramadorEMulherMotoca
             }
 
             /// <summary>
-            /// Get if the Game is currently paused.
+            /// Directly moves the Player to the desired position.
             /// </summary>
-            /// <returns>True if it's paused by any means.</returns>
-            public static bool GameIsPaused() => (Time.timeScale == 0);
+            /// <param name="position">The position to go.</param>
+            /// <param name="duration"><see langword="optional"/>, it serves as a delay value.</param>
+            /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
+            public static IEnumerator MovePlayerToPosition(Vector3 position, float duration = 1.0f) => MoveToPosition(
+                GetPlayer(),
+                GetPlayer().transform.position,
+                position,
+                duration
+            );
 
             /// <summary>
-            /// Get if the Game is currently resumed.
+            /// Move a reference GameObject to a position.
             /// </summary>
-            /// <returns>True if the game is in any state other than paused.</returns>
-            public static bool GameIsResumed() => (Time.timeScale > 0);
+            /// <param name="reference">The object to move.</param>
+            /// <param name="init">The initial position.</param>
+            /// <param name="end">The final position.</param>
+            /// <param name="duration"><see langword="optional"/>, it serves as a delay value.</param>
+            /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
+            public static IEnumerator MoveToPosition(GameObject reference, Vector3 init, Vector3 end, float duration = 1.0f)
+            {
+                for(float time = 0.0f; time < duration; time += Time.deltaTime)
+                {
+                    reference.transform.position = Vector3.Lerp(init, end, (time / duration));
 
-            /// <summary>
-            /// Get the Player main Component.
-            /// </summary>
-            /// <returns>The Kyoshi Component on its current state.</returns>
-            public static Kyoshi GetKyoshi() => GetPlayer().GetComponent<Kyoshi>();
+                    yield return 0;
+                }
+
+                reference.transform.position = end;
+            }
 
             /// <summary>
             /// Get the current Jukebox.
@@ -185,54 +280,17 @@ namespace MestreTramadorEMulherMotoca
             public static Jukebox GetJukebox() => GameObject.Find(Constants.GameObjectNames.Jukebox).GetComponent<Jukebox>();
 
             /// <summary>
-            /// Get if there was any Mouse click on screen.
+            /// Get the Player main Component.
             /// </summary>
-            /// <returns>True if there was a click by the Mouse Zero, One and Two buttons.</returns>
-            public static bool GetAnyMouseClick() => (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2));
+            /// <returns>The Kyoshi Component on its current state.</returns>
+            public static Kyoshi GetKyoshi() => GetPlayerComponent<Kyoshi>();
 
             /// <summary>
-            /// Get the Player GameObject.
+            /// Get a specific Component of the Player.
             /// </summary>
-            /// <returns>The GameObject on its current state.</returns>
-            public static GameObject GetPlayer() => GameObject.Find(Constants.GameObjectNames.Player);
-
-            /// <summary>
-            /// Get if the Player is touching any <see cref="Constants.Tags.Floor"/> Game Objects.
-            /// </summary>
-            /// <returns>True if it is.</returns>
-            public static bool IsPlayerTouchingFloor() => IsTouchingFloor(GetPlayer());
-
-            /// <summary>
-            /// Get if a <see cref="Character"/> is touching any <see cref="Constants.Tags.Floor"/> Game Objects.
-            /// </summary>
-            /// <param name="character">The GameObject of the character.</param>
-            /// <returns>True if it is.</returns>
-            public static bool IsTouchingFloor(GameObject character)
-            {
-                foreach(GameObject floor in GameObject.FindGameObjectsWithTag(Constants.Tags.Floor))
-                {
-                    if(character.GetComponent<Rigidbody2D>().IsTouching(floor.GetComponent<Collider2D>()))
-                    {
-                        return true;
-                    }
-                }
-                
-                return false;
-            }
-
-            /// <summary>
-            /// Verifiy if some GameObject is turned to the left.
-            /// </summary>
-            /// <param name="scale">The local scale of the GameObject.</param>
-            /// <returns><see langword="true"/> if it is.</returns>
-            public static bool IsTurnedToLeft(Vector3 scale) => (scale.x < 0);
-
-            /// <summary>
-            /// Verifiy if some GameObject is turned to the right.
-            /// </summary>
-            /// <param name="scale">The local scale of the GameObject.</param>
-            /// <returns><see langword="true"/> if it is.</returns>
-            public static bool IsTurnedToRight(Vector3 scale) => (scale.x > 0);
+            /// <typeparam name="Type">A valid <see cref="UnityEngine.Component"/>.</typeparam>
+            /// <returns>The Component, if present.</returns>
+            public static Type GetPlayerComponent<Type>() where Type : Component => GetPlayer().GetComponent<Type>();
 
             /// <summary>
             /// Ovewrite of the <see cref="UnityEngine.Resources.Load{T}(string)"/> method,
@@ -242,6 +300,22 @@ namespace MestreTramadorEMulherMotoca
             /// <typeparam name="Type">A valid <see cref="UnityEngine.Object"/>.</typeparam>
             /// <returns>The Resource loaded.</returns>
             public static Type LoadResource<Type>(string path) where Type : Object => Resources.Load<Type>(path);
+
+            /// <summary>
+            /// Quick converter of the Mouse Position to a Game coordinate.
+            /// </summary>
+            /// <returns>A Vector3 with the correct position.</returns>
+            public static Vector3 CurrentMouseWorldPoint() => Camera.main.ScreenToWorldPoint(new Vector3(
+                Input.mousePosition.x,
+                Input.mousePosition.y,
+                1.0f
+            ));
+
+            /// <summary>
+            /// Get the Player Position.
+            /// </summary>
+            /// <returns>The position Vector3 on its current state.</returns>
+            public static Vector3 GetPlayerPosition() => GetPlayer().transform.position;
 
             /// <summary>
             /// Put the game on pause state.
@@ -391,7 +465,7 @@ namespace MestreTramadorEMulherMotoca
 
                 foreach(KeyValuePair<string, string> parameter in parameters)
                 {
-                    Data.Add(parameter.Key, parameter.Value);
+                    Set(parameter.Key, parameter.Value);
                 }
 
                 Load(sceneName);
@@ -404,11 +478,15 @@ namespace MestreTramadorEMulherMotoca
             /// <returns>An empty <see langword="string"/> or the value.</returns>
             public static string Get(string key)
             {
-                if(Data != null)
+                VerifyData();
+
+                if(Data.TryGetValue(key, out string parameter))
                 {
-                    if(Data.TryGetValue(key, out string parameter))
+                    switch(key)
                     {
-                        return parameter;
+                        case "Book": return (parameter != "" ? parameter : "0");
+
+                        default: return parameter;
                     }
                 }
 
@@ -423,6 +501,13 @@ namespace MestreTramadorEMulherMotoca
             public static void Set(string key, string value)
             {
                 VerifyData();
+
+                if(Data.TryGetValue(key, out string oldValue))
+                {
+                    Data[key] = value;
+
+                    return;
+                }
 
                 Data.Add(key, value);
             }

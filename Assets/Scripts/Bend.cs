@@ -5,8 +5,14 @@ using MestreTramadorEMulherMotoca.Util;
 /// <summary>
 /// Represents a usable Bend.
 /// </summary>
-public class Bend : MonoBehaviour
+public sealed class Bend : MonoBehaviour
 {
+    /// <summary>
+    /// Determine if the Bend has been dropped.
+    /// </summary>
+    /// <value><see langword="true"/> if it has been dropped, aka the mouse button lifted.</value>
+    private bool HasDropped { get; set; } = false;
+
     /// <summary>
     /// Dissipate the Bend, then destroy it.
     /// </summary>
@@ -33,12 +39,67 @@ public class Bend : MonoBehaviour
     }
 
     /// <summary>
-    /// On the Enter Collider, the Bend is dissipated.
+    /// On the Enter Collider, the Bend is dissipated if
+    /// is not in contact with a Barrier.
     /// </summary>
-    /// <param name="collider">The collider wich had collided.</param>
-    private void OnCollisionEnter2D(Collision2D collider)
+    /// <param name="other">The collider wich had collided.</param>
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        Dissipate();
+        if(!other.gameObject.CompareTag(Tags.Barrier))
+        {
+            Dissipate();
+        }
+    }
+
+    /// <summary>
+    /// The Destroyer play the last Dissipate disc on the Jukebox.
+    /// </summary>
+    private void OnDestroy()
+    {
+        Helper.GetJukebox().PlayDisc(DiscIndex.Dissipate);
+    }
+
+    /// <summary>
+    /// The Starter set the Pull and Dissipate discs on the Jukebox,
+    /// also play the first one.
+    /// </summary>
+    private void Start()
+    {
+        Helper
+        .GetJukebox()
+        .AddDisc(
+            DiscIndex.Pull,
+            Helper.LoadResource<AudioClip>(PullPath())
+        )
+        .AddDisc(
+            DiscIndex.Dissipate,
+            Helper.LoadResource<AudioClip>(DissipatePath())
+        )
+        .PlayDisc(DiscIndex.Pull);
+
+        string DissipatePath()
+        {
+            switch(tag)
+            {
+                case Tags.Earth:
+                return $"{Path.SFX}{AudioClipNames.EarthImpact}";
+
+                default:
+                return "";
+            }
+        }
+
+        string PullPath()
+        {
+            switch(tag)
+            {
+                case Tags.Earth:
+                return $"{Path.SFX}{AudioClipNames.EarthPull}";
+
+                default:
+                return "";
+            }
+        }
     }
 
     /// <summary>
@@ -46,12 +107,14 @@ public class Bend : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if(Input.GetMouseButton(0) && Helper.GameIsResumed())
+        if(Input.GetMouseButton(0) && Helper.GameIsResumed() && !HasDropped)
         {
             Follow();
 
             return;
         }
+
+        HasDropped = true;
 
         if((CompareTag(Tags.Air) || CompareTag(Tags.Fire)) || !GetComponent<Renderer>().isVisible || Helper.GameIsPaused())
         {

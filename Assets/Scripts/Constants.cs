@@ -6,6 +6,62 @@ namespace MestreTramadorEMulherMotoca
     namespace Constants
     {
         /// <summary>
+        /// The indexes of discs to the <see cref="Jukebox"/>.
+        /// </summary>
+        public static class DiscIndex
+        {
+            /// <summary>
+            /// Disc "Move".
+            /// </summary>
+            public const int Move = 1;
+
+            /// <summary>
+            /// Disc "Jump".
+            /// </summary>
+            public const int Jump = 2;
+
+            /// <summary>
+            /// Disc "DoubleJump".
+            /// </summary>
+            public const int DoubleJump = 3;
+
+            /// <summary>
+            /// Disc "Dash".
+            /// </summary>
+            public const int Dash = 4;
+
+            /// <summary>
+            /// Disc "AirBend".
+            /// </summary>
+            public const int AirBend = 5;
+
+            /// <summary>
+            /// Disc "EarthBend".
+            /// </summary>
+            public const int EarthBend = 6;
+
+            /// <summary>
+            /// Disc "FireBend".
+            /// </summary>
+            public const int FireBend = 7;
+
+            /// <summary>
+            /// Disc "WaterBend".
+            /// </summary>
+            public const int WaterBend = 8;
+
+            /// <summary>
+            /// Disc "Pull".
+            /// </summary>
+            public const int Pull = 9;
+
+            /// <summary>
+            /// Disc "Dissipate".
+            /// </summary>
+            public const int Dissipate = 10;
+        }
+
+        /// <summary>
         /// The Constant names for the <see cref="UnityEngine.AudioClip"/> instances.
         /// </summary>
         public static class AudioClipNames
@@ -39,6 +95,16 @@ namespace MestreTramadorEMulherMotoca
             /// The reading theme of a Book.
             /// </summary>
             public const string BookReading = "BookReading";
+
+            /// <summary>
+            /// The impact of Earth sound effect.
+            /// </summary>
+            public const string EarthImpact = EarthPull;
+
+            /// <summary>
+            /// The pulling of Earth sound effect.
+            /// </summary>
+            public const string EarthPull = "EarthPull";
 
             /// <summary>
             /// The Kyoshi Dashing sound effect.
@@ -87,14 +153,34 @@ namespace MestreTramadorEMulherMotoca
             public const string Background = "Background";
 
             /// <summary>
+            /// An <see cref="Obstacle"/> Barrier.
+            /// </summary>
+            public const string Barrier = "Barrier";
+
+            /// <summary>
+            /// Acts as the <see cref="BookEnd"/> of the first level.
+            /// </summary>
+            public const string Cliff = "Cliff";
+
+            /// <summary>
             /// The Earth Boulder <see cref="Bend"/>.
             /// </summary>
             public const string EarthBoulder = Earth + "Boulder";
 
             /// <summary>
+            /// The Curtains themselves.
+            /// </summary>
+            public const string Curtains = "Curtains";
+
+            /// <summary>
             /// The Fire Stream <see cref="Bend"/>.
             /// </summary>
             public const string FireStream = Fire + "Stream";
+
+            /// <summary>
+            /// A simple hole on the <see cref="SceneNames.BookEarth"/> scene.
+            /// </summary>
+            public const string Hole = "Hole";
 
             /// <summary>
             /// The Jukebox itself.
@@ -107,14 +193,14 @@ namespace MestreTramadorEMulherMotoca
             public const string Label = "Label";
 
             /// <summary>
-            /// The Player, aka, <see cref="Kyoshi"/>.
-            /// </summary>
-            public const string Player = "Kyoshi";
-
-            /// <summary>
             /// The <see cref="Book"/> Number.
             /// </summary>
             public const string Number = "Number";
+
+            /// <summary>
+            /// The Player, aka, <see cref="Kyoshi"/>.
+            /// </summary>
+            public const string Player = "Kyoshi";
 
             /// <summary>
             /// The <see cref="Book"/> Subtitle.
@@ -198,12 +284,12 @@ namespace MestreTramadorEMulherMotoca
             /// <summary>
             /// Player Dash Impulse.
             /// </summary>
-            public const float Impulse = 300.0f;            
+            public const float Impulse = 300.0f;
 
             /// <summary>
             /// Player Movement Speed.
             /// </summary>
-            public const float Speed = 5.0f;            
+            public const float Speed = 5.0f;
         }
 
         /// <summary>
@@ -298,6 +384,11 @@ namespace MestreTramadorEMulherMotoca
             public const string BookWater = "BookWater";
 
             /// <summary>
+            /// The summary menu.
+            /// </summary>
+            public const string Menu = "Menu";
+
+            /// <summary>
             /// The loading screen.
             /// </summary>
             public const string PreBook = "PreBook";
@@ -338,6 +429,11 @@ namespace MestreTramadorEMulherMotoca
             /// Determine the nature of Air.
             /// </summary>
             public const string Air = "Air";
+
+            /// <summary>
+            /// An invisible barrier.
+            /// </summary>
+            public const string Barrier = "Barrier";
 
             /// <summary>
             /// Determine the nature of Earth.

@@ -10,15 +10,40 @@ using MestreTramadorEMulherMotoca.Util;
 /// </summary>
 public sealed class Kyoshi : Bender
 {
-    #pragma warning disable CS0108
     /// <summary>
-    /// The Disc Index of the Avatar Kyoshi.
+    /// Avatar Kyoshi <see langword="override"/> the <see cref="Character.EnableMovement"/>
+    /// method to only enable according to the Book.
     /// </summary>
-    private readonly struct DiscIndex
+    #pragma warning disable CS0108
+    public void EnableMovement()
     {
-        // TODO: Place some discs.
+        switch(int.Parse(SceneLoader.Get("Book")))
+        {
+            case 1:
+                EnableMoving();
+            break;
+
+            case 2:
+                EnableJumping();
+            goto case 1;
+
+            case 3:
+            case 4:
+                base.EnableMovement();
+            break;
+        }
     }
     #pragma warning restore CS0108
+
+    /// <summary>
+    /// Place Avatar Kyoshi above layers.
+    /// </summary>
+    public void PlaceAbove() => GetComponent<SpriteRenderer>().sortingOrder = 10;
+
+    /// <summary>
+    /// Place Avatar Kyoshi below layers.
+    /// </summary>
+    public void PlaceBelow() => GetComponent<SpriteRenderer>().sortingOrder = 0;
 
     /// <summary>
     /// Avatar Kyoshi <see langword="override"/> the
@@ -45,7 +70,7 @@ public sealed class Kyoshi : Bender
 
             DisableDashing();
 
-            Helper.GetJukebox().PlayDisc(Character.DiscIndex.Dash);
+            Helper.GetJukebox().PlayDisc(DiscIndex.Dash);
 
             StartCoroutine(RefreshDash());
         }
@@ -75,14 +100,14 @@ public sealed class Kyoshi : Bender
     /// two times, then it is disabled.
     /// </summary>
     protected override void OnJump()
-    {      
+    {
         if(Input.GetKeyDown(KeyCode.Space) && Jumps <= 1)
         {
             if(Jumps == 0)
             {
-                Helper.GetJukebox().PlayDisc(Character.DiscIndex.Jump);
+                Helper.GetJukebox().PlayDisc(DiscIndex.Jump);
             }
-            
+
             GetComponent<Rigidbody2D>()
             .AddForce(Vector2.up * Force);
 
@@ -90,7 +115,7 @@ public sealed class Kyoshi : Bender
 
             if(Jumps > 1)
             {
-                Helper.GetJukebox().PlayDisc(Character.DiscIndex.DoubleJump);
+                Helper.GetJukebox().PlayDisc(DiscIndex.DoubleJump);
 
                 DisableJumping();
             }
@@ -103,7 +128,7 @@ public sealed class Kyoshi : Bender
     /// wich is switched according to the given Axis.
     /// </summary>
     protected override void OnMovement()
-    {        
+    {
         float axis = Input.GetAxis("Horizontal");
 
         float x = Helper.CalculateXPosition(axis, Speed);
@@ -117,7 +142,7 @@ public sealed class Kyoshi : Bender
 
         if(axis != 0 && Helper.IsPlayerTouchingFloor())
         {
-            Helper.GetJukebox().PlayDiscIfNotPlaying(Character.DiscIndex.Move);            
+            Helper.GetJukebox().PlayDiscIfNotPlaying(DiscIndex.Move);
         }
     }
 
@@ -139,49 +164,78 @@ public sealed class Kyoshi : Bender
         .GetJukebox()
         // .ReplaceDiscOne()
         .ReplaceDisc(
-            Character.DiscIndex.Move,
+            DiscIndex.Move,
             Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiMove}")
         )
         .ReplaceDisc(
-            Character.DiscIndex.Jump,
+            DiscIndex.Jump,
             Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiJump}")
         )
         .ReplaceDisc(
-            Character.DiscIndex.DoubleJump,
+            DiscIndex.DoubleJump,
             Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDoubleJump}")
         )
         .ReplaceDisc(
-            Character.DiscIndex.Dash,
+            DiscIndex.Dash,
             Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDash}")
         );
     }
 
     /// <summary>
+    /// By the current Book, set the controls for the Avatar Kyoshi.
+    /// </summary>
+    private void SetControls()
+    {
+        switch(int.Parse(SceneLoader.Get("Book")))
+        {
+            case 1:
+                EnableEarthBending();
+            break;
+
+            case 2:
+                EnableJumping();
+                RefreshJump();
+                EnableFireBending();
+            goto case 1;
+
+            case 3:
+                EnableDashing();
+                EnableDoubleJumping();
+                EnableAirBending();
+            goto case 2;
+
+            case 4:
+                EnableWaterBending();
+            goto case 3;
+
+            default:
+                base.EnableMovement();
+                BecomeAvatar();
+            break;
+        }
+    }
+
+    /// <summary>
     /// Avatar Kyoshi <see langword="override"/> the
-    /// Start to enable the Jump and Dash events,
-    /// also the Bend events. <br/>
+    /// Starter to, according to the book,
+    /// enable Jump, Double Jump, Dash and also the Bend events. <br/>
     ///
-    /// The values for the properties are setted.
+    /// The values for the properties are setted. <br/>
+    /// The Cursor is also set to the Defauly theme.
     /// </summary>
     protected override void Start()
     {
         base.Start();
 
-        EnableJumping();
-        EnableDashing();
+        SetDiscs();
+
+        BendCursor.SetDefault();
 
         Speed   = Player.Speed;
         Force   = Player.Force;
         Impulse = Player.Impulse;
 
-        RefreshJump();
-
-        BecomeAvatar();
-
-        SetDiscs();
-
-        BendCursor.SetDefault();
-        BendCursor.Unhide();
+        SetControls();
     }
 
     /// <summary>
@@ -196,15 +250,15 @@ public sealed class Kyoshi : Bender
     }
 
     /// <summary>
-    /// The TriggerEnter checks for refresh
-    /// the Jumps.
+    /// The TriggerEnter checks for refresh the Jumps if possible.
     /// </summary>
     /// <param name="other">The other GameObject that was collided.</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag(Tags.Floor))
+        if(other.CompareTag(Tags.Floor) && SceneLoader.Get("Book") != SceneData.BookEarth.Value)
         {
             RefreshJump();
+            EnableJumping();
         }
     }
 }

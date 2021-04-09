@@ -11,24 +11,24 @@ public class Bendable : MonoBehaviour
     /// Determine if the source is ready to be bended.
     /// </summary>
     /// <value><see langword="true"/> to become ready.</value>
-    public bool ReadyToBend { get; private set; }
+    protected bool ReadyToBend { get; set; }
 
     /// <summary>
     /// Determine if the source is been used to be bended.
     /// </summary>
     /// <value><see langword="true"/> if is been used.</value>
-    private bool IsBending { get; set; }
+    protected bool IsBending { get; set; }
 
     /// <summary>
     /// Allow the use of Bending on the source.
     /// </summary>
-    private void AllowBending()
+    protected virtual void AllowBending()
     {
         if(Helper.GameIsPaused())
         {
             return;
         }
-        
+
         BendCursor.Set(tag);
 
         ReadyToBend = true;
@@ -37,7 +37,7 @@ public class Bendable : MonoBehaviour
     /// <summary>
     /// Block the use of Bending on the source.
     /// </summary>
-    private void BlockBending()
+    protected virtual void BlockBending()
     {
         if(Helper.GameIsPaused())
         {
@@ -168,7 +168,7 @@ public class Bendable : MonoBehaviour
             Quaternion.identity
         );
 
-        Physics2D.IgnoreCollision(bend.GetComponent<Collider2D>(), Helper.GetPlayer().GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(bend.GetComponent<Collider2D>(), Helper.GetPlayerComponent<Collider2D>());
     }
 
     /// <summary>

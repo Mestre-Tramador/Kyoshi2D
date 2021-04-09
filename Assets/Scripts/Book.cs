@@ -161,28 +161,23 @@ public sealed class Book : MonoBehaviour
     /// </summary>
     private void LoadBook()
     {
-        string scene = "";
+        SceneLoader.Load(SceneName());
 
-        switch(int.Parse(Index))
+        string SceneName()
         {
-            case 1:
-                scene = SceneNames.BookEarth;
-            break;
+            switch(int.Parse(Index))
+            {
+                case 1: return SceneNames.BookEarth;
 
-            case 2:
-                scene = SceneNames.BookFire;
-            break;
+                case 2: return SceneNames.BookFire;
 
-            case 3:
-                scene = SceneNames.BookAir;
-            break;
+                case 3: return SceneNames.BookAir;
 
-            case 4:
-                scene = SceneNames.BookWater;
-            break;
+                case 4: return SceneNames.BookWater;
+
+                default: return "";
+            }
         }
-
-        SceneLoader.Load(scene);
     }
 
     /// <summary>
@@ -207,28 +202,23 @@ public sealed class Book : MonoBehaviour
     /// </summary>
     private void SetChant()
     {
-        string path = "";
+        Helper.GetJukebox().AddDisc(Helper.LoadResource<AudioClip>(ChantPath()));
 
-        switch(int.Parse(Index))
+        string ChantPath()
         {
-            case 1:
-                path = $"{Path.SFX}{AudioClipNames.BookChantEarth}";
-            break;
+            switch(int.Parse(Index))
+            {
+                case 1: return $"{Path.SFX}{AudioClipNames.BookChantEarth}";
 
-            case 2:
-                path = $"{Path.SFX}{AudioClipNames.BookChantFire}";
-            break;
+                case 2: return $"{Path.SFX}{AudioClipNames.BookChantFire}";
 
-            case 3:
-                path = $"{Path.SFX}{AudioClipNames.BookChantAir}";
-            break;
+                case 3: return $"{Path.SFX}{AudioClipNames.BookChantAir}";
 
-            case 4:
-                path = $"{Path.SFX}{AudioClipNames.BookChantWater}";
-            break;
+                case 4: return $"{Path.SFX}{AudioClipNames.BookChantWater}";
+
+                default: return "";
+            }
         }
-
-        Helper.GetJukebox().AddDisc(Helper.LoadResource<AudioClip>(path));
     }
 
     /// <summary>
@@ -236,28 +226,23 @@ public sealed class Book : MonoBehaviour
     /// </summary>
     private void SetSymbol()
     {
-        string path = "";
+        Symbol().sprite = Helper.LoadResource<Sprite>(SymbolPath());
 
-        switch(int.Parse(Index))
+        string SymbolPath()
         {
-            case 1:
-                path = $"{Path.Nations}{ResourceNames.NationsEarth}";
-            break;
+            switch(int.Parse(Index))
+            {
+                case 1: return $"{Path.Nations}{ResourceNames.NationsEarth}";
 
-            case 2:
-                path = $"{Path.Nations}{ResourceNames.NationsFire}";
-            break;
+                case 2: return $"{Path.Nations}{ResourceNames.NationsFire}";
 
-            case 3:
-                path = $"{Path.Nations}{ResourceNames.NationsAir}";
-            break;
+                case 3: return $"{Path.Nations}{ResourceNames.NationsAir}";
 
-            case 4:
-                path = $"{Path.Nations}{ResourceNames.NationsWater}";
-            break;
+                case 4: return $"{Path.Nations}{ResourceNames.NationsWater}";
+
+                default: return "";
+            }
         }
-
-        Symbol().sprite = Helper.LoadResource<Sprite>(path);
     }
 
     /// <summary>

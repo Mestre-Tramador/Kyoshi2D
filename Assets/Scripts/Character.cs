@@ -7,36 +7,16 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     /// <summary>
-    /// The index of all the possible Character Discs.
-    /// </summary>
-    protected readonly struct DiscIndex
-    {
-        /// <summary>
-        /// The disc for the Movement event.
-        /// </summary>
-        public const int Move = 1;
-
-        /// <summary>
-        /// The disc for the Jump event.
-        /// </summary>
-        public const int Jump = 2;
-
-        /// <summary>
-        /// The disc for the Double Jump event.
-        /// </summary>
-        public const int DoubleJump = 3;
-        
-        /// <summary>
-        /// The disc for the Dash event.
-        /// </summary>
-        public const int Dash = 4;
-    }
-
-    /// <summary>
     /// Controls if the <see cref="Character"/> can dash.
     /// </summary>
     /// <value><see langword="true"/> if it can.</value>
     public bool CanDash { get; private set; }
+
+    /// <summary>
+    /// Controls if the <see cref="Character"/> can jump two times.
+    /// </summary>
+    /// <value><see langword="true"/> if it can</value>
+    public bool CanDoubleJump { get; private set; }
 
     /// <summary>
     /// Controls if the <see cref="Character"/> can jump.
@@ -80,9 +60,19 @@ public abstract class Character : MonoBehaviour
     public void DisableDashing() => CanDash = false;
 
     /// <summary>
+    /// Disable the Double Jump control.
+    /// </summary>
+    public void DisableDoubleJumping() => CanDoubleJump = false;
+
+    /// <summary>
     /// Enable the Dash control.
     /// </summary>
     public void EnableDashing() => CanDash = true;
+
+    /// <summary>
+    /// Enable the Double Jump control.
+    /// </summary>
+    public void EnableDoubleJumping() => CanDoubleJump = true;
 
     /// <summary>
     /// Disable the Jump control.
@@ -99,6 +89,7 @@ public abstract class Character : MonoBehaviour
     /// <list type="bullet">
     /// <item>Movement;</item>
     /// <item>Jump;</item>
+    /// <item>Double Jump;</item>
     /// <item>Dash.</item>
     /// </list>
     /// </summary>
@@ -106,6 +97,7 @@ public abstract class Character : MonoBehaviour
     {
         DisableMoving();
         DisableJumping();
+        DisableDoubleJumping();
         DisableDashing();
     }
 
@@ -114,6 +106,7 @@ public abstract class Character : MonoBehaviour
     /// <list type="bullet">
     /// <item>Movement;</item>
     /// <item>Jump;</item>
+    /// <item>Double Jump;</item>
     /// <item>Dash.</item>
     /// </list>
     /// </summary>
@@ -121,6 +114,7 @@ public abstract class Character : MonoBehaviour
     {
         EnableMoving();
         EnableJumping();
+        EnableDoubleJumping();
         EnableDashing();
     }
 
@@ -180,16 +174,11 @@ public abstract class Character : MonoBehaviour
     /// Consequently, it can be overwritten
     /// to each <see cref="Character"/> specification.
     /// </summary>
-    protected virtual void RefreshJump()
-    {
-        Jumps = 0;
-
-        EnableJumping();
-    }
+    protected virtual void RefreshJump() => Jumps = 0;
 
     /// <summary>
     /// Set the current indexed discs to the Character. <br/>
-    /// 
+    ///
     /// Beeing a <see langword="virtual"/> method, it can be overwritten
     /// to fit any Character.
     /// </summary>
@@ -229,6 +218,11 @@ public abstract class Character : MonoBehaviour
     protected void ListenToJump()
     {
         if(!CanJump)
+        {
+            return;
+        }
+
+        if(Jumps == 1 && !CanDoubleJump)
         {
             return;
         }
