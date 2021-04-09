@@ -35,7 +35,7 @@ public sealed class Hole : Obstacle
             bend.MakeUnbendable();
         }
 
-        placeable.transform.position = new Vector2(transform.position.x + 1.5f, transform.position.y);
+        placeable.transform.position = new Vector3(transform.position.x + 1.5f, transform.position.y + 0.5f, 0.0f);
 
         transform.Find("Fillable").GetComponent<SpriteRenderer>().color = Helper.ColorFixed(27.0f, 84.0f, 42.0f);
         

@@ -1,5 +1,11 @@
+[0.0.10]
+- Imported Scenario Assets for Earth Book
+- Created Tile Palletes and Tiles for Earth Book
+- Created TileMap for Earth Book
+- Fixed some layer inconsistencies on first level
+
 [0.0.9]
-- Imported Earth Pulll SFX
+- Imported Earth Pull SFX
 - Imported Kyoshi Sprite (static)
 - Refactored bunch of scripts
 - Created Earth Book (first level) mechanics
