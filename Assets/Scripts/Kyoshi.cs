@@ -1,6 +1,7 @@
 using UnityEngine;
 using MestreTramadorEMulherMotoca.Constants;
 using MestreTramadorEMulherMotoca.Util;
+using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
 /// Represents the Avatar Kyoshi. <br/>
@@ -63,14 +64,14 @@ public sealed class Kyoshi : Bender
     {
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
-            Vector2 direction = (Helper.IsTurnedToRight(transform.localScale) ? Vector2.right : Vector2.left);
+            Vector2 direction = (IsTurnedToRight(transform.localScale) ? Vector2.right : Vector2.left);
 
             GetComponent<Rigidbody2D>()
             .AddForce(direction * Impulse);
 
             DisableDashing();
 
-            Helper.GetJukebox().PlayDisc(DiscIndex.Dash);
+            GetJukebox().PlayDisc(DiscIndex.Dash);
 
             StartCoroutine(RefreshDash());
         }
@@ -105,7 +106,7 @@ public sealed class Kyoshi : Bender
         {
             if(Jumps == 0)
             {
-                Helper.GetJukebox().PlayDisc(DiscIndex.Jump);
+                GetJukebox().PlayDisc(DiscIndex.Jump);
             }
 
             GetComponent<Rigidbody2D>()
@@ -115,7 +116,7 @@ public sealed class Kyoshi : Bender
 
             if(Jumps > 1)
             {
-                Helper.GetJukebox().PlayDisc(DiscIndex.DoubleJump);
+                GetJukebox().PlayDisc(DiscIndex.DoubleJump);
 
                 DisableJumping();
             }
@@ -131,18 +132,18 @@ public sealed class Kyoshi : Bender
     {
         float axis = Input.GetAxis("Horizontal");
 
-        float x = Helper.CalculateXPosition(axis, Speed);
+        float x = CalculateXPosition(axis, Speed);
 
-        if((x > 0.0f && Helper.IsTurnedToLeft(transform.localScale)) || (x < 0.0f && Helper.IsTurnedToRight(transform.localScale)))
+        if((x > 0.0f && IsTurnedToLeft(transform.localScale)) || (x < 0.0f && IsTurnedToRight(transform.localScale)))
         {
-            Helper.Turn(gameObject);
+            Turn(gameObject);
         }
 
         transform.Translate(new Vector3(x, 0.0f, 0.0f));
 
-        if(axis != 0 && Helper.IsPlayerTouchingFloor())
+        if(axis != 0 && IsPlayerTouchingFloor())
         {
-            Helper.GetJukebox().PlayDiscIfNotPlaying(DiscIndex.Move);
+            GetJukebox().PlayDiscIfNotPlaying(DiscIndex.Move);
         }
     }
 
@@ -163,22 +164,10 @@ public sealed class Kyoshi : Bender
         Helper
         .GetJukebox()
         // .ReplaceDiscOne()
-        .ReplaceDisc(
-            DiscIndex.Move,
-            Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiMove}")
-        )
-        .ReplaceDisc(
-            DiscIndex.Jump,
-            Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiJump}")
-        )
-        .ReplaceDisc(
-            DiscIndex.DoubleJump,
-            Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDoubleJump}")
-        )
-        .ReplaceDisc(
-            DiscIndex.Dash,
-            Helper.LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDash}")
-        );
+        .ReplaceDisc(DiscIndex.Move, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiMove}"))
+        .ReplaceDisc(DiscIndex.Jump, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiJump}"))
+        .ReplaceDisc(DiscIndex.DoubleJump, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDoubleJump}"))
+        .ReplaceDisc(DiscIndex.Dash, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDash}"));
     }
 
     /// <summary>

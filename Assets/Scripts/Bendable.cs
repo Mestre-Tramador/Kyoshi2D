@@ -1,6 +1,7 @@
 using UnityEngine;
 using MestreTramadorEMulherMotoca.Constants;
 using MestreTramadorEMulherMotoca.Util;
+using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
 /// Represents a Bendable source.
@@ -24,7 +25,7 @@ public class Bendable : MonoBehaviour
     /// </summary>
     protected virtual void AllowBending()
     {
-        if(Helper.GameIsPaused())
+        if(GameIsPaused())
         {
             return;
         }
@@ -39,7 +40,7 @@ public class Bendable : MonoBehaviour
     /// </summary>
     protected virtual void BlockBending()
     {
-        if(Helper.GameIsPaused())
+        if(GameIsPaused())
         {
             return;
         }
@@ -69,25 +70,25 @@ public class Bendable : MonoBehaviour
                 switch(tag)
                 {
                     case Tags.Air:
-                        Helper.GetKyoshi().BendAir();
+                        GetKyoshi().BendAir();
                     break;
 
                     case Tags.Earth:
-                        Helper.GetKyoshi().BendEarth();
+                        GetKyoshi().BendEarth();
                     break;
 
                     case Tags.Fire:
-                        Helper.GetKyoshi().BendFire();
+                        GetKyoshi().BendFire();
                     break;
 
                     case Tags.Water:
-                        Helper.GetKyoshi().BendWater();
+                        GetKyoshi().BendWater();
                     break;
                 }
 
                 IsBending = true;
 
-                Helper.GetKyoshi().DisableMovement();
+                GetKyoshi().DisableMovement();
 
                 return;
             }
@@ -96,7 +97,7 @@ public class Bendable : MonoBehaviour
 
             BlockBending();
 
-            Helper.GetKyoshi().EnableMovement();
+            GetKyoshi().EnableMovement();
         }
     }
 
@@ -162,13 +163,9 @@ public class Bendable : MonoBehaviour
     /// <param name="path">The path to the GameObject.</param>
     private void UseBend(string path)
     {
-        GameObject bend = Instantiate(
-            Helper.LoadResource<GameObject>(path),
-            Helper.CurrentMouseWorldPoint(),
-            Quaternion.identity
-        );
+        GameObject bend = Instantiate(LoadResource<GameObject>(path), CurrentMouseWorldPoint(), Quaternion.identity);
 
-        Physics2D.IgnoreCollision(bend.GetComponent<Collider2D>(), Helper.GetPlayerComponent<Collider2D>());
+        Physics2D.IgnoreCollision(bend.GetComponent<Collider2D>(), GetPlayerComponent<Collider2D>());
     }
 
     /// <summary>

@@ -53,12 +53,27 @@ namespace MestreTramadorEMulherMotoca
             /// <summary>
             /// Disc "Pull".
             /// </summary>
-            public const int Pull = 9;
+            public const int Bend = 9;
 
             /// <summary>
             /// Disc "Dissipate".
             /// </summary>
             public const int Dissipate = 10;
+
+            /// <summary>
+            /// Disc "MoveBend".
+            /// </summary>
+            public const int MoveBend = 11;
+
+            /// <summary>
+            /// Disc "Pull".
+            /// </summary>
+            public const int Pull = 12;
+
+            /// <summary>
+            /// Disc "Impact".
+            /// </summary>
+            public const int Impact = 13;
         }
 
         /// <summary>
@@ -99,7 +114,17 @@ namespace MestreTramadorEMulherMotoca
             /// <summary>
             /// The impact of Earth sound effect.
             /// </summary>
-            public const string EarthImpact = EarthPull;
+            public const string EarthImpact = "EarthImpact";
+
+            /// <summary>
+            /// The bending of Earth sound effect.
+            /// </summary>
+            public const string EarthBend = "EarthBend";
+
+            /// <summary>
+            /// The moving of Earth sound effect.
+            /// </summary>
+            public const string EarthMove = "EarthMove";
 
             /// <summary>
             /// The pulling of Earth sound effect.

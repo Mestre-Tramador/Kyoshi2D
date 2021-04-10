@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using MestreTramadorEMulherMotoca.Constants;
 using MestreTramadorEMulherMotoca.Util;
+using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
 /// A kind of Bendable source wich can be moved.
@@ -21,7 +22,7 @@ public sealed class Movable : Bendable
     {
         base.BlockBending();
 
-        Helper.GetKyoshi().EnableMovement();        
+        GetKyoshi().EnableMovement();
 
         if(TryGetComponent<Collider2D>(out Collider2D collider))
         {
@@ -32,6 +33,8 @@ public sealed class Movable : Bendable
         {
             Destroy(body);
         }
+
+        GetJukebox().PlayDisc(DiscIndex.Dissipate);
 
         Destroy(this);
     }
@@ -46,14 +49,14 @@ public sealed class Movable : Bendable
         {
             base.AllowBending();
         }
-        else if(!Helper.GetAnyMouseClick())
+        else if(!GetAnyMouseClick())
         {
             StartCoroutine(RefreshOverlap());
         }
 
         IEnumerator RefreshOverlap()
         {
-            yield return new WaitForSecondsRealtime(1.0f);
+            yield return new WaitForSecondsRealtime(0.5f);
 
             IsOverlappingFloor = false;
         }
@@ -65,7 +68,7 @@ public sealed class Movable : Bendable
     /// </summary>
     protected override void BlockBending()
     {
-        if(Helper.GameIsPaused())
+        if(GameIsPaused())
         {
             return;
         }
@@ -80,7 +83,7 @@ public sealed class Movable : Bendable
     /// </summary>
     /// <param name="other">The reference GameObject.</param>
     /// <returns><see langword="true"/> if is at least one of the cases.</returns>
-    private bool OtherIsBarrierOrPlayer(GameObject other) => (other.CompareTag(Tags.Barrier) || other.CompareTag(Helper.GetPlayerTag()));
+    private bool OtherIsBarrierOrPlayer(GameObject other) => (other.CompareTag(Tags.Barrier) || other.CompareTag(GetPlayerTag()));
 
     /// <summary>
     /// Add rigidity to the source.
@@ -90,11 +93,13 @@ public sealed class Movable : Bendable
         if(!TryGetComponent<Rigidbody2D>(out Rigidbody2D body))
         {
             body = gameObject.AddComponent<Rigidbody2D>();
+
+            GetJukebox().PlayDisc(DiscIndex.MoveBend);
         }
 
         body.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), Helper.GetPlayerComponent<Collider2D>());
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), GetPlayerComponent<Collider2D>());
 
         GetComponent<Collider2D>().isTrigger = false;
     }
@@ -114,7 +119,7 @@ public sealed class Movable : Bendable
     {
         if(!IsOverlappingFloor)
         {
-            transform.position = Vector2.Lerp(transform.position, Helper.CurrentMouseWorldPoint(), 1.0f);
+            transform.position = Vector2.Lerp(transform.position, CurrentMouseWorldPoint(), 1.0f);
         }
     }
 
@@ -123,11 +128,11 @@ public sealed class Movable : Bendable
     /// then, if it is overlapping the Floor, disable the Bending, and finally remove the rigidity.
     /// </summary>
     /// <param name="other">The collider wich had collided.</param>
-    private void OnCollisionEnter2D(Collision2D other) 
+    private void OnCollisionEnter2D(Collision2D other)
     {
         IsOverlappingFloor = false;
 
-        if(OtherIsBarrierOrPlayer(other.gameObject) || other.gameObject.GetComponent<Obstacle>())    
+        if(OtherIsBarrierOrPlayer(other.gameObject) || other.gameObject.GetComponent<Obstacle>())
         {
             return;
         }
@@ -138,9 +143,9 @@ public sealed class Movable : Bendable
 
             BlockBending();
 
-            Helper.GetKyoshi().EnableMovement();
+            GetKyoshi().EnableMovement();
 
-            IsOverlappingFloor = true;        
+            IsOverlappingFloor = true;
         }
 
         RemoveRigidity();
@@ -158,14 +163,14 @@ public sealed class Movable : Bendable
     /// <param name="other">The collider wich had triggered.</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(OtherIsBarrierOrPlayer(other.gameObject))    
+        if(OtherIsBarrierOrPlayer(other.gameObject))
         {
             return;
         }
 
         RemoveRigidity();
     }
-        
+
     /// <summary>
     /// Remove the rigidity of the body.
     /// </summary>
@@ -175,6 +180,28 @@ public sealed class Movable : Bendable
         GetComponent<Collider2D>().isTrigger = andMakeTrigger;
 
         Destroy(GetComponent<Rigidbody2D>());
+
+        GetJukebox().PlayDisc(DiscIndex.Dissipate);
+    }
+
+    /// <summary>
+    /// The Starter set the Move Jukebox disc.
+    /// </summary>
+    private void Start()
+    {
+        Helper
+        .GetJukebox()
+        .AddDisc(DiscIndex.MoveBend, GetMoveDisc());
+
+        AudioClip GetMoveDisc()
+        {
+            switch(tag)
+            {
+                case Tags.Earth: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.EarthMove}");
+
+                default: return null;
+            }
+        }
     }
 
     /// <summary>
@@ -195,29 +222,29 @@ public sealed class Movable : Bendable
                 switch(tag)
                 {
                     case Tags.Air:
-                        Helper.GetKyoshi().BendAir();
+                        GetKyoshi().BendAir();
                     break;
 
                     case Tags.Earth:
-                        Helper.GetKyoshi().BendEarth();
-                        
+                        GetKyoshi().BendEarth();
+
                         AddRigidity();
-                        
+
                         Follow();
                     break;
 
                     case Tags.Fire:
-                        Helper.GetKyoshi().BendFire();
+                        GetKyoshi().BendFire();
                     break;
 
                     case Tags.Water:
-                        Helper.GetKyoshi().BendWater();
+                        GetKyoshi().BendWater();
                     break;
                 }
 
                 IsBending = true;
 
-                Helper.GetKyoshi().DisableMovement();
+                GetKyoshi().DisableMovement();
 
                 return;
             }
@@ -226,7 +253,7 @@ public sealed class Movable : Bendable
 
             BlockBending();
 
-            Helper.GetKyoshi().EnableMovement();
+            GetKyoshi().EnableMovement();
         }
-    }        
+    }
 }

@@ -1,5 +1,5 @@
 using UnityEngine;
-using MestreTramadorEMulherMotoca.Util;
+using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
 /// A Hole is a variation of a Obstacle.
@@ -15,7 +15,7 @@ public sealed class Hole : Obstacle
     {
         Debug.Log("A MORTE DO BUIACO!!!!");
 
-        transform.Find("Fillable").GetComponent<SpriteRenderer>().color = Helper.ColorFixed(27.0f, 84.0f, 42.0f);
+        transform.Find("Fillable").GetComponent<SpriteRenderer>().color = ColorFixed(27.0f, 84.0f, 42.0f);
 
         base.OnHoleFill();
     }
@@ -37,7 +37,7 @@ public sealed class Hole : Obstacle
 
         placeable.transform.position = new Vector3(transform.position.x + 1.5f, transform.position.y + 0.5f, 0.0f);
 
-        transform.Find("Fillable").GetComponent<SpriteRenderer>().color = Helper.ColorFixed(27.0f, 84.0f, 42.0f);
+        transform.Find("Fillable").GetComponent<SpriteRenderer>().color = ColorFixed(27.0f, 84.0f, 42.0f);
         
         base.OnHolePlace(placeable);
     }

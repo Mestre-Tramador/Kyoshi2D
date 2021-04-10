@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using MestreTramadorEMulherMotoca.Constants;
 using static MestreTramadorEMulherMotoca.Constants.Lang;
 using MestreTramadorEMulherMotoca.Util;
+using static MestreTramadorEMulherMotoca.Util.Helper;
 using SimpleJSON;
 
 /// <summary>
@@ -62,7 +63,7 @@ public sealed class Book : MonoBehaviour
     {
         BendCursor.Hide();
 
-        Helper.GetJukebox().PlayDiscOne();
+        GetJukebox().PlayDiscOne();
 
         yield return new WaitForSecondsRealtime(1.0f);
 
@@ -70,23 +71,23 @@ public sealed class Book : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(2.0f);
 
-        StartCoroutine(Helper.FadeIn(Symbol()));
+        StartCoroutine(FadeIn(Symbol()));
 
         yield return new WaitForSecondsRealtime(0.5f);
 
-        StartCoroutine(Helper.FadeIn(Label()));
+        StartCoroutine(FadeIn(Label()));
 
-        StartCoroutine(Helper.FadeIn(Number()));
+        StartCoroutine(FadeIn(Number()));
 
         yield return new WaitForSecondsRealtime(3.5f);
 
-        StartCoroutine(Helper.FadeIn(Title()));
+        StartCoroutine(FadeIn(Title()));
 
         yield return new WaitForSecondsRealtime(4.0f);
 
-        Helper.GetJukebox().PlayDisc(1);
+        GetJukebox().PlayDisc(1);
 
-        StartCoroutine(Helper.FadeIn(Subtitle()));
+        StartCoroutine(FadeIn(Subtitle()));
 
         yield return new WaitForSecondsRealtime(10.0f);
 
@@ -136,7 +137,7 @@ public sealed class Book : MonoBehaviour
     /// </summary>
     private void GetData()
     {
-        TextAsset lang = Helper.LoadResource<TextAsset>($"{Path.Lang}{Helper.CurrentLang()}");
+        TextAsset lang = LoadResource<TextAsset>($"{Path.Lang}{CurrentLang()}");
 
         Data = JSON.Parse(lang.ToString());
     }
@@ -202,7 +203,7 @@ public sealed class Book : MonoBehaviour
     /// </summary>
     private void SetChant()
     {
-        Helper.GetJukebox().AddDisc(Helper.LoadResource<AudioClip>(ChantPath()));
+        GetJukebox().AddDisc(LoadResource<AudioClip>(ChantPath()));
 
         string ChantPath()
         {
@@ -226,7 +227,7 @@ public sealed class Book : MonoBehaviour
     /// </summary>
     private void SetSymbol()
     {
-        Symbol().sprite = Helper.LoadResource<Sprite>(SymbolPath());
+        Symbol().sprite = LoadResource<Sprite>(SymbolPath());
 
         string SymbolPath()
         {

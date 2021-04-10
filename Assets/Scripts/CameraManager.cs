@@ -1,5 +1,6 @@
 using UnityEngine;
 using MestreTramadorEMulherMotoca.Util;
+using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
 /// Manages and controls the Camera.
@@ -27,7 +28,7 @@ public sealed class CameraManager : MonoBehaviour
     /// Manually update the position of the Camera.
     /// </summary>
     /// <param name="position">The new position.</param>
-    public void ManualUpdate(Vector3 position) => StartCoroutine(Helper.MoveToPosition(gameObject, transform.position, position, 2.5f));
+    public void ManualUpdate(Vector3 position) => StartCoroutine(MoveToPosition(gameObject, transform.position, position, 2.5f));
 
     /// <summary>
     /// Stop to follow.
@@ -39,7 +40,7 @@ public sealed class CameraManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        Offset = transform.position - Helper.GetKyoshi().transform.position;
+        Offset = transform.position - GetKyoshi().transform.position;
         
         Follow();
     }
@@ -51,7 +52,7 @@ public sealed class CameraManager : MonoBehaviour
     {
         if(toFollow)
         {
-            transform.position = Helper.GetKyoshi().transform.position + Offset;
+            transform.position = GetKyoshi().transform.position + Offset;
         }
     }
 }

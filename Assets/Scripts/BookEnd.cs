@@ -1,6 +1,7 @@
 using UnityEngine;
 using MestreTramadorEMulherMotoca.Constants;
 using MestreTramadorEMulherMotoca.Util;
+using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
 /// Marks the ends of each and every Book.
@@ -14,7 +15,7 @@ public sealed class BookEnd : MonoBehaviour
     {     
         const float playerX = 105.0f;
 
-        StartCoroutine(Helper.MovePlayerToPosition(new Vector2(playerX, Helper.GetPlayer().transform.position.y), 30.0f));
+        StartCoroutine(MovePlayerToPosition(new Vector2(playerX, GetPlayer().transform.position.y), 30.0f));
 
         CloseCurtains();
     }
@@ -31,7 +32,7 @@ public sealed class BookEnd : MonoBehaviour
     /// <param name="other">The collider wich had triggered.</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.Equals(Helper.GetPlayer()))
+        if(other.gameObject.Equals(GetPlayer()))
         {
             switch(int.Parse(SceneLoader.Get("Book")))
             {
@@ -41,12 +42,12 @@ public sealed class BookEnd : MonoBehaviour
 
                     const float playerX = 58.0f;
 
-                    Helper.GetCameraManager().Unfollow();
-                    Helper.GetCameraManager().ManualUpdate(new Vector3(cameraX, Helper.GetCamera().transform.position.y, cameraZ));
+                    GetCameraManager().Unfollow();
+                    GetCameraManager().ManualUpdate(new Vector3(cameraX, GetCamera().transform.position.y, cameraZ));
 
-                    Helper.GetKyoshi().DisableMovement();
+                    GetKyoshi().DisableMovement();
                     
-                    StartCoroutine(Helper.MovePlayerToPosition(new Vector2(playerX, Helper.GetPlayer().transform.position.y)));
+                    StartCoroutine(MovePlayerToPosition(new Vector2(playerX, GetPlayer().transform.position.y)));
                 break;
             }
         }

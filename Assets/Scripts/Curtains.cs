@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using MestreTramadorEMulherMotoca.Constants;
 using MestreTramadorEMulherMotoca.Util;
+using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
 /// The Curtains on every and each of the the Books.
@@ -21,13 +22,13 @@ public sealed class Curtains : MonoBehaviour
         
         IEnumerator Closure()
         {
-            Helper.GetKyoshi().PlaceBelow();
+            GetKyoshi().PlaceBelow();
 
             yield return new WaitForSecondsRealtime(2.0f);
 
             BendCursor.Hide();            
 
-            StartCoroutine(Helper.FadeIn(GetComponent<Image>()));
+            StartCoroutine(FadeIn(GetComponent<Image>()));
 
             yield return new WaitForSecondsRealtime(1.0f);
 
@@ -43,13 +44,13 @@ public sealed class Curtains : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1.0f);
 
-        StartCoroutine(Helper.FadeOut(GetComponent<Image>()));
+        StartCoroutine(FadeOut(GetComponent<Image>()));
 
         yield return new WaitForSecondsRealtime(1.0f);
 
         BendCursor.Unhide();
 
-        Helper.GetKyoshi().PlaceAbove();
+        GetKyoshi().PlaceAbove();
     }
 
     /// <summary>

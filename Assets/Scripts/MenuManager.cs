@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using MestreTramadorEMulherMotoca.Constants;
 using MestreTramadorEMulherMotoca.Util;
+using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
 /// Manages and controls the Menu.
@@ -24,7 +25,7 @@ public sealed class MenuManager : MonoBehaviour
 
         Helper
         .GetJukebox()
-        .ReplaceDiscOne(Helper.LoadResource<AudioClip>($"{Path.Music}{AudioClipNames.MenuAmbience}"))
+        .ReplaceDiscOne(LoadResource<AudioClip>($"{Path.Music}{AudioClipNames.MenuAmbience}"))
         .SwitchDiscOneLoop()
         .PlayDiscOne();        
     }
@@ -66,7 +67,7 @@ public sealed class MenuManager : MonoBehaviour
             SceneLoader.Load(SceneNames.PreBook, SceneData.BookWater);
         }
 
-        if(!Helper.GetJukebox().IsDiscOnePlaying() && !HasPlayedEntrance)
+        if(!GetJukebox().IsDiscOnePlaying() && !HasPlayedEntrance)
         {
             HasPlayedEntrance = true;
 

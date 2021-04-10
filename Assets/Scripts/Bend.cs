@@ -1,6 +1,7 @@
 using UnityEngine;
 using MestreTramadorEMulherMotoca.Constants;
 using MestreTramadorEMulherMotoca.Util;
+using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
 /// Represents a usable Bend.
@@ -18,7 +19,7 @@ public sealed class Bend : MonoBehaviour
     /// </summary>
     public void Dissipate()
     {
-        if(Helper.GameIsResumed())
+        if(GameIsResumed())
         {
             BendCursor.Unhide();
         }
@@ -29,14 +30,7 @@ public sealed class Bend : MonoBehaviour
     /// <summary>
     /// Make the Bend follow the <see cref="Cursor"/>.
     /// </summary>
-    private void Follow()
-    {
-        transform.position = Vector2.Lerp(
-            transform.position,
-            Helper.CurrentMouseWorldPoint(),
-            1.0f
-        );
-    }
+    private void Follow() => transform.position = Vector2.Lerp(transform.position, CurrentMouseWorldPoint(), 1.0f);
 
     /// <summary>
     /// On the Enter Collider, the Bend is dissipated if
@@ -45,59 +39,48 @@ public sealed class Bend : MonoBehaviour
     /// <param name="other">The collider wich had collided.</param>
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if(!other.gameObject.CompareTag(Tags.Barrier))
+        if(other.gameObject.CompareTag(Tags.Barrier))
         {
-            Dissipate();
+            return;
         }
+        
+        Dissipate();
     }
 
     /// <summary>
     /// The Destroyer play the last Dissipate disc on the Jukebox.
     /// </summary>
-    private void OnDestroy()
-    {
-        Helper.GetJukebox().PlayDisc(DiscIndex.Dissipate);
-    }
+    private void OnDestroy() => GetJukebox().PlayDisc(DiscIndex.Dissipate);
 
     /// <summary>
-    /// The Starter set the Pull and Dissipate discs on the Jukebox,
+    /// The Starter set the Bend and Dissipate discs on the Jukebox,
     /// also play the first one.
     /// </summary>
     private void Start()
     {
         Helper
         .GetJukebox()
-        .AddDisc(
-            DiscIndex.Pull,
-            Helper.LoadResource<AudioClip>(PullPath())
-        )
-        .AddDisc(
-            DiscIndex.Dissipate,
-            Helper.LoadResource<AudioClip>(DissipatePath())
-        )
-        .PlayDisc(DiscIndex.Pull);
+        .AddDisc(DiscIndex.Bend, GetBendDisc())
+        .AddDisc(DiscIndex.Dissipate, GetDissipateDisc())
+        .PlayDisc(DiscIndex.Bend);
 
-        string DissipatePath()
+        AudioClip GetDissipateDisc()
         {
             switch(tag)
             {
-                case Tags.Earth:
-                return $"{Path.SFX}{AudioClipNames.EarthImpact}";
+                case Tags.Earth: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.EarthBend}");
 
-                default:
-                return "";
+                default: return null;
             }
         }
 
-        string PullPath()
+        AudioClip GetBendDisc()
         {
             switch(tag)
             {
-                case Tags.Earth:
-                return $"{Path.SFX}{AudioClipNames.EarthPull}";
+                case Tags.Earth: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.EarthBend}");
 
-                default:
-                return "";
+                default: return null;
             }
         }
     }
@@ -107,7 +90,7 @@ public sealed class Bend : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if(Input.GetMouseButton(0) && Helper.GameIsResumed() && !HasDropped)
+        if(Input.GetMouseButton(0) && GameIsResumed() && !HasDropped)
         {
             Follow();
 
@@ -116,7 +99,7 @@ public sealed class Bend : MonoBehaviour
 
         HasDropped = true;
 
-        if((CompareTag(Tags.Air) || CompareTag(Tags.Fire)) || !GetComponent<Renderer>().isVisible || Helper.GameIsPaused())
+        if((CompareTag(Tags.Air) || CompareTag(Tags.Fire)) || !GetComponent<Renderer>().isVisible || GameIsPaused())
         {
             Dissipate();
         }
