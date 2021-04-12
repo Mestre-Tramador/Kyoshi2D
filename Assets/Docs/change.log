@@ -1,3 +1,7 @@
+[0.0.13.1]
+- Fixed Change Log
+- Fixed Read Me Badge
+
 [0.0.13]
 - Imported Walking Sprite Sheet
 - Created Walking Animation
@@ -6,6 +10,7 @@
 - Improved Documentation spelling
 
 [0.0.12]
+- Updated Unity version to 2021.1.2f1
 - Imported Bigger TileMap for Earth Book
 - Improved Earth Book scenario with existing Assets
 - Fixed a bug with loading the next Book
