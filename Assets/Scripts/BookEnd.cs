@@ -34,21 +34,24 @@ public sealed class BookEnd : MonoBehaviour
     {
         if(other.gameObject.Equals(GetPlayer()))
         {
-            switch(int.Parse(SceneLoader.Get("Book")))
+            if(int.TryParse(SceneLoader.Get("Book"), out int index))
             {
-                case 1:
-                    const float cameraX = 70.0f;
-                    const float cameraZ = -10.0f;
+                switch(index)
+                {
+                    case 1:
+                        const float cameraX = 70.0f;
+                        const float cameraZ = -10.0f;
 
-                    const float playerX = 58.0f;
+                        const float playerX = 58.0f;
 
-                    GetCameraManager().Unfollow();
-                    GetCameraManager().ManualUpdate(new Vector3(cameraX, GetCamera().transform.position.y, cameraZ));
+                        GetCameraManager().Unfollow();
+                        GetCameraManager().ManualUpdate(new Vector3(cameraX, GetCamera().transform.position.y, cameraZ));
 
-                    GetKyoshi().DisableMovement();
-                    
-                    StartCoroutine(MovePlayerToPosition(new Vector2(playerX, GetPlayer().transform.position.y)));
-                break;
+                        GetKyoshi().DisableMovement();
+                        
+                        StartCoroutine(MovePlayerToPosition(new Vector2(playerX, GetPlayer().transform.position.y)));
+                    break;
+                }
             }
         }
     }

@@ -11,6 +11,8 @@ using static MestreTramadorEMulherMotoca.Util.Helper;
 /// </summary>
 public sealed class Curtains : MonoBehaviour
 {
+    private bool IsClosing { get; set; }
+
     /// <summary>
     /// Opposite to the opening, the closure hides
     /// the Book and loads the next one on a fade
@@ -18,10 +20,15 @@ public sealed class Curtains : MonoBehaviour
     /// </summary>
     public void Close()
     {
-        StartCoroutine(Closure());
+        if(!IsClosing)
+        {
+            StartCoroutine(Closure());
+        }
         
         IEnumerator Closure()
         {
+            IsClosing = true;
+
             GetKyoshi().PlaceBelow();
 
             yield return new WaitForSecondsRealtime(2.0f);
@@ -42,6 +49,8 @@ public sealed class Curtains : MonoBehaviour
     /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
     private IEnumerator AwaitToFadeOut()
     {
+        IsClosing = false;
+
         yield return new WaitForSecondsRealtime(1.0f);
 
         StartCoroutine(FadeOut(GetComponent<Image>()));
@@ -58,10 +67,9 @@ public sealed class Curtains : MonoBehaviour
     /// </summary>
     private void LoadNext()
     {
-        int next = int.Parse(SceneLoader.Get("Book"));
-        next++;
-
-        if(next > 4)
+        int next = (int.TryParse(SceneLoader.Get("Book"), out int index) ? (index + 1) : 0);
+                
+        if(next > 4 || next == 0)
         {
             SceneLoader.Load(SceneNames.Menu);
             

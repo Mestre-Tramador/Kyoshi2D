@@ -18,20 +18,27 @@ public sealed class Kyoshi : Bender
     #pragma warning disable CS0108
     public void EnableMovement()
     {
-        switch(int.Parse(SceneLoader.Get("Book")))
+        if(int.TryParse(SceneLoader.Get("Book"), out int index))
         {
-            case 1:
-                EnableMoving();
-            break;
+            switch(index)
+            {
+                case 1:
+                    EnableMoving();
+                break;
 
-            case 2:
-                EnableJumping();
-            goto case 1;
+                case 2:
+                    EnableJumping();
+                goto case 1;
 
-            case 3:
-            case 4:
-                base.EnableMovement();
-            break;
+                case 3:
+                case 4:
+                    base.EnableMovement();
+                break;
+            }
+        }
+        else
+        {
+            base.EnableMovement();
         }
     }
     #pragma warning restore CS0108
@@ -175,32 +182,40 @@ public sealed class Kyoshi : Bender
     /// </summary>
     private void SetControls()
     {
-        switch(int.Parse(SceneLoader.Get("Book")))
+        if(int.TryParse(SceneLoader.Get("Book"), out int index))
         {
-            case 1:
-                EnableEarthBending();
-            break;
+            switch(index)
+            {
+                case 1:
+                    EnableEarthBending();
+                break;
 
-            case 2:
-                EnableJumping();
-                RefreshJump();
-                EnableFireBending();
-            goto case 1;
+                case 2:
+                    EnableJumping();
+                    RefreshJump();
+                    EnableFireBending();
+                goto case 1;
 
-            case 3:
-                EnableDashing();
-                EnableDoubleJumping();
-                EnableAirBending();
-            goto case 2;
+                case 3:
+                    EnableDashing();
+                    EnableDoubleJumping();
+                    EnableAirBending();
+                goto case 2;
 
-            case 4:
-                EnableWaterBending();
-            goto case 3;
+                case 4:
+                    EnableWaterBending();
+                goto case 3;
 
-            default:
-                base.EnableMovement();
-                BecomeAvatar();
-            break;
+                default:
+                    base.EnableMovement();
+                    BecomeAvatar();
+                break;
+            }
+        }
+        else
+        {
+            base.EnableMovement();
+            BecomeAvatar();
         }
     }
 
