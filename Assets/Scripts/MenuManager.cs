@@ -12,7 +12,7 @@ public sealed class MenuManager : MonoBehaviour
     /// <summary>
     /// Determines if the Entrance has been played.
     /// </summary>
-    /// <value><see cref="true"/> if the Entranche has ended.</value>
+    /// <value><see cref="true"/> if the Entrance has ended.</value>
     private bool HasPlayedEntrance { get; set;}
 
     /// <summary>

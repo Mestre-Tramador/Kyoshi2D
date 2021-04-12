@@ -29,7 +29,7 @@ public sealed class BookEnd : MonoBehaviour
     /// On the Enter Trigger, if the Player activated it,
     /// then the Book index is getted and the finalizations are prepared.
     /// </summary>
-    /// <param name="other">The collider wich had triggered.</param>
+    /// <param name="other">The collider which had triggered.</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.Equals(GetPlayer()))

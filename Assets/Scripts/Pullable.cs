@@ -4,14 +4,14 @@ using MestreTramadorEMulherMotoca.Util;
 using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
-/// A kind of Bendable source wich can be pulled.
+/// A kind of Bendable source which can be pulled.
 /// </summary>
 public sealed class Pullable : Bendable
 {
 
     /// <summary>
     /// This <see langword="override"/> of the Bending
-    /// use blocker additionaly stop the Pull Jukebox disc.
+    /// use blocker additionally stop the Pull Jukebox disc.
     /// </summary>
     protected override void BlockBending()
     {
@@ -98,7 +98,7 @@ public sealed class Pullable : Bendable
     /// then the book is ended.</item>
     /// </list>
     /// </summary>
-    /// <param name="other">The collider wich had triggered.</param>
+    /// <param name="other">The collider which had triggered.</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
         switch(tag)

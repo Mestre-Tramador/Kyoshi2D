@@ -99,6 +99,8 @@ public abstract class Character : MonoBehaviour
         DisableJumping();
         DisableDoubleJumping();
         DisableDashing();
+
+        SetWalkingAnimation(false);
     }
 
     /// <summary>
@@ -127,6 +129,16 @@ public abstract class Character : MonoBehaviour
     /// Enable the Movement control.
     /// </summary>
     public void EnableMoving() => CanMove = true;
+
+    public void SetWalkingAnimation(bool isWalking)
+    {
+        const string AnimIsWalking = "IsWalking";
+
+        if(TryGetComponent<Animator>(out Animator anim))
+        {
+            anim.SetBool(AnimIsWalking, isWalking);
+        }
+    }
 
     /// <summary>
     /// The Dash event. <br/>
@@ -241,5 +253,5 @@ public abstract class Character : MonoBehaviour
         }
 
         OnMovement();
-    }
+    }    
 }

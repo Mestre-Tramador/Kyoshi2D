@@ -1,3 +1,10 @@
+[0.0.13]
+- Imported Walking Sprite Sheet
+- Created Walking Animation
+- Implement Player Animation Controller with Walking Animation
+- Refactored some code to play according with the Animation
+- Improved Documentation spelling
+
 [0.0.12]
 - Imported Bigger TileMap for Earth Book
 - Improved Earth Book scenario with existing Assets

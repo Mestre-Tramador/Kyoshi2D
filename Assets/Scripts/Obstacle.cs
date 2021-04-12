@@ -2,7 +2,7 @@ using UnityEngine;
 using MestreTramadorEMulherMotoca.Constants;
 
 /// <summary>
-/// An Obstacle is an object on the map wich needs to be solved.
+/// An Obstacle is an object on the map which needs to be solved.
 /// </summary>
 public class Obstacle : MonoBehaviour
 {
@@ -35,7 +35,7 @@ public class Obstacle : MonoBehaviour
     /// if it's a Bend or a Movable Bend, and if, the proper
     /// event is fired according to both name and tags.
     /// </summary>
-    /// <param name="other">The collider wich had collided.</param>
+    /// <param name="other">The collider which had collided.</param>
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.TryGetComponent<Bend>(out Bend bend))

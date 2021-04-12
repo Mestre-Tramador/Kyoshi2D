@@ -10,7 +10,7 @@ namespace MestreTramadorEMulherMotoca
     namespace Util
     {
         /// <summary>
-        /// Utilitary functions to the <see cref="Cursor"/> change.
+        /// Utility functions to the <see cref="Cursor"/> change.
         /// </summary>
         public static class BendCursor
         {
@@ -81,7 +81,7 @@ namespace MestreTramadorEMulherMotoca
 
             /// <summary>
             /// Overwrite of the <see cref="Cursor.SetCursor(Texture2D, Vector2, CursorMode)"/>
-            /// method, to facilitate the implementation throught the class.
+            /// method, to facilitate the implementation through the class.
             /// </summary>
             /// <param name="cursor">The texture of the Cursor.</param>
             private static void Set(Texture2D cursor) => Cursor.SetCursor(
@@ -139,14 +139,14 @@ namespace MestreTramadorEMulherMotoca
             }
 
             /// <summary>
-            /// Verifiy if some GameObject is turned to the left.
+            /// Verify if some GameObject is turned to the left.
             /// </summary>
             /// <param name="scale">The local scale of the GameObject.</param>
             /// <returns><see langword="true"/> if it is.</returns>
             public static bool IsTurnedToLeft(Vector3 scale) => (scale.x < 0);
 
             /// <summary>
-            /// Verifiy if some GameObject is turned to the right.
+            /// Verify if some GameObject is turned to the right.
             /// </summary>
             /// <param name="scale">The local scale of the GameObject.</param>
             /// <returns><see langword="true"/> if it is.</returns>
@@ -243,15 +243,34 @@ namespace MestreTramadorEMulherMotoca
             /// <summary>
             /// Directly moves the Player to the desired position.
             /// </summary>
-            /// <param name="position">The position to go.</param>
+            /// <param name="finalPosition">The position to go.</param>
             /// <param name="duration"><see langword="optional"/>, it serves as a delay value.</param>
             /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
-            public static IEnumerator MovePlayerToPosition(Vector3 position, float duration = 1.0f) => MoveToPosition(
-                GetPlayer(),
-                GetPlayer().transform.position,
-                position,
-                duration
-            );
+            public static IEnumerator MovePlayerToPosition(Vector3 finalPosition, float duration = 1.0f)
+            {
+                Vector3 initialPosition = GetPlayer().transform.position;
+                
+                GetKyoshi().SetWalkingAnimation(true);
+
+                for(float time = 0.0f; time < duration; time += Time.deltaTime)
+                {
+                    GetPlayer().transform.position = Vector3.Lerp(initialPosition, finalPosition, (time / duration));
+
+                    if(!GetJukebox().IsDiscPlaying(Constants.DiscIndex.Move))
+                    {
+                        GetJukebox().PlayDisc(Constants.DiscIndex.Move);
+                    }
+
+                    yield return 0;
+                }
+
+                GetPlayer().transform.position = finalPosition;
+
+                if(GetPlayer().transform.position.Equals(finalPosition))
+                {
+                    GetKyoshi().SetWalkingAnimation(false);
+                }
+            }
 
             /// <summary>
             /// Move a reference GameObject to a position.
@@ -293,8 +312,8 @@ namespace MestreTramadorEMulherMotoca
             public static Type GetPlayerComponent<Type>() where Type : Component => GetPlayer().GetComponent<Type>();
 
             /// <summary>
-            /// Ovewrite of the <see cref="UnityEngine.Resources.Load{T}(string)"/> method,
-            /// to facilitate the implementation throught the class.
+            /// Overwrite of the <see cref="UnityEngine.Resources.Load{T}(string)"/> method,
+            /// to facilitate the implementation through the class.
             /// </summary>
             /// <param name="path">The <see cref="Path"/> of the Resource.</param>
             /// <typeparam name="Type">A valid <see cref="UnityEngine.Object"/>.</typeparam>
@@ -343,7 +362,7 @@ namespace MestreTramadorEMulherMotoca
             }
 
             /// <summary>
-            /// Turn a 2D GameObject to the oposite direction.
+            /// Turn a 2D GameObject to the opposite direction.
             /// </summary>
             /// <param name="gameObject">The game object to turn.</param>
             public static void Turn(GameObject gameObject)
@@ -362,7 +381,7 @@ namespace MestreTramadorEMulherMotoca
         }
 
         /// <summary>
-        /// The Paths throughts the project.
+        /// The Paths through the project.
         /// </summary>
         public static class Path
         {
@@ -474,7 +493,7 @@ namespace MestreTramadorEMulherMotoca
             /// <summary>
             /// Get a specific parameter.
             /// </summary>
-            /// <param name="key">The key wich holds the value.</param>
+            /// <param name="key">The key which holds the value.</param>
             /// <returns>An empty <see langword="string"/> or the value.</returns>
             public static string Get(string key)
             {

@@ -133,7 +133,7 @@ public sealed class Kyoshi : Bender
     /// <summary>
     /// Avatar Kyoshi <see langword="override"/> the
     /// Movement event to move to the current faced direction,
-    /// wich is switched according to the given Axis.
+    /// which is switched according to the given Axis.
     /// </summary>
     protected override void OnMovement()
     {
@@ -148,7 +148,11 @@ public sealed class Kyoshi : Bender
 
         transform.Translate(new Vector3(x, 0.0f, 0.0f));
 
-        if(axis != 0 && IsPlayerTouchingFloor())
+        bool isWalking = (axis != 0);
+
+        SetWalkingAnimation(isWalking);
+
+        if(isWalking && IsPlayerTouchingFloor())
         {
             GetJukebox().PlayDiscIfNotPlaying(DiscIndex.Move);
         }
@@ -225,7 +229,7 @@ public sealed class Kyoshi : Bender
     /// enable Jump, Double Jump, Dash and also the Bend events. <br/>
     ///
     /// The values for the properties are setted. <br/>
-    /// The Cursor is also set to the Defauly theme.
+    /// The Cursor is also set to the Default theme.
     /// </summary>
     protected override void Start()
     {

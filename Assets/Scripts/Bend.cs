@@ -36,7 +36,7 @@ public sealed class Bend : MonoBehaviour
     /// On the Enter Collider, the Bend is dissipated if
     /// is not in contact with a Barrier.
     /// </summary>
-    /// <param name="other">The collider wich had collided.</param>
+    /// <param name="other">The collider which had collided.</param>
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.CompareTag(Tags.Barrier))

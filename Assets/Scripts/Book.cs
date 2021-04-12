@@ -13,13 +13,13 @@ using SimpleJSON;
 public sealed class Book : MonoBehaviour
 {
     /// <summary>
-    /// The Index of the <see cref="Book"/>, wich determinates its texts.
+    /// The Index of the <see cref="Book"/>, which determinate its texts.
     /// </summary>
     /// <value>An Integer as a String.</value>
     private string Index { get; set; }
 
     /// <summary>
-    /// All the entrys of the <see cref="Book"/> are stored in a JSON file.
+    /// All the entries of the <see cref="Book"/> are stored in a JSON file.
     /// </summary>
     /// <value>
     /// The Data mostly contains all the entries above the key
@@ -28,7 +28,7 @@ public sealed class Book : MonoBehaviour
     private JSONNode Data { get; set; }
 
     /// <summary>
-    /// Gradualy switch from the black screen color to white.
+    /// Gradually switch from the black screen color to white.
     /// </summary>
     /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
     private IEnumerator Entrance()
@@ -42,7 +42,7 @@ public sealed class Book : MonoBehaviour
     }
 
     /// <summary>
-    /// Gradualy switch from the white screen color to black.
+    /// Gradually switch from the white screen color to black.
     /// </summary>
     /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
     private IEnumerator Disappearance()
@@ -56,7 +56,7 @@ public sealed class Book : MonoBehaviour
     }
 
     /// <summary>
-    /// Present all the elements on the screen, fading in and fading out them gradualy.
+    /// Present all the elements on the screen, fading in and fading out them gradually.
     /// </summary>
     /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
     private IEnumerator Present()
@@ -145,7 +145,7 @@ public sealed class Book : MonoBehaviour
     /// <summary>
     /// Get the <see langword="Book"/> Scene parameter and store it. <br/>
     ///
-    /// If unnable to load the parameter, then an Exception is thrown.
+    /// If unable to load the parameter, then an Exception is thrown.
     /// </summary>
     private void GetIndex()
     {

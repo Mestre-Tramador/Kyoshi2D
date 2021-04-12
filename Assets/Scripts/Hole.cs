@@ -9,7 +9,7 @@ public sealed class Hole : Obstacle
     /// <summary>
     /// When a Hole is filled, it... <br/>
     /// 
-    /// As an <see langword="override"/>, only the Hole have this beaviour.
+    /// As an <see langword="override"/>, only the Hole have this behavior.
     /// </summary>
     protected override void OnHoleFill()
     {
@@ -23,7 +23,7 @@ public sealed class Hole : Obstacle
     /// <summary>
     /// When something is placed in a Hole, it... <br/>
     /// 
-    /// As an <see langword="override"/>, only the Hole have this beaviour.
+    /// As an <see langword="override"/>, only the Hole have this behavior.
     /// </summary>
     /// <param name="placeable">The placed object.</param>
     protected override void OnHolePlace(GameObject placeable)

@@ -5,7 +5,7 @@ using MestreTramadorEMulherMotoca.Util;
 using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
-/// A kind of Bendable source wich can be moved.
+/// A kind of Bendable source which can be moved.
 /// </summary>
 public sealed class Movable : Bendable
 {
@@ -127,7 +127,7 @@ public sealed class Movable : Bendable
     /// On the Collision Enter, it checks if is not an Obstacle, its Barrier or the Player,
     /// then, if it is overlapping the Floor, disable the Bending, and finally remove the rigidity.
     /// </summary>
-    /// <param name="other">The collider wich had collided.</param>
+    /// <param name="other">The collider which had collided.</param>
     private void OnCollisionEnter2D(Collision2D other)
     {
         IsOverlappingFloor = false;
@@ -158,9 +158,9 @@ public sealed class Movable : Bendable
 
     /// <summary>
     /// On the Trigger Enter, if its not a Barrier or the Player,
-    /// then the ridigity is removed.
+    /// then the rigidity is removed.
     /// </summary>
-    /// <param name="other">The collider wich had triggered.</param>
+    /// <param name="other">The collider which had triggered.</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(OtherIsBarrierOrPlayer(other.gameObject))
