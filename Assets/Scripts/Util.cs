@@ -269,7 +269,15 @@ namespace MestreTramadorEMulherMotoca
             /// <param name="finalPosition">The position to go.</param>
             /// <param name="duration"><see langword="optional"/>, it serves as a delay value.</param>
             /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
-            public static IEnumerator MovePlayerToPosition(Vector3 finalPosition, float duration = 1.0f)
+            public static IEnumerator MovePlayerToPosition(Vector3 finalPosition, float duration = 1.0f) => MoveToPosition(GetPlayer(), GetPlayer().transform.position, finalPosition, duration);
+
+            /// <summary>
+            /// Directly moves the Player to the desired position, but walking.
+            /// </summary>
+            /// <param name="finalPosition">The position to go.</param>
+            /// <param name="duration"><see langword="optional"/>, it serves as a delay value.</param>
+            /// <returns>The <see cref="IEnumerator"/> of the Coroutine.</returns>
+            public static IEnumerator MovePlayerWalkingToPosition(Vector3 finalPosition, float duration = 1.0f)
             {
                 Vector3 initialPosition = GetPlayer().transform.position;
 
@@ -470,6 +478,12 @@ namespace MestreTramadorEMulherMotoca
 
                 VerifyData();
             }
+
+            /// <summary>
+            /// Get the current loaded <see cref="UnityEngine.SceneManagement.Scene"/> name.
+            /// </summary>
+            /// <returns>The name of the scene, as it is.</returns>
+            public static string Current() => SceneManager.GetActiveScene().name;
 
             /// <summary>
             /// Load a <see cref="UnityEngine.SceneManagement.Scene"/> by its name.

@@ -92,11 +92,6 @@ namespace MestreTramadorEMulherMotoca
         public static class AudioClipNames
         {
             /// <summary>
-            /// The chanting for a Book Subtitle.
-            /// </summary>
-            private const string BookChant = "BookChant";
-
-            /// <summary>
             /// The chanting for the Air Book Subtitle.
             /// </summary>
             public const string BookChantAir = BookChant + Air;
@@ -124,52 +119,52 @@ namespace MestreTramadorEMulherMotoca
             /// <summary>
             /// The impact of Earth sound effect.
             /// </summary>
-            public const string EarthImpact = "EarthImpact";
+            public const string EarthImpact = Earth + Impact;
 
             /// <summary>
             /// The bending of Earth sound effect.
             /// </summary>
-            public const string EarthBend = "EarthBend";
+            public const string EarthBend = Earth + Bend;
 
             /// <summary>
             /// The moving of Earth sound effect.
             /// </summary>
-            public const string EarthMove = "EarthMove";
+            public const string EarthMove = Earth + "Move";
 
             /// <summary>
             /// The pulling of Earth sound effect.
             /// </summary>
-            public const string EarthPull = "EarthPull";
+            public const string EarthPull = Earth + Pull;
 
             /// <summary>
             /// The continuous bending of Fire sound effect.
             /// </summary>
-            public const string FireBend = "FireBend";
+            public const string FireBend = Fire + Bend;
 
             /// <summary>
             /// The bending of Fire sound effect.
             /// </summary>
-            public const string FireBendStart = FireBend + "Start";
+            public const string FireBendStart = FireBend + Start;
 
             /// <summary>
             /// The dissipation of the bending of Fire sound effect.
             /// </summary>
-            public const string FireEnd = "FireEnd";
+            public const string FireEnd = Fire + End;
 
             /// <summary>
             /// The impact of Fire sound effect.
             /// </summary>
-            public const string FireImpact = "FireImpact";
+            public const string FireImpact = Fire + Impact;
 
             /// <summary>
             /// The pulling of Fire sound effect.
             /// </summary>
-            public const string FirePull = "FirePull";
+            public const string FirePull = Fire + Pull;
 
             /// <summary>
             /// The Kyoshi Dashing sound effect.
             /// </summary>
-            public const string KyoshiDash = "KyoshiDash";
+            public const string KyoshiDash = Kyoshi + "Dash";
 
             /// <summary>
             /// The Kyoshi Jumping sound effect.
@@ -179,27 +174,102 @@ namespace MestreTramadorEMulherMotoca
             /// <summary>
             /// The Kyoshi Double Jumping sound effect.
             /// </summary>
-            public const string KyoshiDoubleJump = "KyoshiJumpAir";
+            public const string KyoshiDoubleJump = Kyoshi + "JumpAir";
 
             /// <summary>
             /// The Kyoshi Moving sound effect.
             /// </summary>
-            public const string KyoshiMove = "KyoshiStep";
+            public const string KyoshiMove = Kyoshi + "Step";
 
             /// <summary>
             /// The Menu ambience music.
             /// </summary>
-            public const string MenuAmbience = "MenuAmbience";
+            public const string MenuAmbience = Menu + "Ambience";
 
             /// <summary>
             /// The Menu entrance music.
             /// </summary>
-            public const string MenuEntrance = "MenuEntrance";
+            public const string MenuEntrance = Menu + "Entrance";
 
             /// <summary>
             /// The lighting up of a Torch Obstacle.
             /// </summary>
             public const string ObstacleTorchLightUp = "ObstacleTorchLightUp";
+
+            /// <summary>
+            /// The Easter Egg theme "Grêmio da Geral".
+            /// </summary>
+            public const string ThemeAzenha = Theme + "Azenha";
+
+            /// <summary>
+            /// The Easter Egg theme "Back In Black", by AC/DC.
+            /// </summary>
+            public const string ThemeBlack = Theme + "Black";
+
+            /// <summary>
+            /// The third level theme.
+            /// </summary>
+            public const string ThemeAir = Theme + Air;
+
+            /// <summary>
+            /// The first level theme.
+            /// </summary>
+            public const string ThemeEarth = Theme + Earth;
+
+            /// <summary>
+            /// The second level theme.
+            /// </summary>
+            public const string ThemeFire = Theme + Fire;
+
+            /// <summary>
+            /// The fourth level theme.
+            /// </summary>
+            public const string ThemeWater = Theme + Water;
+
+            /// <summary>
+            /// The Bending prefix.
+            /// </summary>
+            private const string Bend = "Bend";
+
+            /// <summary>
+            /// The chanting for a Book Subtitle.
+            /// </summary>
+            private const string BookChant = "BookChant";
+
+            /// <summary>
+            /// The endind of a Bend sufix.
+            /// </summary>
+            private const string End = "End";
+
+            /// <summary>
+            /// The impact of a Bend sufix.
+            /// </summary>
+            private const string Impact = "Impact";
+
+            /// <summary>
+            /// Avatar Kyoshi prefixation.
+            /// </summary>
+            private const string Kyoshi = "Kyoshi";
+
+            /// <summary>
+            /// Menu prefixation for themes.
+            /// </summary>
+            private const string Menu = "Menu";
+
+            /// <summary>
+            /// The pulling of a Bend sufix.
+            /// </summary>
+            private const string Pull = "Pull";
+
+            /// <summary>
+            /// The start of a Bend sufix.
+            /// </summary>
+            private const string Start = "Start";
+
+            /// <summary>
+            /// Theme prefixation for general musics.
+            /// </summary>
+            private const string Theme = "Theme";
         }
 
         /// <summary>
@@ -511,6 +581,11 @@ namespace MestreTramadorEMulherMotoca
         public static class Tags
         {
             /// <summary>
+            /// Determine an Abyss.
+            /// </summary>
+            public const string Abyss = "Abyss";
+
+            /// <summary>
             /// Determine the nature of Air.
             /// </summary>
             public const string Air = "Air";
@@ -531,14 +606,19 @@ namespace MestreTramadorEMulherMotoca
             public const string Fire = "Fire";
 
             /// <summary>
-            /// Determine the nature of Water.
-            /// </summary>
-            public const string Water = "Water";
-
-            /// <summary>
             /// Mark as a part of Floor.
             /// </summary>
             public const string Floor = "Floor";
+
+            /// <summary>
+            /// Mark a return point on the Floor.
+            /// </summary>
+            public const string Return = "Return";
+
+            /// <summary>
+            /// Determine the nature of Water.
+            /// </summary>
+            public const string Water = "Water";
         }
     }
 }

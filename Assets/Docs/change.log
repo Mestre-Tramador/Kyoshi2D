@@ -1,3 +1,12 @@
+[0.0.15]
+- Imported music themes for the Earth Book and Easter Eggs
+- Implement Levitation and Rescue Behaviour
+- Implement first Commands usage
+- Created first elements on the Air Book
+- Improved some functions on existing scripts
+- Added Documentation on missing functions
+- Removed end lines on scripts
+
 [0.0.14]
 - Imported Fire Bending SFX variations
 - Implement Fire Book level

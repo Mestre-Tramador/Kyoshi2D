@@ -1,5 +1,4 @@
 using UnityEngine;
-using MestreTramadorEMulherMotoca.Util;
 using static MestreTramadorEMulherMotoca.Util.Helper;
 
 /// <summary>
@@ -41,7 +40,7 @@ public sealed class CameraManager : MonoBehaviour
     private void Start()
     {
         Offset = transform.position - GetKyoshi().transform.position;
-        
+
         Follow();
     }
 

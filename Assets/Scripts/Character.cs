@@ -130,6 +130,10 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     public void EnableMoving() => CanMove = true;
 
+    /// <summary>
+    /// Set the given state to the character's walking animation.
+    /// </summary>
+    /// <param name="isWalking">The state to determine if is walking.</param>
     public void SetWalkingAnimation(bool isWalking)
     {
         const string AnimIsWalking = "IsWalking";
@@ -253,5 +257,5 @@ public abstract class Character : MonoBehaviour
         }
 
         OnMovement();
-    }    
+    }
 }

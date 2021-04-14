@@ -16,7 +16,7 @@ public sealed class BookEnd : MonoBehaviour
     {
         const float playerX = 105.0f;
 
-        StartCoroutine(MovePlayerToPosition(new Vector2(playerX, GetPlayer().transform.position.y), 30.0f));
+        StartCoroutine(MovePlayerWalkingToPosition(new Vector2(playerX, GetPlayer().transform.position.y), 30.0f));
 
         CloseCurtains();
     }
@@ -81,7 +81,7 @@ public sealed class BookEnd : MonoBehaviour
 
                 GetKyoshi().DisableMovement();
 
-                StartCoroutine(MovePlayerToPosition(new Vector2(playerX, GetPlayer().transform.position.y)));
+                StartCoroutine(MovePlayerWalkingToPosition(new Vector2(playerX, GetPlayer().transform.position.y)));
             }
         }
     }

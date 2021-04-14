@@ -114,6 +114,33 @@ public sealed class Jukebox : MonoBehaviour
     public Jukebox PlayDiscOneIfNotPlaying() => (!IsDiscOnePlaying() ? PlayDiscOne() : this);
 
     /// <summary>
+    /// Put the given disc on a loop state.
+    /// </summary>
+    /// <param name="index">The index of the disc.</param>
+    /// <returns>Itself, to run other operations.</returns>
+    public Jukebox PutDiscInLoop(int index)
+    {
+        Disc(index).loop = true;
+
+        return this;
+    }
+
+    /// <summary>
+    /// Put the disc 1 on a loop state.
+    /// </summary>
+    /// <returns>Itself, to run other operations.</returns>
+    public Jukebox PutDiscOneInLoop() => PutDiscInLoop(0);
+
+    public Jukebox RemoveDiscLoop(int index)
+    {
+        Disc(index).loop = false;
+
+        return this;
+    }
+
+    public Jukebox RemoveDiscOneLoop() => RemoveDiscLoop(0);
+
+    /// <summary>
     /// Replace an existing disc, or simply put it on the desired position.
     /// </summary>
     /// <param name="index">The index of the disc.</param>

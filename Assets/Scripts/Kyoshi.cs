@@ -172,13 +172,27 @@ public sealed class Kyoshi : Bender
     /// </summary>
     protected override void SetDiscs()
     {
-        Helper
-        .GetJukebox()
-        // .ReplaceDiscOne()
-        .ReplaceDisc(DiscIndex.Move, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiMove}"))
-        .ReplaceDisc(DiscIndex.Jump, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiJump}"))
-        .ReplaceDisc(DiscIndex.DoubleJump, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDoubleJump}"))
-        .ReplaceDisc(DiscIndex.Dash, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDash}"));
+        GetJukebox()
+        .ReplaceDiscOne(GetThemeDisc())
+        .PutDiscOneInLoop()
+        .AddDisc(DiscIndex.Move, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiMove}"))
+        .AddDisc(DiscIndex.Jump, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiJump}"))
+        .AddDisc(DiscIndex.DoubleJump, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDoubleJump}"))
+        .AddDisc(DiscIndex.Dash, LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.KyoshiDash}"))
+        .PlayDiscOne();
+
+        AudioClip GetThemeDisc()
+        {
+            if(int.TryParse(SceneLoader.Get("Book"), out int index))
+            {
+                switch(index)
+                {
+                    case 1: return LoadResource<AudioClip>($"{Path.Music}{AudioClipNames.ThemeEarth}");
+                }
+            }
+
+            return null;
+        }
     }
 
     /// <summary>
