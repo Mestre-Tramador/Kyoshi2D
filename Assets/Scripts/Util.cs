@@ -115,6 +115,15 @@ namespace MestreTramadorEMulherMotoca
             public static bool GetAnyMouseClick() => (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2));
 
             /// <summary>
+            /// Get if a numeric value is between a minimum and a maximum.
+            /// </summary>
+            /// <param name="value">The base value.</param>
+            /// <param name="min">The minimum value.</param>
+            /// <param name="max">The maximum value.</param>
+            /// <returns><see langword="true"/> if the value is between said values.</returns>
+            public static bool IsBetween(float value, float min, float max) => (value >= min && value <= max);
+
+            /// <summary>
             /// Get if the Player is touching any <see cref="Constants.Tags.Floor"/> Game Objects.
             /// </summary>
             /// <returns><see cref="true"/> if it is.</returns>
@@ -187,7 +196,21 @@ namespace MestreTramadorEMulherMotoca
             /// <param name="a"><see langword="optional"/> Alpha entry.</param>
             /// <returns>The Color structure with its values fixed.</returns>
             public static Color ColorFixed(float r, float g, float b, float a = 255.0f) => new Color((r / 255.0f), (g / 255.0f), (b / 255.0f), (a / 255.0f));
-            
+
+            /// <summary>
+            /// Turn a Color opaque.
+            /// </summary>
+            /// <param name="color">The color to be transformed.</param>
+            /// <returns>The same color but opaque.</returns>
+            public static Color ColorOpaque(Color color) => new Color(color.r, color.g, color.b, 1);
+
+            /// <summary>
+            /// Turn a Color transparent.
+            /// </summary>
+            /// <param name="color">The color to be transformed.</param>
+            /// <returns>The same color but transparent.</returns>
+            public static Color ColorTransparent(Color color) => new Color(color.r, color.g, color.b, 0);
+
             /// <summary>
             /// Get the Main Camera GameObject.
             /// </summary>
@@ -249,7 +272,7 @@ namespace MestreTramadorEMulherMotoca
             public static IEnumerator MovePlayerToPosition(Vector3 finalPosition, float duration = 1.0f)
             {
                 Vector3 initialPosition = GetPlayer().transform.position;
-                
+
                 GetKyoshi().SetWalkingAnimation(true);
 
                 for(float time = 0.0f; time < duration; time += Time.deltaTime)

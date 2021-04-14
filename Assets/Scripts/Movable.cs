@@ -18,7 +18,7 @@ public sealed class Movable : Bendable
     /// <summary>
     /// Completely make the source unbendable.
     /// </summary>
-    public void MakeUnbendable()
+    public override void MakeUnbendable()
     {
         base.BlockBending();
 
@@ -34,9 +34,9 @@ public sealed class Movable : Bendable
             Destroy(body);
         }
 
-        GetJukebox().PlayDisc(DiscIndex.Dissipate);
+        GetJukebox().PlayDisc(DiscIndex.PlaceBend);
 
-        Destroy(this);
+        base.MakeUnbendable();
     }
 
     /// <summary>
@@ -181,7 +181,7 @@ public sealed class Movable : Bendable
 
         Destroy(GetComponent<Rigidbody2D>());
 
-        GetJukebox().PlayDisc(DiscIndex.Dissipate);
+        GetJukebox().PlayDisc(DiscIndex.PlaceBend);
     }
 
     /// <summary>
@@ -189,15 +189,25 @@ public sealed class Movable : Bendable
     /// </summary>
     private void Start()
     {
-        Helper
-        .GetJukebox()
-        .AddDisc(DiscIndex.MoveBend, GetMoveDisc());
+        GetJukebox()
+        .AddDisc(DiscIndex.MoveBend, GetMoveDisc())
+        .AddDisc(DiscIndex.PlaceBend, GetPlaceDisc());
 
         AudioClip GetMoveDisc()
         {
             switch(tag)
             {
                 case Tags.Earth: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.EarthMove}");
+
+                default: return null;
+            }
+        }
+
+        AudioClip GetPlaceDisc()
+        {
+            switch(tag)
+            {
+                case Tags.Earth: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.EarthBend}");
 
                 default: return null;
             }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using MestreTramadorEMulherMotoca.Constants;
 using MestreTramadorEMulherMotoca.Util;
@@ -12,12 +13,33 @@ public sealed class BookEnd : MonoBehaviour
     /// The ending scene of the Earth Book.
     /// </summary>
     public void EndEarthBook()
-    {     
+    {
         const float playerX = 105.0f;
 
         StartCoroutine(MovePlayerToPosition(new Vector2(playerX, GetPlayer().transform.position.y), 30.0f));
 
         CloseCurtains();
+    }
+
+    /// <summary>
+    /// The ending scene of the Fire Book.
+    /// </summary>
+    public void EndFireBook()
+    {
+        StartCoroutine(DelayToEnd());
+
+        IEnumerator DelayToEnd()
+        {
+            yield return new WaitForSecondsRealtime(4.0f);
+
+            GetCameraManager().ManualUpdate(new Vector3(
+                GetCamera().transform.position.x,
+                GetCamera().transform.position.y + 10.0f,
+                GetCamera().transform.position.z
+            ));
+
+            CloseCurtains();
+        }
     }
 
     /// <summary>
@@ -36,22 +58,30 @@ public sealed class BookEnd : MonoBehaviour
         {
             if(int.TryParse(SceneLoader.Get("Book"), out int index))
             {
+                const float cameraZ = -10.0f;
+
+                float cameraX = 0.0f;
+                float playerX = 0.0f;
+
                 switch(index)
                 {
                     case 1:
-                        const float cameraX = 70.0f;
-                        const float cameraZ = -10.0f;
+                        cameraX = 70.0f;
+                        playerX = 58.0f;
+                    break;
 
-                        const float playerX = 58.0f;
-
-                        GetCameraManager().Unfollow();
-                        GetCameraManager().ManualUpdate(new Vector3(cameraX, GetCamera().transform.position.y, cameraZ));
-
-                        GetKyoshi().DisableMovement();
-                        
-                        StartCoroutine(MovePlayerToPosition(new Vector2(playerX, GetPlayer().transform.position.y)));
+                    case 2:
+                        cameraX = 47.5f;
+                        playerX = 37.25f;
                     break;
                 }
+
+                GetCameraManager().Unfollow();
+                GetCameraManager().ManualUpdate(new Vector3(cameraX, GetCamera().transform.position.y, cameraZ));
+
+                GetKyoshi().DisableMovement();
+
+                StartCoroutine(MovePlayerToPosition(new Vector2(playerX, GetPlayer().transform.position.y)));
             }
         }
     }

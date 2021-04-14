@@ -13,6 +13,13 @@ public sealed class Jukebox : MonoBehaviour
     private Dictionary<int, AudioSource> Discs { get; set; }
 
     /// <summary>
+    /// Verify if the Disc was placed on the Jukebox.
+    /// </summary>
+    /// <param name="index">The index of the disc.</param>
+    /// <returns><see cref="true"/> if the given disc was placed on the Jukebox.</returns>
+    public bool DiscWasPlaced(int index) => Discs.ContainsKey(index);
+
+    /// <summary>
     /// Verify if an specific disc is playing.
     /// </summary>
     /// <param name="index">The index of the disc.</param>
@@ -186,13 +193,6 @@ public sealed class Jukebox : MonoBehaviour
     /// </summary>
     /// <returns>The <see cref="AudioSource"/> of the disc 1.</returns>
     private AudioSource DiscOne() => Disc(0);
-
-    /// <summary>
-    /// Verify if the Disc was placed on the Jukebox.
-    /// </summary>
-    /// <param name="index">The index of the disc.</param>
-    /// <returns><see cref="true"/> if the given disc was placed on the Jukebox.</returns>
-    private bool DiscWasPlaced(int index) => Discs.ContainsKey(index);
 
     /// <summary>
     /// Arrange the discs and get the disc 1.

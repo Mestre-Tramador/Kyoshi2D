@@ -8,6 +8,51 @@ using static MestreTramadorEMulherMotoca.Util.Helper;
 /// </summary>
 public sealed class Pullable : Bendable
 {
+    /// <summary>
+    /// An offset when pulling by the X axis.
+    /// </summary>
+    /// <value>Generally a hard coded number.</value>
+    private float OffsetX { get; set; }
+
+    /// <summary>
+    /// An offset when pulling by the Y axis.
+    /// </summary>
+    /// <value>Generally a hard coded number.</value>
+    private float OffsetY { get; set; }
+
+    /// <summary>
+    /// The minimum X axis value the Bend can be pulled.
+    /// </summary>
+    /// <value>Generally a hard coded number.</value>
+    private float MinX { get; set; }
+
+    /// <summary>
+    /// The maximum X axis value the Bend can be pulled.
+    /// </summary>
+    /// <value>Generally a hard coded number.</value>
+    private float MaxX { get; set; }
+
+    /// <summary>
+    /// The minimum Y axis value the Bend can be pulled.
+    /// </summary>
+    /// <value>Generally a hard coded number.</value>
+    private float MinY { get; set; }
+
+    /// <summary>
+    /// The maximum Y axis value the Bend can be pulled.
+    /// </summary>
+    /// <value>Generally a hard coded number.</value>
+    private float MaxY { get; set; }
+
+    /// <summary>
+    /// Completely make the source unbendable.
+    /// </summary>
+    public override void MakeUnbendable()
+    {
+        GetJukebox().PlayDisc(DiscIndex.Impact);
+
+        base.MakeUnbendable();
+    }
 
     /// <summary>
     /// This <see langword="override"/> of the Bending
@@ -21,15 +66,28 @@ public sealed class Pullable : Bendable
     }
 
     /// <summary>
-    /// Follow the Cursor only on X axis.
+    /// From the current position, follow the cursor
+    /// on a single axis based on the given parameter.
     /// </summary>
-    /// <param name="offsetX">An offset, if needed.</param>
-    private void Follow(float offsetX = 0.0f)
+    /// <param name="endPosition">The ending position to pull.</param>
+    private void Follow(Vector2 endPosition)
     {
-        transform.position = Vector2.Lerp(transform.position, new Vector2(CurrentMouseWorldPoint().x + offsetX, transform.position.y), 1.0f);
+        transform.position = Vector2.Lerp(transform.position, endPosition, 1.0f);
 
         GetJukebox().PlayDiscIfNotPlaying(DiscIndex.Pull);
     }
+
+    /// <summary>
+    /// <see cref="Follow(Vector2)"/> the Cursor only on X axis.
+    /// </summary>
+    /// <param name="offsetX">An offset, if needed.</param>
+    private void FollowByX(float offsetX = 0.0f) => Follow(new Vector2((CurrentMouseWorldPoint().x) + offsetX, transform.position.y));
+
+    /// <summary>
+    /// <see cref="Follow(Vector2)"/> the Cursor only on Y axis.
+    /// </summary>
+    /// <param name="offsetX">An offset, if needed.</param>
+    private void FollowByY(float offsetY = 0.0f) => Follow(new Vector2(transform.position.x, (CurrentMouseWorldPoint().y + offsetY)));
 
     /// <summary>
     /// The Updater keeps the verification
@@ -55,13 +113,25 @@ public sealed class Pullable : Bendable
                     case Tags.Earth:
                         GetKyoshi().BendEarth();
 
-                        const float offsetX = 26.0f;
-
-                        Follow(offsetX);
+                        FollowByX(OffsetX);
                     break;
 
                     case Tags.Fire:
                         GetKyoshi().BendFire();
+
+                        if(!IsBetween(transform.position.y, MinY, MaxY))
+                        {
+                            Vector2 fixedPosition = new Vector2(
+                                transform.position.x,
+                                (transform.position.y >= MaxY ? (MaxY - 0.25f) : (MinY + 0.25f))
+                            );
+
+                            Follow(fixedPosition);
+
+                            break;
+                        }
+
+                        FollowByY(OffsetY);
                     break;
 
                     case Tags.Water:
@@ -116,9 +186,25 @@ public sealed class Pullable : Bendable
                         .GetComponent<BookEnd>()
                         .EndEarthBook();
 
-                        GetJukebox().PlayDisc(DiscIndex.Impact);
 
-                        Destroy(this);
+                        MakeUnbendable();
+                    }
+                }
+            break;
+            case Tags.Fire:
+                if(SceneLoader.Get("Book") == SceneData.BookFire.Value)
+                {
+                    if(other.CompareTag(tag))
+                    {
+                        base.BlockBending();
+
+                        transform.position = new Vector2(transform.position.x, MaxY);
+
+                        GameObject.Find(GameObjectNames.Altar)
+                        .GetComponent<BookEnd>()
+                        .EndFireBook();
+
+                        MakeUnbendable();
                     }
                 }
             break;
@@ -135,11 +221,25 @@ public sealed class Pullable : Bendable
         .AddDisc(DiscIndex.Pull, GetPullDisc())
         .AddDisc(DiscIndex.Impact, GetImpactDisc());
 
+        switch(tag)
+        {
+            case Tags.Earth:
+                OffsetX = 26.0f;
+            break;
+            case Tags.Fire:
+                OffsetY = -0.5f;
+                MinY = 0.0f;
+                MaxY = 2.25f;
+            break;
+        }
+
         AudioClip GetPullDisc()
         {
             switch(tag)
             {
                 case Tags.Earth: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.EarthPull}");
+
+                case Tags.Fire: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.FirePull}");
 
                 default: return null;
             }
@@ -150,6 +250,8 @@ public sealed class Pullable : Bendable
             switch(tag)
             {
                 case Tags.Earth: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.EarthImpact}");
+
+                case Tags.Fire: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.FireImpact}");
 
                 default: return null;
             }

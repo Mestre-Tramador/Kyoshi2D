@@ -21,6 +21,11 @@ public class Bendable : MonoBehaviour
     protected bool IsBending { get; set; }
 
     /// <summary>
+    /// Remove completely the Bendable source, aka the script itself, of the object.
+    /// </summary>
+    public virtual void MakeUnbendable() => Destroy(this);
+
+    /// <summary>
     /// Allow the use of Bending on the source.
     /// </summary>
     protected virtual void AllowBending()

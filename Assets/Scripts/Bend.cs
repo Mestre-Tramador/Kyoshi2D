@@ -28,6 +28,18 @@ public sealed class Bend : MonoBehaviour
     }
 
     /// <summary>
+    /// Get if the Bend is of a physical element.
+    /// </summary>
+    /// <returns><see langword="true"/> if is a Bend of Earth or Water.</returns>
+    private bool IsAPhysicalElement() => (CompareTag(Tags.Earth) || CompareTag(Tags.Water));
+
+    /// <summary>
+    /// Get if the Bend is not a physical element.
+    /// </summary>
+    /// <returns><see langword="true"/> if is a Bend of Air or Fire.</returns>
+    private bool IsNotAPhysicalElement() => (!IsAPhysicalElement());
+
+    /// <summary>
     /// Make the Bend follow the <see cref="Cursor"/>.
     /// </summary>
     private void Follow() => transform.position = Vector2.Lerp(transform.position, CurrentMouseWorldPoint(), 1.0f);
@@ -43,14 +55,23 @@ public sealed class Bend : MonoBehaviour
         {
             return;
         }
-        
+
         Dissipate();
     }
 
     /// <summary>
-    /// The Destroyer play the last Dissipate disc on the Jukebox.
+    /// The Destroyer play the last Dissipate disc on the Jukebox
+    /// and stop the Bend disc if it's playing.
     /// </summary>
-    private void OnDestroy() => GetJukebox().PlayDisc(DiscIndex.Dissipate);
+    private void OnDestroy()
+    {
+        if(GetJukebox().IsDiscPlaying(DiscIndex.Bend))
+        {
+            GetJukebox().StopDisc(DiscIndex.Bend);
+        }
+
+        GetJukebox().PlayDisc(DiscIndex.Dissipate);
+    }
 
     /// <summary>
     /// The Starter set the Bend and Dissipate discs on the Jukebox,
@@ -70,6 +91,8 @@ public sealed class Bend : MonoBehaviour
             {
                 case Tags.Earth: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.EarthBend}");
 
+                case Tags.Fire: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.FireEnd}");
+
                 default: return null;
             }
         }
@@ -79,6 +102,8 @@ public sealed class Bend : MonoBehaviour
             switch(tag)
             {
                 case Tags.Earth: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.EarthBend}");
+
+                case Tags.Fire: return LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.FireBendStart}");
 
                 default: return null;
             }
@@ -94,14 +119,23 @@ public sealed class Bend : MonoBehaviour
         {
             Follow();
 
+            if(IsNotAPhysicalElement() && !GetJukebox().IsDiscPlaying(DiscIndex.Bend))
+            {
+                GetJukebox()
+                .ReplaceDisc(DiscIndex.Bend, GetNonPhysicalBendDisc())
+                .PlayDiscIfNotPlaying(DiscIndex.Bend);
+            }
+
             return;
         }
 
         HasDropped = true;
 
-        if((CompareTag(Tags.Air) || CompareTag(Tags.Fire)) || !GetComponent<Renderer>().isVisible || GameIsPaused())
+        if(IsNotAPhysicalElement() || !GetComponent<Renderer>().isVisible || GameIsPaused())
         {
             Dissipate();
         }
+
+        AudioClip GetNonPhysicalBendDisc() => (CompareTag(Tags.Fire) ? LoadResource<AudioClip>($"{Path.SFX}{AudioClipNames.FireBend}") : null);
     }
 }

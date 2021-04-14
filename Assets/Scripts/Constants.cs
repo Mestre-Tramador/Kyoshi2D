@@ -66,14 +66,24 @@ namespace MestreTramadorEMulherMotoca
             public const int MoveBend = 11;
 
             /// <summary>
+            /// Disc "PlaceBend".
+            /// </summary>
+            public const int PlaceBend = 12;
+
+            /// <summary>
             /// Disc "Pull".
             /// </summary>
-            public const int Pull = 12;
+            public const int Pull = 13;
 
             /// <summary>
             /// Disc "Impact".
             /// </summary>
-            public const int Impact = 13;
+            public const int Impact = 14;
+
+            /// <summary>
+            /// Disc "Obstacle".
+            /// </summary>
+            public const int Obstacle = 15;
         }
 
         /// <summary>
@@ -132,6 +142,31 @@ namespace MestreTramadorEMulherMotoca
             public const string EarthPull = "EarthPull";
 
             /// <summary>
+            /// The continuous bending of Fire sound effect.
+            /// </summary>
+            public const string FireBend = "FireBend";
+
+            /// <summary>
+            /// The bending of Fire sound effect.
+            /// </summary>
+            public const string FireBendStart = FireBend + "Start";
+
+            /// <summary>
+            /// The dissipation of the bending of Fire sound effect.
+            /// </summary>
+            public const string FireEnd = "FireEnd";
+
+            /// <summary>
+            /// The impact of Fire sound effect.
+            /// </summary>
+            public const string FireImpact = "FireImpact";
+
+            /// <summary>
+            /// The pulling of Fire sound effect.
+            /// </summary>
+            public const string FirePull = "FirePull";
+
+            /// <summary>
             /// The Kyoshi Dashing sound effect.
             /// </summary>
             public const string KyoshiDash = "KyoshiDash";
@@ -160,6 +195,11 @@ namespace MestreTramadorEMulherMotoca
             /// The Menu entrance music.
             /// </summary>
             public const string MenuEntrance = "MenuEntrance";
+
+            /// <summary>
+            /// The lighting up of a Torch Obstacle.
+            /// </summary>
+            public const string ObstacleTorchLightUp = "ObstacleTorchLightUp";
         }
 
         /// <summary>
@@ -173,6 +213,11 @@ namespace MestreTramadorEMulherMotoca
             public const string AirBall = Air + "Ball";
 
             /// <summary>
+            /// Acts as the <see cref="BookEnd"/> of the second level.
+            /// </summary>
+            public const string Altar = "Altar";
+
+            /// <summary>
             /// The <see cref="Book"/> Background.
             /// </summary>
             public const string Background = "Background";
@@ -181,6 +226,11 @@ namespace MestreTramadorEMulherMotoca
             /// An <see cref="Obstacle"/> Barrier.
             /// </summary>
             public const string Barrier = "Barrier";
+
+            /// <summary>
+            /// An <see cref="Obstacle"/> Boulder.
+            /// </summary>
+            public const string Boulder = "Boulder";
 
             /// <summary>
             /// Acts as the <see cref="BookEnd"/> of the first level.
@@ -203,7 +253,17 @@ namespace MestreTramadorEMulherMotoca
             public const string FireStream = Fire + "Stream";
 
             /// <summary>
-            /// A simple hole on the <see cref="SceneNames.BookEarth"/> scene.
+            /// The Fillable of the <see cref="Hole"/> Obstacle.
+            /// </summary>
+            public const string Fillable = "Fillable";
+
+            /// <summary>
+            /// The Fuel of the Torch Obstacle.
+            /// </summary>
+            public const string Fuel = "Fuel";
+
+            /// <summary>
+            /// An <see cref="Obstacle"/> Hole.
             /// </summary>
             public const string Hole = "Hole";
 
@@ -304,12 +364,12 @@ namespace MestreTramadorEMulherMotoca
             /// <summary>
             /// Player Jump Force.
             /// </summary>
-            public const float Force = 250.0f;
+            public const float Force = 300.0f;
 
             /// <summary>
             /// Player Dash Impulse.
             /// </summary>
-            public const float Impulse = 300.0f;
+            public const float Impulse = 350.0f;
 
             /// <summary>
             /// Player Movement Speed.
