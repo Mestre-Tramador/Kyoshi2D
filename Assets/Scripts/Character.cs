@@ -7,6 +7,26 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     /// <summary>
+    /// Control if is Jumping on the Animator.
+    /// </summary>
+    private const string AnimIsJumping = "IsJumping";
+
+    /// <summary>
+    /// Control if is Levitating on the Animator.
+    /// </summary>
+    private const string AnimIsLevitating = "IsLevitating";
+
+    /// <summary>
+    /// Control if is Levitating from a Jump on the Animator.
+    /// </summary>
+    private const string AnimIsLevitatingFromJump = "IsLevitatingFromJump";
+
+    /// <summary>
+    /// Control if is Walking on the Animator.
+    /// </summary>
+    private const string AnimIsWalking = "IsWalking";
+
+    /// <summary>
     /// Controls if the <see cref="Character"/> can dash.
     /// </summary>
     /// <value><see langword="true"/> if it can.</value>
@@ -131,13 +151,49 @@ public abstract class Character : MonoBehaviour
     public void EnableMoving() => CanMove = true;
 
     /// <summary>
+    /// Set the given state to the character's levitating animation.
+    /// </summary>
+    /// <param name="isLevitating">The state to determine if is levitating.</param>
+    public void SetLevitatingAnimation(bool isLevitating)
+    {
+        if(TryGetComponent<Animator>(out Animator anim))
+        {
+            if(anim.GetBool(AnimIsJumping))
+            {
+
+                SetJumpingAnimation(false);
+                anim.SetBool(AnimIsLevitatingFromJump, true);
+            }
+
+            anim.SetBool(AnimIsLevitating, isLevitating);
+
+            if(!isLevitating)
+            {
+                anim.SetBool(AnimIsLevitatingFromJump, false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Set the given state to the character's jumping animation.
+    /// </summary>
+    /// <param name="isJumping">The state to determine if is jumping.</param>
+    public void SetJumpingAnimation(bool isJumping)
+    {
+        SetWalkingAnimation(false);
+
+        if(TryGetComponent<Animator>(out Animator anim))
+        {
+            anim.SetBool(AnimIsJumping, isJumping);
+        }
+    }
+
+    /// <summary>
     /// Set the given state to the character's walking animation.
     /// </summary>
     /// <param name="isWalking">The state to determine if is walking.</param>
     public void SetWalkingAnimation(bool isWalking)
     {
-        const string AnimIsWalking = "IsWalking";
-
         if(TryGetComponent<Animator>(out Animator anim))
         {
             anim.SetBool(AnimIsWalking, isWalking);

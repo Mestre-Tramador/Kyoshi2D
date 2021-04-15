@@ -1,3 +1,11 @@
+[0.0.16]
+- Imported more music themes for Easter Eggs
+- Imported Sky Background and Temple for Earth Book Sprites
+- Created Idleing and Jumping Animations
+- Refactored setting of Animation States on scripts
+- Improved Earth Booke scenario
+- Edited Hole Obstacle behaviour
+
 [0.0.15]
 - Imported music themes for the Earth Book and Easter Eggs
 - Implement Levitation and Rescue Behaviour

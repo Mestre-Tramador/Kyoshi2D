@@ -14,7 +14,7 @@ public sealed class Hole : Obstacle
     /// </summary>
     protected override void OnHoleFill()
     {
-        GetHoleFillable().GetComponent<SpriteRenderer>().color = ColorFixed(27.0f, 84.0f, 42.0f);
+        Destroy(GetHoleFillable().GetComponent<SpriteRenderer>());
 
         base.OnHoleFill();
     }

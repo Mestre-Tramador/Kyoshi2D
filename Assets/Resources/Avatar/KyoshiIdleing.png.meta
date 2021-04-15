@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: 0a8a5dc39e04da945b13dbb33d42005d
+guid: 54ba0754175e6dc4ebc2eff6b2ea219e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8504710735829147990
-    second: KyoshiWalking_0
+      213: -6549723888060951168
+    second: KyoshiIdleing_0
   - first:
-      213: 8506828618146044315
-    second: KyoshiWalking_1
+      213: -787893240112285693
+    second: KyoshiIdleing_1
   - first:
-      213: -439702387647697
-    second: KyoshiWalking_2
+      213: 5231906535634454433
+    second: KyoshiIdleing_2
   - first:
-      213: -5735997956786873210
-    second: KyoshiWalking_3
+      213: 2393518561130352669
+    second: KyoshiIdleing_3
   - first:
-      213: -6934890318536231729
-    second: KyoshiWalking_4
+      213: 6632934138212630413
+    second: KyoshiIdleing_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -106,11 +106,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: KyoshiWalking_0
+      name: KyoshiIdleing_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 18
+        x: 3
+        y: 2
         width: 148
         height: 224
       alignment: 0
@@ -120,20 +120,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6512c86ba5dc60670800000000000000
-      internalID: 8504710735829147990
+      spriteID: 0859c3363d4ba15a0800000000000000
+      internalID: -6549723888060951168
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KyoshiWalking_1
+      name: KyoshiIdleing_1
       rect:
         serializedVersion: 2
-        x: 149
-        y: 0
-        width: 131
-        height: 242
+        x: 158
+        y: 2
+        width: 148
+        height: 223
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,20 +141,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b99d8bd9e835e0670800000000000000
-      internalID: 8506828618146044315
+      spriteID: 308fc26c547d015f0800000000000000
+      internalID: -787893240112285693
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KyoshiWalking_2
+      name: KyoshiIdleing_2
       rect:
         serializedVersion: 2
-        x: 284
-        y: 5
-        width: 134
-        height: 237
+        x: 310
+        y: 3
+        width: 148
+        height: 222
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,20 +162,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2b906fc7107efff0800000000000000
-      internalID: -439702387647697
+      spriteID: 1a7498a36477b9840800000000000000
+      internalID: 5231906535634454433
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KyoshiWalking_3
+      name: KyoshiIdleing_3
       rect:
         serializedVersion: 2
-        x: 429
-        y: 0
-        width: 131
-        height: 242
+        x: 461
+        y: 3
+        width: 148
+        height: 225
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,18 +183,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 68c1a59bf34a560b0800000000000000
-      internalID: -5735997956786873210
+      spriteID: d109a7f237c773120800000000000000
+      internalID: 2393518561130352669
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: KyoshiWalking_4
+      name: KyoshiIdleing_4
       rect:
         serializedVersion: 2
-        x: 565
-        y: 18
+        x: 619
+        y: 3
         width: 148
         height: 224
       alignment: 0
@@ -204,8 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc43a577ff152cf90800000000000000
-      internalID: -6934890318536231729
+      spriteID: d8fb9b6b47aec0c50800000000000000
+      internalID: 6632934138212630413
       vertices: []
       indices: 
       edges: []

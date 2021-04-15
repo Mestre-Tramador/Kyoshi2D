@@ -114,6 +114,8 @@ public sealed class Kyoshi : Bender
             if(Jumps == 0)
             {
                 GetJukebox().PlayDisc(DiscIndex.Jump);
+
+                SetJumpingAnimation(true);
             }
 
             GetComponent<Rigidbody2D>()
@@ -126,6 +128,8 @@ public sealed class Kyoshi : Bender
                 GetJukebox().PlayDisc(DiscIndex.DoubleJump);
 
                 DisableJumping();
+
+                SetLevitatingAnimation(true);
             }
         }
     }
@@ -149,6 +153,11 @@ public sealed class Kyoshi : Bender
         transform.Translate(new Vector3(x, 0.0f, 0.0f));
 
         bool isWalking = (axis != 0);
+
+        if(!IsPlayerTouchingFloor())
+        {
+            isWalking = false;
+        }
 
         SetWalkingAnimation(isWalking);
 
@@ -281,6 +290,8 @@ public sealed class Kyoshi : Bender
         {
             RefreshJump();
             EnableJumping();
+            SetJumpingAnimation(false);
+            SetLevitatingAnimation(false);
         }
     }
 }

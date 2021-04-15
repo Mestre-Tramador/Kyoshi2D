@@ -207,6 +207,11 @@ namespace MestreTramadorEMulherMotoca
             public const string ThemeBlack = Theme + "Black";
 
             /// <summary>
+            /// The Easter Egg theme from the 90's X-Men Cartoon.
+            /// </summary>
+            public const string ThemeMutant = Theme + "Mutant";
+
+            /// <summary>
             /// The third level theme.
             /// </summary>
             public const string ThemeAir = Theme + Air;

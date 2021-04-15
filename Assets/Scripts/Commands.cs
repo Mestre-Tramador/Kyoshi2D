@@ -22,16 +22,20 @@ namespace MestreTramadorEMulherMotoca
                 switch(command)
                 {
                     case CommandList.AZENHA:
-                        ReplaceThemeDisc(LoadResource<AudioClip>($"{Path.Music}ThemeAzenha"));
+                        ReplaceThemeDisc(LoadResource<AudioClip>($"{Path.Music}{ThemeAzenha}"));
                     break;
 
                     case CommandList.BLACK:
-                        ReplaceThemeDisc(LoadResource<AudioClip>($"{Path.Music}ThemeBlack"));
+                        ReplaceThemeDisc(LoadResource<AudioClip>($"{Path.Music}{ThemeBlack}"));
                     return;
 
                     case CommandList.ORIGINAL:
                         ReplaceThemeDisc(GetSceneOriginalTheme());
                     return;
+
+                    case CommandList.XMEN:
+                    ReplaceThemeDisc(LoadResource<AudioClip>($"{Path.Music}{ThemeMutant}"));
+                    break;
                 }
 
                 void ReplaceThemeDisc(AudioClip replaceDisc) => GetJukebox().StopDiscOne().ReplaceDiscOne(replaceDisc).PutDiscOneInLoop().PlayDiscOne();
@@ -99,6 +103,11 @@ namespace MestreTramadorEMulherMotoca
                 /// Blame him for this all.
                 /// </summary>
                 public const string TRAMA = "mestretramador";
+
+                /// <summary>
+                /// Stan Lee must be proud...
+                /// </summary>
+                public const string XMEN = "mutant";
             }
         }
     }

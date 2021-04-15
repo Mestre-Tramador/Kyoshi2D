@@ -38,6 +38,8 @@ public class Levitation : MonoBehaviour
 
             GetJukebox().PlayDisc(DiscIndex.Dash);
 
+            GetKyoshi().SetLevitatingAnimation(true);
+
             yield return StartCoroutine(MovePlayerToPosition(new Vector3(
                 GetPlayer().transform.position.x,
                 (PointToReturn.y + 0.5f),
@@ -51,6 +53,8 @@ public class Levitation : MonoBehaviour
                 GetPlayer().transform.position.y,
                 GetPlayer().transform.position.z
             )));
+
+            GetKyoshi().SetLevitatingAnimation(false);
 
             GetPlayerComponent<Rigidbody2D>().isKinematic = false;
 
