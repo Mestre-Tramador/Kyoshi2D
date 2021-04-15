@@ -1,3 +1,7 @@
+[0.0.17]
+- Imported Earth Boulder Ben Sprite
+- Refactored Earth Boulder Prefab to the new sprite
+
 [0.0.16]
 - Imported more music themes for Easter Eggs
 - Imported Sky Background and Temple for Earth Book Sprites
